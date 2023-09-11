@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 public class Drivetrain {
-    DcMotor fl, fr, bl, br;
+    private DcMotor fl, fr, bl, br;
 
 
     public Drivetrain(OpMode opMode){
@@ -70,6 +70,10 @@ public class Drivetrain {
         fr.setPower(power);
         bl.setPower(power);
         br.setPower(power);
+    }
+
+    public DcMotor[] getMotors(){
+        return new DcMotor[] {fl, fr, bl, br};
     }
 
 
