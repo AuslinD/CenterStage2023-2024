@@ -17,7 +17,7 @@ public class Drivetrain {
         bl = opMode.hardwareMap.get(DcMotorEx.class, "bl");
 
         fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
