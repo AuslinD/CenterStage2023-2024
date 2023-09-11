@@ -14,7 +14,7 @@ public class TeleOpMethods{
 
     public void teleOpControls(Gamepad gamepad1, Gamepad gamepad2){
 
-        
+
 
     }
 }
