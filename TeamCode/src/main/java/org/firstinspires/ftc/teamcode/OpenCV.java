@@ -175,7 +175,7 @@ public class OpenCV extends LinearOpMode
         void inputToCb(Mat input)
         {
             Imgproc.cvtColor(input, YCrCb, Imgproc.COLOR_RGB2YCrCb);
-            Core.extractChannel(YCrCb, Cr, 2);
+            Core.extractChannel(YCrCb, Cr, 1);
         }
 
         @Override
