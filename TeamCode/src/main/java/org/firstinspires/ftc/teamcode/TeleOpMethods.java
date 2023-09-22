@@ -3,15 +3,17 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-public class TeleOpMethods{
+public class TeleOpMethods {
     Robot robot;
     //Manipulator
 
-    public TeleOpMethods(OpMode opMode) {   //manip later
+    public TeleOpMethods(OpMode opMode)
+    {   //manip later
         this.robot = new Robot(opMode);
     }
 
-    public void teleOpControls(Gamepad gamepad1, Gamepad gamepad2){
+    public void teleOpControls(Gamepad gamepad1, Gamepad gamepad2)
+    {
         double FLP = 0;
         double FRP = 0;
         double BRP = 0;

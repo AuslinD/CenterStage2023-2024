@@ -7,10 +7,11 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 public class Drivetrain {
-    private DcMotor fl, fr, bl, br;
+    public DcMotor fl, fr, bl, br;
 
 
-    public Drivetrain(OpMode opMode){
+    public Drivetrain(OpMode opMode) {
+
         fl = opMode.hardwareMap.get(DcMotorEx.class, "fl");
         fr = opMode.hardwareMap.get(DcMotorEx.class, "fr");
         br = opMode.hardwareMap.get(DcMotorEx.class, "br");
@@ -38,7 +39,8 @@ public class Drivetrain {
 
     }
 
-    public Drivetrain(LinearOpMode linearOpMode){
+    public Drivetrain(LinearOpMode linearOpMode) {
+
         fl = linearOpMode.hardwareMap.get(DcMotorEx.class, "fl");
         fr = linearOpMode.hardwareMap.get(DcMotorEx.class, "fr");
         br = linearOpMode.hardwareMap.get(DcMotorEx.class, "br");
@@ -65,14 +67,15 @@ public class Drivetrain {
         bl.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
-    public void setALLMotorPower(double power){
+    public void setALLMotorPower(double power) {
+
         fl.setPower(power);
         fr.setPower(power);
         bl.setPower(power);
         br.setPower(power);
     }
 
-    public DcMotor[] getMotors(){
+    public DcMotor[] getMotors() {
         return new DcMotor[] {fl, fr, bl, br};
     }
 

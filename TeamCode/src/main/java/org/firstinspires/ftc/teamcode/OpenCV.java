@@ -172,10 +172,10 @@ public class OpenCV extends LinearOpMode
          * This function takes the RGB frame, converts to YCrCb,
          * and extracts the Cb channel to the 'Cb' variable
          */
-        void inputToCb(Mat input)
+        void inputToCr(Mat input)
         {
             Imgproc.cvtColor(input, YCrCb, Imgproc.COLOR_RGB2YCrCb);
-            Core.extractChannel(YCrCb, Cr, 2);
+            Core.extractChannel(YCrCb, Cr, 1);
         }
 
         @Override
@@ -190,7 +190,7 @@ public class OpenCV extends LinearOpMode
              * buffer would be re-allocated the first time a real frame
              * was crunched)
              */
-            inputToCb(firstFrame);
+            inputToCr(firstFrame);
 
             /*
              * Submats are a persistent reference to a region of the parent
@@ -243,7 +243,7 @@ public class OpenCV extends LinearOpMode
             /*
              * Get the Cb channel of the input frame after conversion to YCrCb
              */
-            inputToCb(input);
+            inputToCr(input);
 
             /*
              * Compute the average pixel value of each submat region. We're
