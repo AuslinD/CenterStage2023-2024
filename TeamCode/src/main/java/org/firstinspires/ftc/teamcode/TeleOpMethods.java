@@ -18,6 +18,10 @@ public class TeleOpMethods {
         double FRP = 0;
         double BRP = 0;
         double BLP = 0;
+        double rn1p = 0;
+        double rn2p = 0;
+        double up1p = 0;
+        double up2p = 0;
 
         if(Math.abs(gamepad1.left_stick_y) > 0.1 || Math.abs(gamepad1.left_stick_x) > 0.1 || Math.abs(gamepad1.right_stick_x) > 0.1) {
             FLP += gamepad1.left_stick_y;
@@ -58,12 +62,57 @@ public class TeleOpMethods {
             }
 
         }
+
+
         else {
             robot.drivetrain.getMotors()[0].setPower(0);
             robot.drivetrain.getMotors()[1].setPower(0);
             robot.drivetrain.getMotors()[2].setPower(0);
             robot.drivetrain.getMotors()[3].setPower(0);
         }
+        if(Math.abs(gamepad2.left_stick_y) > 0.1 || Math.abs(gamepad2.left_stick_x) > 0.1 || Math.abs(gamepad2.right_stick_x) > 0.1) {
+            rn1p += gamepad2.left_stick_y;
+            rn2p += gamepad2.left_stick_y;
+            up1p += gamepad2.left_stick_y;
+            up2p += gamepad2.left_stick_y;
+
+            rn1p += gamepad2.left_stick_x;
+            rn2p += gamepad2.left_stick_x;
+            up1p += gamepad2.left_stick_x;
+            up2p += gamepad2.left_stick_x;
+
+            rn1p += gamepad2.right_stick_x;
+            rn2p += gamepad2.right_stick_x;
+            up1p += gamepad2.right_stick_x;
+            up2p += gamepad2.right_stick_x;
+
+            double max = Math.max(Math.max(Math.abs(rn1p) , Math.abs(rn2p)), Math.max((up1p), Math.abs(up2p)));
+
+            if (Math.abs(max) > 1) {
+                rn1p /= Math.abs(max);
+                rn2p /= Math.abs(max);
+                up1p /= Math.abs(max);
+                up2p /= Math.abs(max);
+            }
+            if(Math.abs(gamepad2.right_trigger) > 0.1) {
+
+                robot.drivetrain.getMotors()[0].setPower(rn1p * .4);
+                robot.drivetrain.getMotors()[1].setPower(rn2p * .4);
+                robot.drivetrain.getMotors()[2].setPower(up1p * .4);
+                robot.drivetrain.getMotors()[3].setPower(up2p * .4);
+            }
+            else {
+                robot.drivetrain.getMotors()[0].setPower(rn1p);
+                robot.drivetrain.getMotors()[1].setPower(rn2p);
+                robot.drivetrain.getMotors()[2].setPower(up1p);
+                robot.drivetrain.getMotors()[3].setPower(up2p);
+            }
+
+        }
+
+
 
     }
+
+
 }
