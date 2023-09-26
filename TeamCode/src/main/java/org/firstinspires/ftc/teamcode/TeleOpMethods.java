@@ -100,11 +100,13 @@ public class TeleOpMethods {
                 robot.lift.getMotors()[2].setPower(up1p);
                 robot.lift.getMotors()[3].setPower(up2p);
             }
-
         }
-
-
-
+        if(gamepad2.a){
+            robot.claw.clawDown();
+        }
+        if(gamepad2.b){
+            robot.claw.clawUp();
+        }
     }
 
 

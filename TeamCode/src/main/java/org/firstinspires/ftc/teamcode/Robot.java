@@ -10,12 +10,12 @@ public class Robot {
     public Robot(OpMode opmode){
         drivetrain = new Drivetrain(opmode);
         lift = new Lift(opmode);
-        claw = new Claw();
+        claw = new Claw(opmode);
     }
     public Robot(LinearOpMode linearOpMode){
         drivetrain = new Drivetrain(linearOpMode);
         lift = new Lift(linearOpMode);
-        claw = new Claw();
+        claw = new Claw(linearOpMode);
     }
 
 
