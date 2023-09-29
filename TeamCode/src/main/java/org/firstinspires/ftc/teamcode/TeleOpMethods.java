@@ -109,7 +109,12 @@ public class TeleOpMethods {
             
 
         }
-        if gamepad2.right_stick_y
+        if(gamepad2.b){
+            robot.claw.clawdegrees1();
+        }
+        if(gamepad2.b){
+            robot.claw.clawdegrees2();
+        }
     }
 
 
