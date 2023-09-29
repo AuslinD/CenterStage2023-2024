@@ -14,7 +14,8 @@ public class Claw {
     double down = 0;
     double up = 1;
 
-    double rotate = 0;
+    double rotate1 = 0;
+    double rotate2 = 0;
 
     public Claw(OpMode opMode) {
         M1 = opMode.hardwareMap.get(Servo.class, "clawServo");
@@ -27,10 +28,10 @@ public class Claw {
     public void clawUp(){
         M1.setPosition(up);
     }
-    public void clawdegrees(){
-        M2.setPosition(rotate);
-
-
+    public void clawdegrees1(){
+        M2.setPosition(rotate1);
     }
-
+    public void clawdegrees2(){
+        M2.setPosition(rotate2);
+    }
 }
