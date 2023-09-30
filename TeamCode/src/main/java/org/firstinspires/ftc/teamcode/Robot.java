@@ -28,8 +28,8 @@ public class Robot {
     }
     public Robot(LinearOpMode linearOpMode){
         drivetrain = new Drivetrain(linearOpMode);
-        lift = new Lift(linearOpMode);
-        claw = new Claw(linearOpMode);
+        //lift = new Lift(linearOpMode);
+        //claw = new Claw(linearOpMode);
 
         imu = linearOpMode.hardwareMap.get(IMU.class, "imu");
         // Adjust the orientation parameters to match your robot
