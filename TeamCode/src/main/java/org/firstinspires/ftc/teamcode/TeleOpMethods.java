@@ -15,6 +15,8 @@ public class TeleOpMethods {
     {   //manip later
         this.robot = new Robot(opMode);
         this.opMode = opMode;
+        robot.imu.resetYaw();
+
     }
 
     public void teleOpControls(Gamepad gamepad1, Gamepad gamepad2)

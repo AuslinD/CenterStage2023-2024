@@ -25,6 +25,7 @@ public class Robot {
                 RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
         // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
         imu.initialize(parameters);
+        imu.resetYaw();
     }
     public Robot(LinearOpMode linearOpMode){
         drivetrain = new Drivetrain(linearOpMode);
@@ -38,6 +39,7 @@ public class Robot {
                 RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
         // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
         imu.initialize(parameters);
+        imu.resetYaw();
     }
 
     public IMU getImu(){
