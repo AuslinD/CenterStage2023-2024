@@ -8,9 +8,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 public class TeleOpMethods {
     private static Robot robot;
-    OpMode opMode;
+    static OpMode opMode;
     //Manipulator
 
+    private static double lockHeadingHeading;
     public TeleOpMethods(OpMode opMode)
     {   //manip later
         this.robot = new Robot(opMode);
@@ -32,7 +33,9 @@ public class TeleOpMethods {
         double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
         double x = gamepad1.left_stick_x;
         double rx = gamepad1.right_stick_x;
+
         IMU imu = robot.getImu();
+
 
         if (gamepad1.options) {
             imu.resetYaw();
@@ -62,6 +65,39 @@ public class TeleOpMethods {
             frontLeftPower *= .5;
             backLeftPower *= .5;
         }
+
+        if(!gamepad1.right_bumper) {
+            lockHeadingHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+        }
+        else{
+            double mathLockHeadingHeading = lockHeadingHeading + Math.PI;
+            double mathBotHeading = botHeading + Math.PI;
+            double headingError;
+            if(Math.abs(mathBotHeading - mathLockHeadingHeading) < Math.abs(((2 * Math.PI) - mathBotHeading) - mathLockHeadingHeading)){
+                headingError = mathBotHeading - mathLockHeadingHeading;
+            }
+            else{
+                headingError = ((2 * Math.PI) - mathBotHeading) - mathLockHeadingHeading;
+            }
+            double correctionPower = headingError / Math.PI;
+            opMode.telemetry.addData("headingError", headingError);
+            opMode.telemetry.addData("correctionPower", correctionPower);
+            opMode.telemetry.update();
+
+            if(correctionPower > 0.1){
+
+            }
+            else if(correctionPower < -.1){
+
+            }
+
+
+
+
+        }
+
+
+
         robot.drivetrain.fl.setPower(frontLeftPower);
         robot.drivetrain.bl.setPower(backLeftPower);
         robot.drivetrain.fr.setPower(frontRightPower);
