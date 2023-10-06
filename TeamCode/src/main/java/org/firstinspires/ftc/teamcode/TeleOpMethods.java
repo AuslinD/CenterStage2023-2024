@@ -6,7 +6,9 @@ import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
+
 public class TeleOpMethods {
+
     private static Robot robot;
     static OpMode opMode;
     //Manipulator
@@ -28,7 +30,7 @@ public class TeleOpMethods {
 
     }
 
-    private static void driveTrainStuff(Gamepad gamepad1, Gamepad gamepad2){
+    private static void driveTrainStuff(Gamepad gamepad1, Gamepad gamepad2) {
         //Drivetrain Stuff
         double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
         double x = gamepad1.left_stick_x;
@@ -105,7 +107,7 @@ public class TeleOpMethods {
 
     }
 
-    private static void manipulatorStuff(Gamepad gamepad1, Gamepad gamepad2){
+    private static void manipulatorStuff(Gamepad gamepad1, Gamepad gamepad2) {
 
         //Manipulator and lift stuff
         double rn1p = 0;
