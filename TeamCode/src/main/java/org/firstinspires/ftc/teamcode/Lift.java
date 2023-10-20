@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 public class Lift {
     private DcMotor rotateLeft, rotateRight, liftLeft, liftRight; // rn stands for rotational motor
+    double setPower = 0.8;
     public Lift(OpMode opMode){
         rotateLeft = opMode.hardwareMap.get(DcMotorEx.class, "rotleft");
         rotateRight = opMode.hardwareMap.get(DcMotorEx.class, "rotright");
@@ -70,20 +71,22 @@ public class Lift {
         liftLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         liftRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
-    public void setMotorsToRunToPosition(int targetPosition) {
-        rotateLeft.setPower(1);
-        rotateRight.setPower(1);
-        liftLeft.setPower(1);
-        liftRight.setPower(1);
+    public void setMotorsToRotate(int targetPosition) {
+        rotateLeft.setPower(-setPower);
+        rotateRight.setPower(setPower);
 
         // Set the target position for each motor
         rotateLeft.setTargetPosition(targetPosition);
         rotateRight.setTargetPosition(targetPosition);
-        liftLeft.setTargetPosition(targetPosition);
-        liftRight.setTargetPosition(targetPosition);
-
     }
 
+    public void setMotorsToGoUpOrDown(int targetPosition) {
+        liftLeft.setPower(-setPower);
+        liftRight.setPower(setPower);
+
+        liftLeft.setTargetPosition(targetPosition);
+        liftRight.setTargetPosition(targetPosition);
+    }
     public void setAllLiftMotorPower(double power){
         rotateLeft.setPower(power);
         rotateRight.setPower(power);
