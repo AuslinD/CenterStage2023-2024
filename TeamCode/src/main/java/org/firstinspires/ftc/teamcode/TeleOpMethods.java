@@ -39,8 +39,8 @@ public class TeleOpMethods {
         IMU imu = robot.getImu();
 
 
-        if (gamepad1.options) {
-            imu.resetYaw();
+        if (gamepad1.dpad_up) {
+            robot.resetImu();
         }
 
         double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);

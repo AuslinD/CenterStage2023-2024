@@ -9,11 +9,11 @@ public class StraigthAuto extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         Robot robot = new Robot(this);
         waitForStart();
-        robot.drivetrain.fl.setPower(.5);
-        robot.drivetrain.bl.setPower(.5);
-        robot.drivetrain.fr.setPower(.5);
-        robot.drivetrain.br.setPower(.5);
-        sleep(5000);
+        robot.drivetrain.fl.setPower(.18);
+        robot.drivetrain.bl.setPower(.18);
+        robot.drivetrain.fr.setPower(.18);
+        robot.drivetrain.br.setPower(.18);
+        sleep(15000);
         robot.drivetrain.fl.setPower(0);
         robot.drivetrain.bl.setPower(0);
         robot.drivetrain.fr.setPower(0);
