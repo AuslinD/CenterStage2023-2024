@@ -118,14 +118,17 @@ public class TeleOpMethods {
         double rn2p = 0;
         double up1p = 0;
         double up2p = 0;
-
+        int multiplier = 20;
         if(Math.abs(gamepad2.left_stick_y) > 0.1 || Math.abs(gamepad2.left_stick_x) > 0.1 || Math.abs(gamepad2.right_stick_x) > 0.1) {
             up1p += gamepad2.left_stick_y;
             up2p += gamepad2.left_stick_y;
 
-
+            robot.lift.setMotorsToGoUpOrDown((int)(up1p * multiplier));
+            robot.lift.setMotorsToGoUpOrDown((int)(up2p * multiplier));
             rn1p += gamepad2.right_stick_y;
             rn2p += gamepad2.right_stick_y;
+            robot.lift.setMotorsToRotate((int)(rn1p * multiplier));
+            robot.lift.setMotorsToRotate((int)(rn2p * multiplier));
 
             double max = Math.max(Math.max(Math.abs(rn1p) , Math.abs(rn2p)), Math.max((up1p), Math.abs(up2p)));
 
