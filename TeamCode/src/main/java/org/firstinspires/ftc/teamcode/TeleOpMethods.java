@@ -25,6 +25,7 @@ public class TeleOpMethods {
     public void teleOpControls(Gamepad gamepad1, Gamepad gamepad2)
     {
         driveTrainStuff(gamepad1, gamepad2);
+        manipulatorStuff(gamepad1, gamepad2);
 
 
 

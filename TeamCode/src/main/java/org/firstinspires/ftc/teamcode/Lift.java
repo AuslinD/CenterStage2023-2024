@@ -72,8 +72,8 @@ public class Lift {
         liftRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
     public void setMotorsToRotate(int targetPosition) {
-        rotateLeft.setPower(-setPower);
-        rotateRight.setPower(setPower);
+        rotateLeft.setPower(setPower);
+        rotateRight.setPower(-setPower);
 
         // Set the target position for each motor
         rotateLeft.setTargetPosition(targetPosition);
@@ -81,8 +81,8 @@ public class Lift {
     }
 
     public void setMotorsToGoUpOrDown(int targetPosition) {
-        liftLeft.setPower(-setPower);
-        liftRight.setPower(setPower);
+        liftLeft.setPower(setPower);
+        liftRight.setPower(-setPower);
 
         liftLeft.setTargetPosition(targetPosition);
         liftRight.setTargetPosition(targetPosition);

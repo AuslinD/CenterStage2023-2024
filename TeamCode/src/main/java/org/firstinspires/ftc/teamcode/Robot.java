@@ -15,7 +15,7 @@ public class Robot {
 
     public Robot(OpMode opmode){
         drivetrain = new Drivetrain(opmode);
-        //lift = new Lift(opmode);
+        lift = new Lift(opmode);
         //claw = new Claw(opmode);
 
         imu = opmode.hardwareMap.get(IMU.class, "imu");
@@ -29,7 +29,7 @@ public class Robot {
     }
     public Robot(LinearOpMode linearOpMode){
         drivetrain = new Drivetrain(linearOpMode);
-        //lift = new Lift(linearOpMode);
+        lift = new Lift(linearOpMode);
         //claw = new Claw(linearOpMode);
 
         imu = linearOpMode.hardwareMap.get(IMU.class, "imu");
