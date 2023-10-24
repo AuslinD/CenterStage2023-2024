@@ -10,8 +10,9 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 
 public class Lift {
-    private DcMotor rotateLeft, rotateRight, liftLeft, liftRight; // rn stands for rotational motor
+    public DcMotor rotateLeft, rotateRight, liftLeft, liftRight; // rn stands for rotational motor
     double setPower = 0.8;
+
     public Lift(OpMode opMode){
         rotateLeft = opMode.hardwareMap.get(DcMotorEx.class, "rotleft");
         rotateRight = opMode.hardwareMap.get(DcMotorEx.class, "rotright");
@@ -34,10 +35,24 @@ public class Lift {
         liftRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         rotateLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-        rotateRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        rotateRight.setDirection(DcMotorSimple.Direction.REVERSE);
         liftLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-        liftRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        liftRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        rotateLeft.setTargetPosition(0);
+        rotateRight.setTargetPosition(0);
+        liftRight.setTargetPosition(0);
+        liftLeft.setTargetPosition(0);
+
+        rotateLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rotateRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        liftLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        liftRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        rotateLeft.setPower(setPower);
+        rotateRight.setPower(setPower);
+        liftLeft.setPower(setPower);
+        liftRight.setPower(setPower);
     }
 
     public Lift(LinearOpMode linearOpMode){
@@ -62,9 +77,14 @@ public class Lift {
         liftRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         rotateLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-        rotateRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        rotateRight.setDirection(DcMotorSimple.Direction.REVERSE);
         liftLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-        liftRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        liftRight.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        rotateLeft.setTargetPosition(0);
+        rotateRight.setTargetPosition(0);
+        liftRight.setTargetPosition(0);
+        liftLeft.setTargetPosition(0);
 
         rotateLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rotateRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -72,8 +92,6 @@ public class Lift {
         liftRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
     public void setMotorsToRotate(int targetPosition) {
-        rotateLeft.setPower(setPower);
-        rotateRight.setPower(-setPower);
 
         // Set the target position for each motor
         rotateLeft.setTargetPosition(targetPosition);
@@ -82,7 +100,7 @@ public class Lift {
 
     public void setMotorsToGoUpOrDown(int targetPosition) {
         liftLeft.setPower(setPower);
-        liftRight.setPower(-setPower);
+        liftRight.setPower(setPower);
 
         liftLeft.setTargetPosition(targetPosition);
         liftRight.setTargetPosition(targetPosition);

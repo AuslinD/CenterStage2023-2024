@@ -12,10 +12,15 @@ public class TeleOpMethods {
     private static Robot robot;
     static OpMode opMode;
     //Manipulator
+    static double rn1p, rn2p, up1p, up2p;
 
     private static double lockHeadingHeading;
     public TeleOpMethods(OpMode opMode)
     {   //manip later
+        rn1p = 0;
+        rn2p = 0;
+        up1p = 0;
+        up2p = 0;
         this.robot = new Robot(opMode);
         this.opMode = opMode;
         robot.imu.resetYaw();
@@ -115,30 +120,32 @@ public class TeleOpMethods {
     private static void manipulatorStuff(Gamepad gamepad1, Gamepad gamepad2) {
 
         //Manipulator and lift stuff
-        double rn1p = 0;
-        double rn2p = 0;
-        double up1p = 0;
-        double up2p = 0;
-        int multiplier = 20;
-        if(Math.abs(gamepad2.left_stick_y) > 0.1 || Math.abs(gamepad2.left_stick_x) > 0.1 || Math.abs(gamepad2.right_stick_x) > 0.1) {
+        int multiplier = 30;
+        if(Math.abs(gamepad2.left_stick_y) > 0.1 || Math.abs(gamepad2.right_stick_y) > 0.1) {
             up1p += gamepad2.left_stick_y;
-            up2p += gamepad2.left_stick_y;
-
             robot.lift.setMotorsToGoUpOrDown((int)(up1p * multiplier));
-            robot.lift.setMotorsToGoUpOrDown((int)(up2p * multiplier));
+
             rn1p += gamepad2.right_stick_y;
-            rn2p += gamepad2.right_stick_y;
-            robot.lift.setMotorsToRotate((int)(rn1p * multiplier));
-            robot.lift.setMotorsToRotate((int)(rn2p * multiplier));
+            rn1p *= multiplier;
+            rn2p = rn1p;
+            up1p *= multiplier;
+            up2p = up1p;
+            if (up1p < 0 || up2p < 0)
+            {
+                up1p = 0;
+                up2p = 0;
+            }
 
-            double max = Math.max(Math.max(Math.abs(rn1p) , Math.abs(rn2p)), Math.max((up1p), Math.abs(up2p)));
+            robot.lift.setMotorsToRotate((int)rn1p);
 
-            if (Math.abs(max) > 1) {
+            //double max = Math.max(Math.max(Math.abs(rn1p) , Math.abs(rn2p)), Math.max((up1p), Math.abs(up2p)));
+
+            /*if (Math.abs(max) > 1) {
                 rn1p /= Math.abs(max);
                 rn2p /= Math.abs(max);
                 up1p /= Math.abs(max);
                 up2p /= Math.abs(max);
-            }
+            }*/
             if(Math.abs(gamepad2.right_trigger) > 0.1) {
 
                 robot.lift.getMotors()[0].setPower(rn1p * .4);
@@ -153,14 +160,23 @@ public class TeleOpMethods {
                 robot.lift.getMotors()[3].setPower(up2p);
             }
         }
+
         if(gamepad2.a){
             robot.claw.clawDown();
         }
         if(gamepad2.b){
             robot.claw.clawUp();
-
-
         }
+
+        opMode.telemetry.addData("goal", rn2p);
+        opMode.telemetry.addData("goal", rn1p);
+        opMode.telemetry.addData("goal", up1p);
+        opMode.telemetry.addData("goal", up2p);
+        opMode.telemetry.addData("ours", robot.lift.rotateRight.getCurrentPosition());
+        opMode.telemetry.addData("ours", robot.lift.rotateLeft.getCurrentPosition());
+        opMode.telemetry.addData("ours", robot.lift.liftLeft.getCurrentPosition());
+        opMode.telemetry.addData("ours", robot.lift.liftRight.getCurrentPosition());
+        opMode.telemetry.update();
     }
 
 
