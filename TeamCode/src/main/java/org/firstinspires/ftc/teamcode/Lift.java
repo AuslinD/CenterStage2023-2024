@@ -49,10 +49,13 @@ public class Lift {
         liftLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         liftRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+        /*
         rotateLeft.setPower(setPower);
         rotateRight.setPower(setPower);
         liftLeft.setPower(setPower);
         liftRight.setPower(setPower);
+
+         */
     }
 
     public Lift(LinearOpMode linearOpMode){
@@ -86,10 +89,13 @@ public class Lift {
         liftRight.setTargetPosition(0);
         liftLeft.setTargetPosition(0);
 
+        /*
         rotateLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rotateRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         liftLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         liftRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        
+         */
     }
     public void setMotorsToRotate(int targetPosition) {
 
