@@ -44,8 +44,10 @@ public class Lift {
         liftRight.setTargetPosition(0);
         liftLeft.setTargetPosition(0);
 
+        /*
         rotateLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rotateRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        */
         liftLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         liftRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
@@ -92,21 +94,24 @@ public class Lift {
         /*
         rotateLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rotateRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        */
+
         liftLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         liftRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        liftLeft.setPower(setPower);
+        liftRight.setPower(setPower);
         
-         */
+
     }
     public void setMotorsToRotate(int targetPosition) {
-
         // Set the target position for each motor
         rotateLeft.setTargetPosition(targetPosition);
         rotateRight.setTargetPosition(targetPosition);
     }
 
     public void setMotorsToGoUpOrDown(int targetPosition) {
-        liftLeft.setPower(setPower);
-        liftRight.setPower(setPower);
+
 
         liftLeft.setTargetPosition(targetPosition);
         liftRight.setTargetPosition(targetPosition);

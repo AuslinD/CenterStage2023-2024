@@ -122,21 +122,19 @@ public class TeleOpMethods {
         //Manipulator and lift stuff
         int multiplier = 30;
         if(Math.abs(gamepad2.left_stick_y) > 0.1 || Math.abs(gamepad2.right_stick_y) > 0.1) {
-            up1p += gamepad2.left_stick_y;
-            robot.lift.setMotorsToGoUpOrDown((int)(up1p * multiplier));
-
-            rn1p += gamepad2.right_stick_y;
-            rn1p *= multiplier;
+            up1p += gamepad2.left_stick_y * multiplier;
+            rn1p += gamepad2.right_stick_y * multiplier;
             rn2p = rn1p;
-            up1p *= multiplier;
             up2p = up1p;
             if (up1p < 0 || up2p < 0)
             {
                 up1p = 0;
                 up2p = 0;
             }
+            robot.lift.setMotorsToGoUpOrDown((int)(up1p));
 
-            robot.lift.setMotorsToRotate((int)rn1p);
+            robot.lift.rotateRight.setPower(gamepad2.left_stick_y);
+            robot.lift.rotateLeft.setPower(gamepad1.left_stick_y);
 
             //double max = Math.max(Math.max(Math.abs(rn1p) , Math.abs(rn2p)), Math.max((up1p), Math.abs(up2p)));
 
@@ -160,6 +158,10 @@ public class TeleOpMethods {
                 robot.lift.getMotors()[3].setPower(up2p);
             }
         }
+        else{
+            robot.lift.rotateRight.setPower(0);
+            robot.lift.rotateLeft.setPower(0);
+        }
 
         if(gamepad2.a){
             robot.claw.clawDown();
@@ -168,14 +170,14 @@ public class TeleOpMethods {
             robot.claw.clawUp();
         }
 
-        opMode.telemetry.addData("goal", rn2p);
+        opMode.telemetry.addData("2goal", rn2p);
         opMode.telemetry.addData("goal", rn1p);
-        opMode.telemetry.addData("goal", up1p);
-        opMode.telemetry.addData("goal", up2p);
-        opMode.telemetry.addData("ours", robot.lift.rotateRight.getCurrentPosition());
-        opMode.telemetry.addData("ours", robot.lift.rotateLeft.getCurrentPosition());
-        opMode.telemetry.addData("ours", robot.lift.liftLeft.getCurrentPosition());
-        opMode.telemetry.addData("ours", robot.lift.liftRight.getCurrentPosition());
+        opMode.telemetry.addData("upgoal", up1p);
+        opMode.telemetry.addData("up2goal", up2p);
+        opMode.telemetry.addData("oursRR", robot.lift.rotateRight.getCurrentPosition());
+        opMode.telemetry.addData("oursRL", robot.lift.rotateLeft.getCurrentPosition());
+        opMode.telemetry.addData("oursLL", robot.lift.liftLeft.getCurrentPosition());
+        opMode.telemetry.addData("oursLR", robot.lift.liftRight.getCurrentPosition());
         opMode.telemetry.update();
     }
 

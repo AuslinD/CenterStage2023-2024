@@ -48,7 +48,9 @@ public class EncoderAutoMethods {
     public void turn(double heading, double timeout){
         double initHeading = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
         ElapsedTime runtime = new ElapsedTime();
-        while (runtime.seconds() < timeout && linearOpMode.opModeIsActive() && Math.abs(robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading) < heading )
+        while (runtime.seconds() < timeout && linearOpMode.opModeIsActive() && Math.abs(robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading) < heading ){
+
+        }
 
     }
 }
