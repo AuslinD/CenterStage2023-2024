@@ -27,11 +27,11 @@ public class EncoderAutoMethods {
             if ((robot.drivetrain.bl.getCurrentPosition() - initPos) < 0){
                 neg = -1;
             }
-            if (encoderTicksToInches((robot.drivetrain.bl.getCurrentPosition() - initPos)) * (1/8) >= 1){
-                robot.drivetrain.fl.setPower(1 * neg);
-                robot.drivetrain.bl.setPower(1 * neg);
-                robot.drivetrain.fr.setPower(1 * neg);
-                robot.drivetrain.br.setPower(1 * neg);
+            if (encoderTicksToInches((robot.drivetrain.bl.getCurrentPosition() - initPos)) * (1.0/8) >= 1){
+                robot.drivetrain.fl.setPower(1.0 * neg);
+                robot.drivetrain.bl.setPower(1.0 * neg);
+                robot.drivetrain.fr.setPower(1.0 * neg);
+                robot.drivetrain.br.setPower(1.0 * neg);
 
             }
             else {
