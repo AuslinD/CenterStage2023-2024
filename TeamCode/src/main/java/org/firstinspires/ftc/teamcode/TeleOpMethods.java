@@ -133,8 +133,8 @@ public class TeleOpMethods {
             }
             robot.lift.setMotorsToGoUpOrDown((int)(up1p));
 
-            robot.lift.rotateRight.setPower(gamepad2.left_stick_y);
-            robot.lift.rotateLeft.setPower(gamepad1.left_stick_y);
+            robot.lift.rotateRight.setPower(gamepad2.right_stick_y);
+            robot.lift.rotateLeft.setPower(gamepad2.right_stick_y);
 
             //double max = Math.max(Math.max(Math.abs(rn1p) , Math.abs(rn2p)), Math.max((up1p), Math.abs(up2p)));
 
@@ -144,19 +144,6 @@ public class TeleOpMethods {
                 up1p /= Math.abs(max);
                 up2p /= Math.abs(max);
             }*/
-            if(Math.abs(gamepad2.right_trigger) > 0.1) {
-
-                robot.lift.getMotors()[0].setPower(rn1p * .4);
-                robot.lift.getMotors()[1].setPower(rn2p * .4);
-                robot.lift.getMotors()[2].setPower(up1p * .4);
-                robot.lift.getMotors()[3].setPower(up2p * .4);
-            }
-            else {
-                robot.lift.getMotors()[0].setPower(rn1p);
-                robot.lift.getMotors()[1].setPower(rn2p);
-                robot.lift.getMotors()[2].setPower(up1p);
-                robot.lift.getMotors()[3].setPower(up2p);
-            }
         }
         else{
             robot.lift.rotateRight.setPower(0);
