@@ -30,7 +30,7 @@ public class TeleOpMethods {
 
     public void teleOpControls(Gamepad gamepad1, Gamepad gamepad2)
     {
-        driveTrainStuff(gamepad1, gamepad2);
+        notDriveTrainStuff(gamepad1, gamepad2);//for tryouts
         manipulatorStuff(gamepad1, gamepad2);
         opMode.telemetry.update();
 
