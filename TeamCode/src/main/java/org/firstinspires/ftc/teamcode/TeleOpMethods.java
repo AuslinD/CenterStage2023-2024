@@ -11,6 +11,7 @@ public class TeleOpMethods {
 
     private static Robot robot;
     static OpMode opMode;
+    static double initPos;
     //Manipulator
     static double rn1p, rn2p, up1p, up2p;
 
@@ -24,14 +25,14 @@ public class TeleOpMethods {
         this.robot = new Robot(opMode);
         this.opMode = opMode; 
         robot.imu.resetYaw();
-
+        initPos = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
     }
 
     public void teleOpControls(Gamepad gamepad1, Gamepad gamepad2)
     {
-        notDriveTrainStuff(gamepad1, gamepad2);
+        driveTrainStuff(gamepad1, gamepad2);
         manipulatorStuff(gamepad1, gamepad2);
-
+        opMode.telemetry.update();
 
 
     }
@@ -49,7 +50,10 @@ public class TeleOpMethods {
             robot.resetImu();
         }
 
-        double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+        double botHeading = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+
+
+        opMode.telemetry.addData("botHeading", Math.toDegrees(botHeading));
         opMode.telemetry.addData("Yaw", imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS));
         opMode.telemetry.addData("Pitch", imu.getRobotYawPitchRollAngles().getPitch(AngleUnit.RADIANS));
         opMode.telemetry.addData("Roll", imu.getRobotYawPitchRollAngles().getRoll(AngleUnit.RADIANS));
@@ -94,7 +98,7 @@ public class TeleOpMethods {
             double correctionPower = headingError / Math.PI;
             opMode.telemetry.addData("headingError", headingError);
             opMode.telemetry.addData("correctionPower", correctionPower);
-            opMode.telemetry.update();
+
 
             if(correctionPower > 0.1){
 
@@ -165,7 +169,7 @@ public class TeleOpMethods {
         opMode.telemetry.addData("oursRL", robot.lift.rotateLeft.getCurrentPosition());
         opMode.telemetry.addData("oursLL", robot.lift.liftLeft.getCurrentPosition());
         opMode.telemetry.addData("oursLR", robot.lift.liftRight.getCurrentPosition());
-        opMode.telemetry.update();
+
     }
 
     public static void notDriveTrainStuff(Gamepad gamepad1, Gamepad gamepad2){
