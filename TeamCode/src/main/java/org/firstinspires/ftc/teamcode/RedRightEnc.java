@@ -17,6 +17,8 @@ public class RedRightEnc extends LinearOpMode {
     OpenCV.RedCV pipeline;
     @Override
     public void runOpMode() throws InterruptedException {
+
+        movement = new EncoderAutoMethods(this);
             /**
              * NOTE: Many comments have been omitted from this sample for the
              * sake of conciseness. If you're just starting out with EasyOpenCv,
@@ -48,9 +50,7 @@ public class RedRightEnc extends LinearOpMode {
                 }
             });
 
-            waitForStart();
-
-            while (opModeIsActive())
+            while (!isStarted() && !isStopRequested())
             {
                 telemetry.addData("Analysis", pipeline.getAnalysis());
                 telemetry.update();
@@ -58,8 +58,6 @@ public class RedRightEnc extends LinearOpMode {
                 // Don't burn CPU cycles busy-looping in this sample
                 sleep(50);
             }
-            robot = new Robot(this);
-            movement = new EncoderAutoMethods();
             movement.drive(5, 5);
             movement.turn(90, 5);
             movement.sideToSide(5,5);

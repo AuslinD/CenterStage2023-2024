@@ -12,9 +12,10 @@ public class EncoderAutoMethods {
 
     LinearOpMode linearOpMode;
 
-    public EncoderAutoMethods() {
-        robot = robot;
-        linearOpMode = linearOpMode;
+    public EncoderAutoMethods(LinearOpMode opMode) {
+        linearOpMode = opMode;
+        robot = new Robot(linearOpMode);
+
     }
 
     public static double encoderTicksToInches(double ticks) {
@@ -42,6 +43,8 @@ public class EncoderAutoMethods {
                 robot.drivetrain.br.setPower(distance - encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 8));
             }
         }
+        linearOpMode.telemetry.addData("foreward", encoderTicksToInches(robot.drivetrain.bl.getCurrentPosition()));
+        linearOpMode.telemetry.update();
     }
 
     public void turn(double heading, double timeout) {
@@ -77,6 +80,8 @@ public class EncoderAutoMethods {
                     robot.drivetrain.fr.setPower((heading - (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading)) * (1.0 / 5) * neg);
                 }
             }
+            linearOpMode.telemetry.addData("turn",(robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES)));
+            linearOpMode.telemetry.update();
         }
     }
 
@@ -116,6 +121,8 @@ public class EncoderAutoMethods {
                         robot.drivetrain.fr.setPower(side - (encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5) * neg));
                     }
                 }
+                linearOpMode.telemetry.addData("side", encoderTicksToInches(robot.drivetrain.fl.getCurrentPosition()));
+                linearOpMode.telemetry.update();
             }
         }
 }
