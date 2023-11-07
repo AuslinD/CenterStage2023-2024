@@ -7,7 +7,10 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Intake {
-    double ANG_DOWN = -.5;
+
+    //CHANGE THIS
+    double ANG_DOWN = -0.5;
+    double ANG_UP = 0.5;
     private CRServo intakeLeft, intakeRight, transferLeft, transferRight;
 
     private Servo intakeAngleLeft, intakeAngleRight;
@@ -20,6 +23,7 @@ public class Intake {
         intakeAngleLeft = opMode.hardwareMap.get(Servo.class, "angL");
         intakeAngleRight = opMode.hardwareMap.get(Servo.class, "angR");
         intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        transferRight.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public Intake(LinearOpMode opMode){
@@ -30,6 +34,7 @@ public class Intake {
         intakeAngleLeft = opMode.hardwareMap.get(Servo.class, "angL");
         intakeAngleRight = opMode.hardwareMap.get(Servo.class, "angR");
         intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        transferRight.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void spinTake(double power){
@@ -40,8 +45,13 @@ public class Intake {
     }
 
     public void lowerIntake(){
-        intakeAngleLeft.setPosition(ANG_DOWN);
+        intakeAngleLeft.setPosition(ANG_DOWN - .1);
         intakeAngleRight.setPosition(ANG_DOWN);
+    }
+
+    public void stowIntake(){
+        intakeAngleLeft.setPosition(ANG_UP - .1);
+        intakeAngleRight.setPosition(ANG_UP + .3);
     }
 
 }

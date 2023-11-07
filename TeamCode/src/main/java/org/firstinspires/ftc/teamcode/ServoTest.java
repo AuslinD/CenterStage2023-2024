@@ -26,7 +26,8 @@ public class ServoTest extends LinearOpMode {
         tree = hardwareMap.get(Servo.class, "tree");
 
         intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-
+        transferLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        transferRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         waitForStart();
 
