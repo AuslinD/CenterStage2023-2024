@@ -25,37 +25,35 @@ public class EncoderAutoMethods {
         double initPos = robot.drivetrain.bl.getCurrentPosition();
         ElapsedTime runtime = new ElapsedTime();
         int neg = 1;
-        while (linearOpMode.opModeIsActive() && runtime.seconds() < timeout && Math.abs(robot.drivetrain.bl.getCurrentPosition() - initPos) < Math.abs(distance)) {
-            if ((robot.drivetrain.bl.getCurrentPosition() - initPos) < 0) {
+        while (linearOpMode.opModeIsActive() && runtime.seconds() < timeout && Math.abs(robot.drivetrain.bl.getCurrentPosition() - initPos - Math.abs(distance)) < Math.abs(distance)) {
+            if (distance - (robot.drivetrain.bl.getCurrentPosition() - initPos) < 0) {
                 neg = -1;
             }
-            if (encoderTicksToInches((robot.drivetrain.bl.getCurrentPosition() - initPos)) * (1.0 / 8) >= 1) {
+            if ((distance - encoderTicksToInches(robot.drivetrain.bl.getCurrentPosition()) - initPos) * (1.0 / 8) >= 1) {
                 robot.drivetrain.fl.setPower(1.0 * neg);
                 robot.drivetrain.bl.setPower(1.0 * neg);
                 robot.drivetrain.fr.setPower(1.0 * neg);
                 robot.drivetrain.br.setPower(1.0 * neg);
 
             } else {
-                robot.drivetrain.fl.setPower(encoderTicksToInches((robot.drivetrain.bl.getCurrentPosition() - initPos)) * (1.0 / 8) * neg);
-                robot.drivetrain.fr.setPower(encoderTicksToInches((robot.drivetrain.br.getCurrentPosition() - initPos)) * (1.0 / 8) * neg);
-                robot.drivetrain.bl.setPower(encoderTicksToInches((robot.drivetrain.fr.getCurrentPosition() - initPos)) * (1.0 / 8) * neg);
-                robot.drivetrain.br.setPower(encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 8) * neg);
+                robot.drivetrain.fl.setPower(distance - encoderTicksToInches((robot.drivetrain.bl.getCurrentPosition() - initPos)) * (1.0 / 8));
+                robot.drivetrain.fr.setPower(distance - encoderTicksToInches((robot.drivetrain.br.getCurrentPosition() - initPos)) * (1.0 / 8));
+                robot.drivetrain.bl.setPower(distance - encoderTicksToInches((robot.drivetrain.fr.getCurrentPosition() - initPos)) * (1.0 / 8));
+                robot.drivetrain.br.setPower(distance - encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 8));
             }
         }
-
-
     }
 
     public void turn(double heading, double timeout) {
         double initHeading = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
         ElapsedTime runtime = new ElapsedTime();
         int neg = 1;
-        while (runtime.seconds() < timeout && linearOpMode.opModeIsActive() && Math.abs(robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading) < heading) {
+        while (runtime.seconds() < timeout && linearOpMode.opModeIsActive() && Math.abs(robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading - heading) < heading) {
             if (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading < 0) {
                 neg *= -1;
             }
             if ((robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading) * (1.0 / 5) >= 1) {
-                if (neg < 0) {//left turn
+                if (neg > 0) {//left turn
                     robot.drivetrain.fl.setPower(1.0 * neg);
                     robot.drivetrain.bl.setPower(1.0 * neg);
                     robot.drivetrain.br.setPower(1.0);
@@ -67,7 +65,7 @@ public class EncoderAutoMethods {
                     robot.drivetrain.fr.setPower(1.0 * neg);
                 }
             } else {
-                if (neg < 0) {//left turn
+                if (neg > 0) {//left turn
                     robot.drivetrain.fl.setPower((robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading) * (1.0 / 5) * neg);
                     robot.drivetrain.bl.setPower((robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading) * (1.0 / 5) * neg);
                     robot.drivetrain.br.setPower((robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading) * (1.0 / 5));
@@ -79,7 +77,22 @@ public class EncoderAutoMethods {
                     robot.drivetrain.fr.setPower((robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading) * (1.0 / 5) * neg);
                 }
             }
+        }
+    }
 
+        public void sideToSide(double side, double timeout) {
+            double initPos = robot.drivetrain.fl.getCurrentPosition();
+            ElapsedTime runtime = new ElapsedTime();
+            int neg = 1;
+            while ((linearOpMode.opModeIsActive() && runtime.seconds() < timeout && (Math.abs(robot.drivetrain.fl.getCurrentPosition()) - initPos - Math.abs(side)) < Math.abs(side)))
+            {
+                if (side - robot.drivetrain.fl.getCurrentPosition() - initPos < 0)
+                {
+                    neg = -1;
+                }
+                if (side - encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 8) >= 1){
+
+            }
         }
     }
 }
