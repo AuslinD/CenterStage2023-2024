@@ -29,7 +29,7 @@ public class EncoderAutoMethods {
             if (distance - (robot.drivetrain.bl.getCurrentPosition() - initPos) < 0) {
                 neg = -1;
             }
-            if ((distance - encoderTicksToInches(robot.drivetrain.bl.getCurrentPosition()) - initPos) * (1.0 / 8) >= 1) {
+            if (Math.abs(distance - encoderTicksToInches(robot.drivetrain.bl.getCurrentPosition()) - initPos) * (1.0 / 8) >= 1) {
                 robot.drivetrain.fl.setPower(1.0 * neg);
                 robot.drivetrain.bl.setPower(1.0 * neg);
                 robot.drivetrain.fr.setPower(1.0 * neg);
@@ -48,11 +48,11 @@ public class EncoderAutoMethods {
         double initHeading = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
         ElapsedTime runtime = new ElapsedTime();
         int neg = 1;
-        while (runtime.seconds() < timeout && linearOpMode.opModeIsActive() && Math.abs(robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading - heading) < heading) {
-            if (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading < 0) {
+        while (runtime.seconds() < timeout && linearOpMode.opModeIsActive() && Math.abs(robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading - heading) < 0.5) {
+            if (heading - (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading)< 0) {
                 neg *= -1;
             }
-            if ((robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading) * (1.0 / 5) >= 1) {
+            if ((Math.abs(heading - (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading)) * (1.0 / 5) >= 1)) {
                 if (neg > 0) {//left turn
                     robot.drivetrain.fl.setPower(1.0 * neg);
                     robot.drivetrain.bl.setPower(1.0 * neg);
@@ -66,15 +66,15 @@ public class EncoderAutoMethods {
                 }
             } else {
                 if (neg > 0) {//left turn
-                    robot.drivetrain.fl.setPower((robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading) * (1.0 / 5) * neg);
-                    robot.drivetrain.bl.setPower((robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading) * (1.0 / 5) * neg);
-                    robot.drivetrain.br.setPower((robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading) * (1.0 / 5));
-                    robot.drivetrain.fr.setPower((robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading) * (1.0 / 5));
+                    robot.drivetrain.fl.setPower((heading - (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading)) * (1.0 / 5) * neg);
+                    robot.drivetrain.bl.setPower((heading - (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading)) * (1.0 / 5) * neg);
+                    robot.drivetrain.br.setPower((heading - (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading)) * (1.0 / 5));
+                    robot.drivetrain.fr.setPower((heading - robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading) * (1.0 / 5));
                 } else {
-                    robot.drivetrain.fl.setPower((robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading) * (1.0 / 5));
-                    robot.drivetrain.bl.setPower((robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading) * (1.0 / 5));
-                    robot.drivetrain.br.setPower((robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading) * (1.0 / 5) * neg);
-                    robot.drivetrain.fr.setPower((robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading) * (1.0 / 5) * neg);
+                    robot.drivetrain.fl.setPower((heading - (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading)) * (1.0 / 5));
+                    robot.drivetrain.bl.setPower((heading - (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading)) * (1.0 / 5));
+                    robot.drivetrain.br.setPower((heading - (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading)) * (1.0 / 5) * neg);
+                    robot.drivetrain.fr.setPower((heading - (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading)) * (1.0 / 5) * neg);
                 }
             }
         }
@@ -86,13 +86,34 @@ public class EncoderAutoMethods {
             int neg = 1;
             while ((linearOpMode.opModeIsActive() && runtime.seconds() < timeout && (Math.abs(robot.drivetrain.fl.getCurrentPosition()) - initPos - Math.abs(side)) < Math.abs(side)))
             {
-                if (side - robot.drivetrain.fl.getCurrentPosition() - initPos < 0)
+                if (side - (robot.drivetrain.fl.getCurrentPosition() - initPos) < 0)
                 {
                     neg = -1;
                 }
-                if (side - encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 8) >= 1){
-
-            }
-        }
+                if (Math.abs(side - (encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)))) * (1.0 / 8) >= 1){
+                    if (neg > 0) {//left slide
+                        robot.drivetrain.fl.setPower(1.0 * neg);
+                        robot.drivetrain.bl.setPower(1.0);
+                        robot.drivetrain.br.setPower(1.0 * neg);
+                        robot.drivetrain.fr.setPower(1.0);
+                    } else {
+                        robot.drivetrain.fl.setPower(1.0);
+                        robot.drivetrain.bl.setPower(1.0 * neg);
+                        robot.drivetrain.br.setPower(1.0);
+                        robot.drivetrain.fr.setPower(1.0 * neg);
+                    }
+                }
+                else {
+                    if (neg > 0) {//left slide
+                        robot.drivetrain.fl.setPower((side - encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5) * neg);
+                        robot.drivetrain.bl.setPower((side - encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5));
+                        robot.drivetrain.br.setPower((side - encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5) * neg);
+                        robot.drivetrain.fr.setPower((side - encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos) * (1.0 / 5));
+                    } else {
+                        robot.drivetrain.fl.setPower((side - (encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5));
+                        robot.drivetrain.bl.setPower((side - (encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5) * neg);
+                        robot.drivetrain.br.setPower((side - (encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5));
+                        robot.drivetrain.fr.setPower((side - (encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5) * neg);
+                    }
     }
 }

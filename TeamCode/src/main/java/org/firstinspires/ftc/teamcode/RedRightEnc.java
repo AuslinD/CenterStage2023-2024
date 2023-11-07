@@ -13,7 +13,7 @@ public class RedRightEnc extends LinearOpMode {
         robot = new Robot(this);
         movement = new EncoderAutoMethods();
         movement.drive(5, 5);
-        movement.turn(90)
-
+        movement.turn(90, 5);
+        movement.sideToSide(5,5);
     }
 }
