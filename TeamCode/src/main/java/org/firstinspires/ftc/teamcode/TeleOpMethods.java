@@ -33,13 +33,36 @@ public class TeleOpMethods {
         driveTrainStuff(gamepad1, gamepad2);//for tryouts
         manipulatorStuff(gamepad1, gamepad2);
         intakeStuff(gamepad1, gamepad2);
+        clawStuff(gamepad1, gamepad2);
         opMode.telemetry.update();
 
 
     }
 
     private void intakeStuff(Gamepad gamepad1, Gamepad gamepad2) {
-
+        if(gamepad2.a){
+            robot.intake.spinTake(1);
+        }
+        else if(gamepad2.y){
+            robot.intake.spinTake(-1);
+        }
+        if(gamepad2.x){
+            robot.intake.lowerIntake();
+        }
+        else if(gamepad2.b){
+            robot.intake.stowIntake();
+        }
+    }
+    private void clawStuff(Gamepad gamepad1, Gamepad gamepad2){
+        if(gamepad2.right_trigger > .1){
+            robot.claw.clawUp();
+        }
+        else if(gamepad2.left_trigger > .1){
+            robot.claw.setClawPosition(0);
+        }
+        else{
+            robot.claw.clawDown();
+        }
     }
 
     private static void driveTrainStuff(Gamepad gamepad1, Gamepad gamepad2) {
@@ -117,6 +140,13 @@ public class TeleOpMethods {
 
         }
 
+        if(Math.abs(gamepad2.right_stick_x) > 0.1){
+            frontLeftPower += .2 * gamepad2.right_stick_y;
+            backLeftPower += .2 * gamepad2.right_stick_y;
+            frontRightPower -= .2 * gamepad2.right_stick_y;
+            backRightPower -= .2 * gamepad2.right_stick_y;
+        }
+
 
 
         robot.drivetrain.fl.setPower(frontLeftPower);
@@ -130,10 +160,9 @@ public class TeleOpMethods {
 
         //Manipulator and lift stuff
         int multiplier = 30;
-        if(Math.abs(gamepad2.left_stick_y) > 0.1 || Math.abs(gamepad2.right_stick_y) > 0.1) {
+        if(Math.abs(gamepad2.left_stick_y) > 0.1) {
             up1p += gamepad2.left_stick_y * multiplier;
-            rn1p += gamepad2.right_stick_y * multiplier;
-            rn2p = rn1p;
+
             up2p = up1p;
             if (up1p < 0 || up2p < 0)
             {
@@ -142,8 +171,7 @@ public class TeleOpMethods {
             }
             robot.lift.setMotorsToGoUpOrDown((int)(up1p));
 
-            robot.lift.rotateRight.setPower(gamepad2.right_stick_y);
-            robot.lift.rotateLeft.setPower(gamepad2.right_stick_y);
+
 
             //double max = Math.max(Math.max(Math.abs(rn1p) , Math.abs(rn2p)), Math.max((up1p), Math.abs(up2p)));
 
@@ -154,17 +182,14 @@ public class TeleOpMethods {
                 up2p /= Math.abs(max);
             }*/
         }
-        else{
-            robot.lift.rotateRight.setPower(0);
-            robot.lift.rotateLeft.setPower(0);
+        //TODO: FINISH THE ANGLE THINGS
+        if(gamepad2.right_bumper || gamepad2.left_bumper){
+            rn1p += gamepad2.right_stick_y * multiplier;
+            rn2p = rn1p;
+            robot.lift.rotateRight.setPower(gamepad2.right_stick_y);
+            robot.lift.rotateLeft.setPower(gamepad2.right_stick_y);
         }
 
-        if(gamepad2.a){
-            robot.claw.clawDown();
-        }
-        if(gamepad2.b){
-            robot.claw.clawUp();
-        }
 
         opMode.telemetry.addData("2goal", rn2p);
         opMode.telemetry.addData("goal", rn1p);
@@ -190,6 +215,14 @@ public class TeleOpMethods {
         double backLeftPower = (y - x + rx) / denominator;
         double frontRightPower = (y - x - rx) / denominator;
         double backRightPower = (y + x - rx) / denominator;
+
+        if(gamepad1.right_trigger > 0.1){
+            frontRightPower *= .5;
+            backRightPower *= .5;
+            frontLeftPower *= .5;
+            backLeftPower *= .5;
+        }
+
 
         robot.drivetrain.fl.setPower(frontLeftPower);
         robot.drivetrain.bl.setPower(backLeftPower);
