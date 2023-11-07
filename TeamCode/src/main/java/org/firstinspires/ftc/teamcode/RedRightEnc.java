@@ -58,8 +58,31 @@ public class RedRightEnc extends LinearOpMode {
                 // Don't burn CPU cycles busy-looping in this sample
                 sleep(50);
             }
-            movement.drive(5, 5);
-            movement.turn(90, 5);
-            movement.sideToSide(5,5);
+            OpenCV.RedCV.SkystonePosition pos = pipeline.getAnalysis();
+        movement.drive(5, 3);
+        switch(pipeline.getAnalysis()) {
+            case LEFT:
+                movement.turn(90, 3);
+                //move pixel
+                movement.turn(-90, 3);
+                break;
+            case RIGHT:
+                movement.turn(-90, 3);
+                //move pixel
+                movement.drive(90, 3);
+
+                break;
+            case CENTER:
+                //move pixel
+
+                break;
+            default:
+                //move pixel
+                //sleep(0);
+        }
+        movement.drive(-3, 5);
+        movement.sideToSide(-4, 3);
+            //movement.turn(90, 5);
+            //movement.sideToSide(5,5);
     }
 }
