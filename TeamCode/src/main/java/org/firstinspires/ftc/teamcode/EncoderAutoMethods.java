@@ -105,15 +105,17 @@ public class EncoderAutoMethods {
                 }
                 else {
                     if (neg > 0) {//left slide
-                        robot.drivetrain.fl.setPower((side - encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5) * neg);
-                        robot.drivetrain.bl.setPower((side - encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5));
-                        robot.drivetrain.br.setPower((side - encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5) * neg);
-                        robot.drivetrain.fr.setPower((side - encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos) * (1.0 / 5));
+                        robot.drivetrain.fl.setPower(side - encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5) * neg);
+                        robot.drivetrain.bl.setPower(side - encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5));
+                        robot.drivetrain.br.setPower(side - encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5) * neg);
+                        robot.drivetrain.fr.setPower(side - encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos) * (1.0 / 5)));
                     } else {
-                        robot.drivetrain.fl.setPower((side - (encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5));
-                        robot.drivetrain.bl.setPower((side - (encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5) * neg);
-                        robot.drivetrain.br.setPower((side - (encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5));
-                        robot.drivetrain.fr.setPower((side - (encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5) * neg);
+                        robot.drivetrain.fl.setPower(side - (encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5)));
+                        robot.drivetrain.bl.setPower(side - (encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5) * neg));
+                        robot.drivetrain.br.setPower(side - (encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5)));
+                        robot.drivetrain.fr.setPower(side - (encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5) * neg));
                     }
-    }
+                }
+            }
+        }
 }
