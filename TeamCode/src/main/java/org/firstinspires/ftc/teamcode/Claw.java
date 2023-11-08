@@ -14,8 +14,8 @@ public class Claw {
     private Servo tree, clawAngle;
 
     //CHANGE THIS
-    double down = -.5;
-    double up = .5;
+    double down = 1;
+    double up = 0;
 
     double rotate1 = 0;
     double rotate2 = 0;
@@ -34,8 +34,12 @@ public class Claw {
     public void clawUp(){
         tree.setPosition(up);
     }
-    public void setClawPosition(int position){
+    public void setClawAngle(double position){
         clawAngle.setPosition(position);
+    }
+
+    public void setClawPosition(double position){
+        tree.setPosition(position);
     }
 
 }

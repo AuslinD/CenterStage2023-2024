@@ -45,13 +45,13 @@ public class Intake {
     }
 
     public void lowerIntake(){
-        intakeAngleLeft.setPosition(ANG_DOWN - .1);
-        intakeAngleRight.setPosition(ANG_DOWN);
+        intakeAngleLeft.setPosition(1);
+        intakeAngleRight.setPosition(-1);
     }
 
     public void stowIntake(){
-        intakeAngleLeft.setPosition(ANG_UP - .1);
-        intakeAngleRight.setPosition(ANG_UP + .3);
+        intakeAngleLeft.setPosition(.5);
+        intakeAngleRight.setPosition(.7);
     }
 
 }

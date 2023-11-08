@@ -54,10 +54,9 @@ public class Lift {
         /*
         rotateLeft.setPower(setPower);
         rotateRight.setPower(setPower);
+        */
         liftLeft.setPower(setPower);
         liftRight.setPower(setPower);
-
-         */
     }
 
     public Lift(LinearOpMode linearOpMode){

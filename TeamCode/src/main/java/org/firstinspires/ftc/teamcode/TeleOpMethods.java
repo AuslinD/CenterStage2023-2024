@@ -12,6 +12,7 @@ public class TeleOpMethods {
     private static Robot robot;
     static OpMode opMode;
     static double initPos;
+    static double treeAngle = 0;
     //Manipulator
     static double rn1p, rn2p, up1p, up2p;
 
@@ -58,11 +59,18 @@ public class TeleOpMethods {
             robot.claw.clawUp();
         }
         else if(gamepad2.left_trigger > .1){
-            robot.claw.setClawPosition(0);
+            robot.claw.setClawPosition( .55);
         }
         else{
             robot.claw.clawDown();
         }
+        if(gamepad2.dpad_up){
+            treeAngle += .025;
+        }
+        else if(gamepad2.dpad_down){
+            treeAngle -= .025;
+        }
+        robot.claw.setClawAngle(treeAngle);
     }
 
     private static void driveTrainStuff(Gamepad gamepad1, Gamepad gamepad2) {
@@ -166,8 +174,8 @@ public class TeleOpMethods {
             up2p = up1p;
             if (up1p < 0 || up2p < 0)
             {
-                up1p = 0;
-                up2p = 0;
+                //up1p = 0;
+                //up2p = 0;
             }
             robot.lift.setMotorsToGoUpOrDown((int)(up1p));
 
@@ -182,12 +190,22 @@ public class TeleOpMethods {
                 up2p /= Math.abs(max);
             }*/
         }
-        //TODO: FINISH THE ANGLE THINGS
-        if(gamepad2.right_bumper || gamepad2.left_bumper){
-            rn1p += gamepad2.right_stick_y * multiplier;
+
+        if(gamepad2.right_bumper){
+            rn1p = 1;
             rn2p = rn1p;
-            robot.lift.rotateRight.setPower(gamepad2.right_stick_y);
-            robot.lift.rotateLeft.setPower(gamepad2.right_stick_y);
+            robot.lift.rotateRight.setPower(rn1p);
+            robot.lift.rotateLeft.setPower(rn2p);
+        }
+        else if(gamepad2.left_bumper){
+            rn1p = -1;
+            rn2p = rn1p;
+            robot.lift.rotateRight.setPower(rn1p);
+            robot.lift.rotateLeft.setPower(rn2p);
+        }
+        else{
+            robot.lift.rotateRight.setPower(0);
+            robot.lift.rotateLeft.setPower(0);
         }
 
 
