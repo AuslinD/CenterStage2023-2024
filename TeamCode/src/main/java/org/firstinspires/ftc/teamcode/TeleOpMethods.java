@@ -31,7 +31,7 @@ public class TeleOpMethods {
 
     public void teleOpControls(Gamepad gamepad1, Gamepad gamepad2)
     {
-        driveTrainStuff(gamepad1, gamepad2);//for tryouts
+        notDriveTrainStuff(gamepad1, gamepad2);//for tryouts
         manipulatorStuff(gamepad1, gamepad2);
         intakeStuff(gamepad1, gamepad2);
         clawStuff(gamepad1, gamepad2);
@@ -46,6 +46,9 @@ public class TeleOpMethods {
         }
         else if(gamepad2.y){
             robot.intake.spinTake(-1);
+        }
+        else{
+            robot.intake.spinTake(0);
         }
         if(gamepad2.x){
             robot.intake.lowerIntake();
