@@ -43,9 +43,11 @@ public class TeleOpMethods {
     private void intakeStuff(Gamepad gamepad1, Gamepad gamepad2) {
         if(gamepad2.a){
             robot.intake.spinTake(1);
+            robot.intake.lowerIntake();
         }
         else if(gamepad2.y){
             robot.intake.spinTake(-1);
+            robot.intake.stowIntake();
         }
         else{
             robot.intake.spinTake(0);
