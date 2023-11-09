@@ -252,6 +252,13 @@ public class TeleOpMethods {
         robot.drivetrain.fr.setPower(frontRightPower);
         robot.drivetrain.br.setPower(backRightPower);
 
+        if(y == 0 && x ==0 && rx ==0){
+            robot.drivetrain.fl.setPower(0);
+            robot.drivetrain.bl.setPower(0);
+            robot.drivetrain.fr.setPower(0);
+            robot.drivetrain.br.setPower(0);
+        }
+
     }
 
 
