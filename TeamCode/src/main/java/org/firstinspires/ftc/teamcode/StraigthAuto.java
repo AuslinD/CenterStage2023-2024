@@ -10,15 +10,23 @@ public class StraigthAuto extends LinearOpMode {
         Robot robot = new Robot(this);
         robot.intake.stowIntake();
         waitForStart();
-        sleep(5000);
+        sleep(4000);
         robot.drivetrain.fl.setPower(.5);
         robot.drivetrain.bl.setPower(.5);
         robot.drivetrain.fr.setPower(.5);
         robot.drivetrain.br.setPower(.5);
-        sleep(24000);
+        sleep(20000);
+        robot.drivetrain.fl.setPower(-.4);
+        robot.drivetrain.bl.setPower(-.4);
+        robot.drivetrain.fr.setPower(-.4);
+        robot.drivetrain.br.setPower(-.4);
+        sleep(1750);
         robot.drivetrain.fl.setPower(0);
         robot.drivetrain.bl.setPower(0);
         robot.drivetrain.fr.setPower(0);
         robot.drivetrain.br.setPower(0);
+        robot.intake.lowerIntake();
+        robot.intake.spinTake(-1);
+
     }
 }
