@@ -4,6 +4,7 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class Robot {
     Drivetrain drivetrain;
@@ -13,6 +14,8 @@ public class Robot {
     Intake intake;
 
     IMU imu;
+
+    Servo plane;
 
 
     public Robot(OpMode opmode){
@@ -29,6 +32,8 @@ public class Robot {
         // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
         imu.initialize(parameters);
         imu.resetYaw();
+
+        //plane = opmode.hardwareMap.get(Servo.class, "plane");
     }
     public Robot(LinearOpMode linearOpMode){
         drivetrain = new Drivetrain(linearOpMode);

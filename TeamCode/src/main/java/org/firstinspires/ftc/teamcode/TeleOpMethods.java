@@ -35,10 +35,16 @@ public class TeleOpMethods {
         manipulatorStuff(gamepad1, gamepad2);
         intakeStuff(gamepad1, gamepad2);
         clawStuff(gamepad1, gamepad2);
+
         opMode.telemetry.update();
 
 
     }
+
+    private void misc(){
+
+    }
+
 
     private void intakeStuff(Gamepad gamepad1, Gamepad gamepad2) {
         if(gamepad2.a){
@@ -174,7 +180,7 @@ public class TeleOpMethods {
         //Manipulator and lift stuff
         int multiplier = 30;
         if(Math.abs(gamepad2.left_stick_y) > 0.1) {
-            up1p += gamepad2.left_stick_y * multiplier;
+            up1p += -gamepad2.left_stick_y * multiplier;
 
             up2p = up1p;
             if (up1p < 0 || up2p < 0)
@@ -197,13 +203,13 @@ public class TeleOpMethods {
         }
 
         if(gamepad2.right_bumper){
-            rn1p = 1;
+            rn1p = .75;
             rn2p = rn1p;
             robot.lift.rotateRight.setPower(rn1p);
             robot.lift.rotateLeft.setPower(rn2p);
         }
         else if(gamepad2.left_bumper){
-            rn1p = -1;
+            rn1p = -.75;
             rn2p = rn1p;
             robot.lift.rotateRight.setPower(rn1p);
             robot.lift.rotateLeft.setPower(rn2p);
