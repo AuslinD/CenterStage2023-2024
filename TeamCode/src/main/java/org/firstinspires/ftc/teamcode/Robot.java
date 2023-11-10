@@ -33,7 +33,7 @@ public class Robot {
         imu.initialize(parameters);
         imu.resetYaw();
 
-        //plane = opmode.hardwareMap.get(Servo.class, "plane");
+        plane = opmode.hardwareMap.get(Servo.class, "plane");
     }
     public Robot(LinearOpMode linearOpMode){
         drivetrain = new Drivetrain(linearOpMode);
