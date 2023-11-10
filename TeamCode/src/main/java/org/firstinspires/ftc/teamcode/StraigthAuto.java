@@ -9,8 +9,9 @@ public class StraigthAuto extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         Robot robot = new Robot(this);
         robot.intake.stowIntake();
+        robot.plane.setPosition(.47);//hello austin my pookie wookie bear <3
         waitForStart();
-        sleep(20000);
+        sleep(1000);
         robot.drivetrain.fl.setPower(.5);
         robot.drivetrain.bl.setPower(.5);
         robot.drivetrain.fr.setPower(.5);
@@ -27,9 +28,14 @@ public class StraigthAuto extends LinearOpMode {
         robot.drivetrain.br.setPower(0);
         robot.intake.spinTake(-1);
         robot.intake.lowerIntake();*/
-        sleep(2000);
+        sleep(1000);
         robot.intake.spinTake(-1);
         robot.intake.spinTake(-1);
+        sleep(5000);
+        robot.intake.stowIntake();
+        robot.drivetrain.setALLMotorPower(-.3);
+        sleep(600);
+        robot.drivetrain.setALLMotorPower(0);
 
 
     }

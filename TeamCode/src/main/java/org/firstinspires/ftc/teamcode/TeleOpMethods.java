@@ -27,6 +27,7 @@ public class TeleOpMethods {
         this.opMode = opMode; 
         robot.imu.resetYaw();
         initPos = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+        robot.plane.setPosition(.47);
     }
 
     public void teleOpControls(Gamepad gamepad1, Gamepad gamepad2)
@@ -35,7 +36,7 @@ public class TeleOpMethods {
         manipulatorStuff(gamepad1, gamepad2);
         intakeStuff(gamepad1, gamepad2);
         clawStuff(gamepad1, gamepad2);
-        planeServoControl(gamepad1);
+        planeServoControl(gamepad1, gamepad2);
 
         opMode.telemetry.update();
 
@@ -84,11 +85,11 @@ public class TeleOpMethods {
         }
         robot.claw.setClawAngle(treeAngle);
     }
-    private void planeServoControl(Gamepad gamepad) {
+    private void planeServoControl(Gamepad gamepad1, Gamepad gamepad2) {
 
-        if (gamepad.a) {
-            robot.setPlanePosition(0.2);
-        } else if (gamepad.b) {
+        if (gamepad1.a || gamepad2.a) {
+            robot.setPlanePosition(0.47);
+        } else if (gamepad1.b) {
             robot.setPlanePosition(0.8);
         }
     }

@@ -54,6 +54,8 @@ public class Robot {
         // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
         imu.initialize(parameters);
         imu.resetYaw();
+
+        plane = linearOpMode.hardwareMap.get(Servo.class, "plane");
     }
 
     public IMU getImu(){
