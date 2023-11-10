@@ -34,6 +34,11 @@ public class Robot {
         imu.resetYaw();
 
         plane = opmode.hardwareMap.get(Servo.class, "plane");
+
+
+
+
+
     }
     public Robot(LinearOpMode linearOpMode){
         drivetrain = new Drivetrain(linearOpMode);
@@ -62,6 +67,10 @@ public class Robot {
         // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
         imu.initialize(parameters);
         imu.resetYaw();
+    }
+    public void setPlanePosition(double position)
+    {
+        plane.setPosition(position);
     }
 
 

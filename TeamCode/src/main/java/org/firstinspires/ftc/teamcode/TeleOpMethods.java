@@ -35,6 +35,7 @@ public class TeleOpMethods {
         manipulatorStuff(gamepad1, gamepad2);
         intakeStuff(gamepad1, gamepad2);
         clawStuff(gamepad1, gamepad2);
+        planeServoControl(gamepad1);
 
         opMode.telemetry.update();
 
@@ -83,6 +84,15 @@ public class TeleOpMethods {
         }
         robot.claw.setClawAngle(treeAngle);
     }
+    private void planeServoControl(Gamepad gamepad) {
+
+        if (gamepad.a) {
+            robot.setPlanePosition(0.2);
+        } else if (gamepad.b) {
+            robot.setPlanePosition(0.8);
+        }
+    }
+
 
     private static void driveTrainStuff(Gamepad gamepad1, Gamepad gamepad2) {
         //Drivetrain Stuff
