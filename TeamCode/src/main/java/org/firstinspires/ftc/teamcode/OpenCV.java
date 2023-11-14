@@ -45,7 +45,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
 public class OpenCV extends LinearOpMode
 {
     OpenCvInternalCamera phoneCam;
-    RedCV pipeline;
+    BlueCV pipeline;
 
     @Override
     public void runOpMode()
@@ -59,7 +59,7 @@ public class OpenCV extends LinearOpMode
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
-        pipeline = new RedCV();
+        pipeline = new BlueCV();
         phoneCam.setPipeline(pipeline);
 
         // We set the viewport policy to optimized view so the preview doesn't appear 90 deg
@@ -115,9 +115,9 @@ public class OpenCV extends LinearOpMode
         /*
          * The core values which define the location and size of the sample regions
          */
-        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(109,98);
-        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(181,98);
-        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(253,98);
+        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(9,200);
+        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(56,148);
+        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(253,148);
         static final int REGION_WIDTH = 20;
         static final int REGION_HEIGHT = 20;
 
@@ -252,7 +252,7 @@ public class OpenCV extends LinearOpMode
              * pixel value of the 3-channel image, and referenced the value
              * at index 2 here.
              */
-            avg1 = (int) Core.mean(region1_Cr).val[0];
+            avg1 = (125);
             avg2 = (int) Core.mean(region2_Cr).val[0];
             avg3 = (int) Core.mean(region3_Cr).val[0];
 
@@ -362,7 +362,7 @@ public class OpenCV extends LinearOpMode
             return position;
         }
     }
-    public static class blueCV extends OpenCvPipeline
+    public static class BlueCV extends OpenCvPipeline
     {
         /*
          * An enum to define the skystone position
@@ -383,9 +383,9 @@ public class OpenCV extends LinearOpMode
         /*
          * The core values which define the location and size of the sample regions
          */
-        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(109,98);
-        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(181,98);
-        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(253,98);
+        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(9,200);
+        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(61,148);
+        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(260,162);
         static final int REGION_WIDTH = 20;
         static final int REGION_HEIGHT = 20;
 
@@ -520,7 +520,7 @@ public class OpenCV extends LinearOpMode
              * pixel value of the 3-channel image, and referenced the value
              * at index 2 here.
              */
-            avg1 = (int) Core.mean(region1_Cb).val[0];
+            avg1 = 173;
             avg2 = (int) Core.mean(region2_Cb).val[0];
             avg3 = (int) Core.mean(region3_Cb).val[0];
 
