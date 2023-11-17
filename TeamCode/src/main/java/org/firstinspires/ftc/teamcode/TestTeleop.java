@@ -9,8 +9,11 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 @TeleOp(name = "test", group = "test")
 public class TestTeleop extends OpMode {
     DcMotor rotateLeft, rotateRight, liftLeft, liftRight;
+    Robot robot;
     @Override
     public void init() {
+        robot = new Robot(this);
+        /*
         rotateLeft = hardwareMap.get(DcMotorEx.class, "rotleft");
         rotateRight = hardwareMap.get(DcMotorEx.class, "rotright");
         liftLeft = hardwareMap.get(DcMotorEx.class, "upleft");
@@ -35,11 +38,14 @@ public class TestTeleop extends OpMode {
         rotateRight.setDirection(DcMotorSimple.Direction.REVERSE);
         liftLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         liftRight.setDirection(DcMotorSimple.Direction.REVERSE);
-
+*/
+        /*
         rotateLeft.setTargetPosition(0);
         rotateRight.setTargetPosition(0);
         liftRight.setTargetPosition(0);
         liftLeft.setTargetPosition(0);
+
+         */
 
 
 
@@ -47,6 +53,7 @@ public class TestTeleop extends OpMode {
 
     @Override
     public void loop() {
+        /*
         if(Math.abs(gamepad2.left_stick_y) > 0.1){
             liftLeft.setPower(1 * gamepad2.left_stick_y);
             liftRight.setPower(1 * gamepad2.left_stick_y);
@@ -64,9 +71,12 @@ public class TestTeleop extends OpMode {
             rotateLeft.setPower(0);
         }
 
+         */
+
         telemetry.addData("left up per rot", liftLeft.getCurrentPosition() / (rotateLeft.getCurrentPosition()+.000001));
         telemetry.addData("right up per rot", liftRight.getCurrentPosition() / (rotateRight.getCurrentPosition()+.000001));
         telemetry.addData("left up per rot", liftLeft.getCurrentPosition() / (rotateRight.getCurrentPosition()+0.000001));
+        telemetry.addData("parallel odom", robot.drivetrain.bl.getCurrentPosition());
         telemetry.update();
 
 
