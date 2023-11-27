@@ -93,6 +93,8 @@ public class Lift {
         /*
         rotateLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rotateRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rotateLeft.setPower(setPower);
+        rotateRight.setPower(setPower);
         */
 
         liftLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);

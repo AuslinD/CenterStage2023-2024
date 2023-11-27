@@ -12,7 +12,7 @@ public class TeleOpMethods {
     private static Robot robot;
     static OpMode opMode;
     static double initPos;
-    static double treeAngle = 0;
+    static double treeAngle = 1;
     //Manipulator
     static double rn1p, rn2p, up1p, up2p;
 
@@ -78,11 +78,21 @@ public class TeleOpMethods {
             robot.claw.clawDown();
         }
         if(gamepad2.dpad_up){
-            treeAngle += .025;
+            treeAngle += .005;
         }
         else if(gamepad2.dpad_down){
-            treeAngle -= .025;
+            treeAngle -= .005;
         }
+
+        if(treeAngle > .7){
+            treeAngle = .7;
+        }
+        else if (treeAngle < .3){
+            treeAngle = .3;
+        }
+
+        opMode.telemetry.addData("treeAngle", treeAngle);
+
         robot.claw.setClawAngle(treeAngle);
     }
     private void planeServoControl(Gamepad gamepad1, Gamepad gamepad2) {
@@ -189,15 +199,16 @@ public class TeleOpMethods {
     private static void manipulatorStuff(Gamepad gamepad1, Gamepad gamepad2) {
 
         //Manipulator and lift stuff
-        int multiplier = 30;
+        int multiplier = 40;
         if(Math.abs(gamepad2.left_stick_y) > 0.1) {
             up1p += -gamepad2.left_stick_y * multiplier;
 
             up2p = up1p;
-            if (up1p < 0 || up2p < 0)
+            if (up1p < -10)
             {
                 //up1p = 0;
                 //up2p = 0;
+                up1p = -10;
             }
             robot.lift.setMotorsToGoUpOrDown((int)(up1p));
 
@@ -235,10 +246,10 @@ public class TeleOpMethods {
         opMode.telemetry.addData("goal", rn1p);
         opMode.telemetry.addData("upgoal", up1p);
         opMode.telemetry.addData("up2goal", up2p);
-        opMode.telemetry.addData("oursRR", robot.lift.rotateRight.getCurrentPosition());
-        opMode.telemetry.addData("oursRL", robot.lift.rotateLeft.getCurrentPosition());
-        opMode.telemetry.addData("oursLL", robot.lift.liftLeft.getCurrentPosition());
-        opMode.telemetry.addData("oursLR", robot.lift.liftRight.getCurrentPosition());
+        opMode.telemetry.addData("oursRotR", robot.lift.rotateRight.getCurrentPosition());
+        opMode.telemetry.addData("oursRotL", robot.lift.rotateLeft.getCurrentPosition());
+        opMode.telemetry.addData("oursLiftL", robot.lift.liftLeft.getCurrentPosition());
+        opMode.telemetry.addData("oursLiftR", robot.lift.liftRight.getCurrentPosition());
 
     }
 
@@ -278,6 +289,7 @@ public class TeleOpMethods {
             robot.drivetrain.fr.setPower(0);
             robot.drivetrain.br.setPower(0);
         }
+        opMode.telemetry.addData("br", robot.drivetrain.br.getCurrentPosition());
 
     }
 

@@ -11,7 +11,9 @@ public class StraigthAuto extends LinearOpMode {
         robot.intake.stowIntake();
         robot.plane.setPosition(.47);//hello austin my pookie wookie bear <3
         waitForStart();
-        sleep(1000);
+        EncoderAutoMethods autoMethods = new EncoderAutoMethods(this);
+        autoMethods.drive(200, 5);
+        sleep(30000);
         robot.drivetrain.fl.setPower(.5);
         robot.drivetrain.bl.setPower(.5);
         robot.drivetrain.fr.setPower(.5);
