@@ -37,7 +37,7 @@ public class TeleOpMethods {
         intakeStuff(gamepad1, gamepad2);
         clawStuff(gamepad1, gamepad2);
         planeServoControl(gamepad1, gamepad2);
-
+        telemetry();
 
 
         opMode.telemetry.update();
