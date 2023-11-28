@@ -24,6 +24,7 @@ public class Intake {
         intakeAngleRight = opMode.hardwareMap.get(Servo.class, "angR");
         intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         transferRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        //transferLeft.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public Intake(LinearOpMode opMode){
@@ -35,12 +36,13 @@ public class Intake {
         intakeAngleRight = opMode.hardwareMap.get(Servo.class, "angR");
         intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         transferRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        transferLeft.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void spinTake(double power){
         intakeLeft.setPower(power);
         intakeRight.setPower(power);
-        transferLeft.setPower(power);
+        transferLeft.setPower(-power);
         transferRight.setPower(power);
     }
 

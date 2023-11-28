@@ -38,6 +38,8 @@ public class TeleOpMethods {
         clawStuff(gamepad1, gamepad2);
         planeServoControl(gamepad1, gamepad2);
 
+
+
         opMode.telemetry.update();
 
 
@@ -91,7 +93,7 @@ public class TeleOpMethods {
             treeAngle = .3;
         }
 
-        opMode.telemetry.addData("treeAngle", treeAngle);
+
 
         robot.claw.setClawAngle(treeAngle);
     }
@@ -121,10 +123,7 @@ public class TeleOpMethods {
         double botHeading = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
 
 
-        opMode.telemetry.addData("botHeading", Math.toDegrees(botHeading));
-        opMode.telemetry.addData("Yaw", imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS));
-        opMode.telemetry.addData("Pitch", imu.getRobotYawPitchRollAngles().getPitch(AngleUnit.RADIANS));
-        opMode.telemetry.addData("Roll", imu.getRobotYawPitchRollAngles().getRoll(AngleUnit.RADIANS));
+
 
         // Rotate the movement direction counter to the bot's rotation
         double rotX = x * Math.cos(-botHeading) - y * Math.sin(-botHeading);
@@ -199,7 +198,7 @@ public class TeleOpMethods {
     private static void manipulatorStuff(Gamepad gamepad1, Gamepad gamepad2) {
 
         //Manipulator and lift stuff
-        int multiplier = 40;
+        int multiplier = 30;
         if(Math.abs(gamepad2.left_stick_y) > 0.1) {
             up1p += -gamepad2.left_stick_y * multiplier;
 
@@ -242,14 +241,7 @@ public class TeleOpMethods {
         }
 
 
-        opMode.telemetry.addData("2goal", rn2p);
-        opMode.telemetry.addData("goal", rn1p);
-        opMode.telemetry.addData("upgoal", up1p);
-        opMode.telemetry.addData("up2goal", up2p);
-        opMode.telemetry.addData("oursRotR", robot.lift.rotateRight.getCurrentPosition());
-        opMode.telemetry.addData("oursRotL", robot.lift.rotateLeft.getCurrentPosition());
-        opMode.telemetry.addData("oursLiftL", robot.lift.liftLeft.getCurrentPosition());
-        opMode.telemetry.addData("oursLiftR", robot.lift.liftRight.getCurrentPosition());
+
 
     }
 
@@ -280,17 +272,32 @@ public class TeleOpMethods {
             robot.drivetrain.br.setPower(backRightPower * .3);
         }
 
-
-
-
         if(y == 0 && x ==0 && rx ==0){
             robot.drivetrain.fl.setPower(0);
             robot.drivetrain.bl.setPower(0);
             robot.drivetrain.fr.setPower(0);
             robot.drivetrain.br.setPower(0);
         }
-        opMode.telemetry.addData("br", robot.drivetrain.br.getCurrentPosition());
 
+    }
+
+    public static void telemetry(){
+        double botHeading = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+
+        opMode.telemetry.addData("botHeading", Math.toDegrees(botHeading));
+        opMode.telemetry.addData("Yaw", robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS));
+        opMode.telemetry.addData("Pitch", robot.imu.getRobotYawPitchRollAngles().getPitch(AngleUnit.RADIANS));
+        opMode.telemetry.addData("Roll", robot.imu.getRobotYawPitchRollAngles().getRoll(AngleUnit.RADIANS));
+        opMode.telemetry.addData("2goal", rn2p);
+        opMode.telemetry.addData("goal", rn1p);
+        opMode.telemetry.addData("upgoal", up1p);
+        opMode.telemetry.addData("up2goal", up2p);
+        opMode.telemetry.addData("oursRotR", robot.lift.rotateRight.getCurrentPosition());
+        opMode.telemetry.addData("oursRotL", robot.lift.rotateLeft.getCurrentPosition());
+        opMode.telemetry.addData("oursLiftL", robot.lift.liftLeft.getCurrentPosition());
+        opMode.telemetry.addData("oursLiftR", robot.lift.liftRight.getCurrentPosition());
+        opMode.telemetry.addData("treeAngle", treeAngle);
+        opMode.telemetry.addData("br", robot.drivetrain.br.getCurrentPosition());
     }
 
 
