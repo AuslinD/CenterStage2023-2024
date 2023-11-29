@@ -259,18 +259,20 @@ public class TeleOpMethods {
         double frontRightPower = (y - x - rx) / denominator;
         double backRightPower = (y + x - rx) / denominator;
 
-        if(gamepad1.right_trigger > 0.1 && gamepad1.left_trigger > .1){
-            robot.drivetrain.fl.setPower(frontLeftPower);
-            robot.drivetrain.bl.setPower(backLeftPower);
-            robot.drivetrain.fr.setPower(frontRightPower);
-            robot.drivetrain.br.setPower(backRightPower);
+
+        robot.drivetrain.fl.setPower(frontLeftPower);
+        robot.drivetrain.bl.setPower(backLeftPower);
+        robot.drivetrain.fr.setPower(frontRightPower);
+        robot.drivetrain.br.setPower(backRightPower);
+
+        if(gamepad1.right_trigger > 0.1){
+            robot.drivetrain.fl.setPower(.5 * frontLeftPower);
+            robot.drivetrain.bl.setPower(.5 * backLeftPower);
+            robot.drivetrain.fr.setPower(.5 * frontRightPower);
+            robot.drivetrain.br.setPower(.5 * backRightPower);
         }
-        else {
-            robot.drivetrain.fl.setPower(frontLeftPower * .3);
-            robot.drivetrain.bl.setPower(backLeftPower * .3);
-            robot.drivetrain.fr.setPower(frontRightPower * .3);
-            robot.drivetrain.br.setPower(backRightPower * .3);
-        }
+
+
 
         if(y == 0 && x ==0 && rx ==0){
             robot.drivetrain.fl.setPower(0);
