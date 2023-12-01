@@ -198,7 +198,7 @@ public class TeleOpMethods {
     private static void manipulatorStuff(Gamepad gamepad1, Gamepad gamepad2) {
 
         //Manipulator and lift stuff
-        int multiplier = 30;
+        int multiplier = 35;
         if(Math.abs(gamepad2.left_stick_y) > 0.1) {
             up1p += -gamepad2.left_stick_y * multiplier;
 

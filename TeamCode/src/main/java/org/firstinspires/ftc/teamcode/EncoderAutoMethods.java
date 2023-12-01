@@ -89,44 +89,62 @@ public class EncoderAutoMethods {
         }
     }
 
-        public void sideToSide(double side, double timeout) {
-            double initPos = robot.drivetrain.fl.getCurrentPosition();
-            ElapsedTime runtime = new ElapsedTime();
-            int neg = 1;
-            while (linearOpMode.opModeIsActive() && runtime.seconds() < timeout && Math.abs(encoderTicksToInches(robot.drivetrain.fl.getCurrentPosition() - initPos) - Math.abs(side)) < 0.5) //change this
+    public void sideToSide(double side, double timeout) {
+        double initPos = robot.drivetrain.fl.getCurrentPosition();
+        ElapsedTime runtime = new ElapsedTime();
+        int neg = 1;
+        while (linearOpMode.opModeIsActive() && runtime.seconds() < timeout && Math.abs(encoderTicksToInches(robot.drivetrain.fl.getCurrentPosition() - initPos) - Math.abs(side)) < 0.5) {
+            if (side - (robot.drivetrain.fl.getCurrentPosition() - initPos) < 0)
             {
-                if (side - (robot.drivetrain.fl.getCurrentPosition() - initPos) < 0)
-                {
-                    neg = -1;
-                }
-                if (Math.abs(side - (encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)))) * (1.0 / 8) >= 1){
-                    if (neg > 0) {//left slide
-                        robot.drivetrain.fl.setPower(1.0 * neg);
-                        robot.drivetrain.bl.setPower(1.0);
-                        robot.drivetrain.br.setPower(1.0 * neg);
-                        robot.drivetrain.fr.setPower(1.0);
-                    } else {
-                        robot.drivetrain.fl.setPower(1.0);
-                        robot.drivetrain.bl.setPower(1.0 * neg);
-                        robot.drivetrain.br.setPower(1.0);
-                        robot.drivetrain.fr.setPower(1.0 * neg);
-                    }
-                }
-                else {
-                    if (neg > 0) {//left slide
-                        robot.drivetrain.fl.setPower(side - encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5) * neg);
-                        robot.drivetrain.bl.setPower(side - encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5));
-                        robot.drivetrain.br.setPower(side - encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5) * neg);
-                        robot.drivetrain.fr.setPower(side - encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos) * (1.0 / 5)));
-                    } else {
-                        robot.drivetrain.fl.setPower(side - (encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5)));
-                        robot.drivetrain.bl.setPower(side - (encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5) * neg));
-                        robot.drivetrain.br.setPower(side - (encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5)));
-                        robot.drivetrain.fr.setPower(side - (encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5) * neg));
-                    }
-                }
-                linearOpMode.telemetry.addData("side", encoderTicksToInches(robot.drivetrain.fl.getCurrentPosition()));
-                linearOpMode.telemetry.update();
+                neg = -1;
             }
+            if (Math.abs(side - (encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)))) * (1.0 / 8) >= 1){
+                if (neg > 0) {//left slide
+                    robot.drivetrain.fl.setPower(1.0 * neg);
+                    robot.drivetrain.bl.setPower(1.0);
+                    robot.drivetrain.br.setPower(1.0 * neg);
+                    robot.drivetrain.fr.setPower(1.0);
+                } else {
+                    robot.drivetrain.fl.setPower(1.0);
+                    robot.drivetrain.bl.setPower(1.0 * neg);
+                    robot.drivetrain.br.setPower(1.0);
+                    robot.drivetrain.fr.setPower(1.0 * neg);
+                }
+            }
+            else {
+                if (neg > 0) {//left slide
+                    robot.drivetrain.fl.setPower(side - encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5) * neg);
+                    robot.drivetrain.bl.setPower(side - encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5));
+                    robot.drivetrain.br.setPower(side - encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5) * neg);
+                    robot.drivetrain.fr.setPower(side - encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos) * (1.0 / 5)));
+                } else {
+                    robot.drivetrain.fl.setPower(side - (encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5)));
+                    robot.drivetrain.bl.setPower(side - (encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5) * neg));
+                    robot.drivetrain.br.setPower(side - (encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5)));
+                    robot.drivetrain.fr.setPower(side - (encoderTicksToInches((robot.drivetrain.fl.getCurrentPosition() - initPos)) * (1.0 / 5) * neg));
+                }
+            }
+            linearOpMode.telemetry.addData("side", encoderTicksToInches(robot.drivetrain.fl.getCurrentPosition()));
+            linearOpMode.telemetry.update();
         }
+    }
+
+    public void encoderDrive(int ticks, int milliseconds){
+        ElapsedTime elapsedTime = new ElapsedTime();
+        int initPos = robot.drivetrain.br.getCurrentPosition();
+        while(elapsedTime.milliseconds() < milliseconds && Math.abs((robot.drivetrain.br.getCurrentPosition() - initPos) - ticks) > 2){
+            int currentDistance = robot.drivetrain.br.getCurrentPosition() - initPos;
+            robot.drivetrain.fl.setPower(.5 * currentDistance - ticks > 0 ? 1: -1);
+            robot.drivetrain.bl.setPower(.5 * currentDistance - ticks > 0 ? 1: -1);
+            robot.drivetrain.fr.setPower(.5 * currentDistance - ticks > 0 ? 1: -1);
+            robot.drivetrain.br.setPower(.5 * currentDistance - ticks > 0 ? 1: -1);
+            linearOpMode.telemetry.addData("currentDistance", currentDistance);
+            linearOpMode.telemetry.addData("targetDistance", ticks);
+            linearOpMode.telemetry.update();
+        }
+        robot.drivetrain.setALLMotorPower(0);
+    }
+
+
+
 }

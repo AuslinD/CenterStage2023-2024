@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 public class Lift {
     public DcMotor rotateLeft, rotateRight, liftLeft, liftRight; // rn stands for rotational motor
-    double setPower = 0.8;
+    double setPower = 0.9;
 
     public Lift(OpMode opMode){
         rotateLeft = opMode.hardwareMap.get(DcMotorEx.class, "rotleft");
