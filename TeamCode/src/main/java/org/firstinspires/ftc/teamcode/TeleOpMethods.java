@@ -37,6 +37,7 @@ public class TeleOpMethods {
         intakeStuff(gamepad1, gamepad2);
         clawStuff(gamepad1, gamepad2);
         planeServoControl(gamepad1, gamepad2);
+        hang(gamepad1, gamepad2);
         telemetry();
 
 
@@ -48,6 +49,8 @@ public class TeleOpMethods {
     private void misc(){
 
     }
+
+
 
 
     private void intakeStuff(Gamepad gamepad1, Gamepad gamepad2) {
@@ -87,10 +90,10 @@ public class TeleOpMethods {
         }
 
         if(treeAngle > .7){
-            treeAngle = .7;
+            //treeAngle = .7;
         }
         else if (treeAngle < .3){
-            treeAngle = .3;
+            //treeAngle = .3;
         }
 
 
@@ -283,7 +286,19 @@ public class TeleOpMethods {
 
     }
 
-    public static void telemetry(){
+    private static void hang(Gamepad gamepad1, Gamepad gamepad2){
+        if(gamepad1.dpad_up){
+            robot.hang.hangL.setPower(1);
+            robot.hang.hangR.setPower(1);
+        }
+        else if(gamepad1.dpad_down){
+            robot.hang.hangL.setPower(-1);
+            robot.hang.hangR.setPower(-1);
+        }
+
+    }
+
+    private static void telemetry(){
         double botHeading = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
 
         opMode.telemetry.addData("botHeading", Math.toDegrees(botHeading));
@@ -301,6 +316,8 @@ public class TeleOpMethods {
         opMode.telemetry.addData("treeAngle", treeAngle);
         opMode.telemetry.addData("br", robot.drivetrain.br.getCurrentPosition());
     }
+
+
 
 
 

@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+
 @Autonomous(name = "ServoTest", group = "test")
 public class ServoTest extends LinearOpMode {
     double up = .5;
@@ -16,28 +18,30 @@ public class ServoTest extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        intakeLeft = hardwareMap.get(CRServo.class, "inL");
-        intakeRight = hardwareMap.get(CRServo.class, "inR");
-        transferLeft = hardwareMap.get(CRServo.class, "trL");
-        transferRight = hardwareMap.get(CRServo.class, "trR");
-        intakeAngleLeft = hardwareMap.get(Servo.class, "angL");
-        intakeAngleRight = hardwareMap.get(Servo.class, "angR");
-        clawAngle = hardwareMap.get(Servo.class, "angClaw");
-        tree = hardwareMap.get(Servo.class, "tree");
+        Robot robot = new Robot(this);
+        CRServo hangL = hardwareMap.get(CRServo.class, "hangL");
+        CRServo hangR = hardwareMap.get(CRServo.class, "hangR");
+        robot.imu.resetYaw();
+        double initPos = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+        robot.plane.setPosition(.47);
 
-        intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        transferLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        transferRight.setDirection(DcMotorSimple.Direction.REVERSE);
+
 
         waitForStart();
 
+        hangL.setPower(-1);
+        hangR.setPower(1);
+        /*
         intakeLeft.setPower(.5);
         intakeRight.setPower(.5);
         transferRight.setPower(.5);
         transferLeft.setPower(.5);
+
+         */
         sleep(10000);
 
         while(!isStopRequested()){
+            /*
             intakeAngleLeft.setPosition(up);
             intakeAngleRight.setPosition(up);
             clawAngle.setPosition(up);
@@ -52,6 +56,8 @@ public class ServoTest extends LinearOpMode {
             telemetry.addLine("down!");
             telemetry.update();
             sleep(2000);
+
+             */
         }
 
 
