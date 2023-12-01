@@ -73,15 +73,15 @@ public class EncoderAutoMethods {
                 }
             } else {
                 if (neg > 0) {//left turn // problem with turning neg when
-                    robot.drivetrain.fl.setPower((heading - (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading)) * (1.0 / 5) * -1);
-                    robot.drivetrain.bl.setPower((heading - (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading)) * (1.0 / 5) * -1);
-                    robot.drivetrain.br.setPower((heading - (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading)) * (1.0 / 5));
-                    robot.drivetrain.fr.setPower((heading - robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading) * (1.0 / 5));
+                    robot.drivetrain.fl.setPower(Math.abs(heading - (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading)) * (1.0 / 5) * -1);
+                    robot.drivetrain.bl.setPower(Math.abs(heading - (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading)) * (1.0 / 5) * -1);
+                    robot.drivetrain.br.setPower(Math.abs(heading - (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading)) * (1.0 / 5));
+                    robot.drivetrain.fr.setPower(Math.abs(heading - (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading)) * (1.0 / 5));
                 } else {
-                    robot.drivetrain.fl.setPower((heading - (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading)) * (1.0 / 5));
-                    robot.drivetrain.bl.setPower((heading - (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading)) * (1.0 / 5));
-                    robot.drivetrain.br.setPower((heading - (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading)) * (1.0 / 5) * -1);
-                    robot.drivetrain.fr.setPower((heading - (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading)) * (1.0 / 5) * -1);
+                    robot.drivetrain.fl.setPower(Math.abs(heading - (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading)) * (1.0 / 5));
+                    robot.drivetrain.bl.setPower(Math.abs(heading - (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading)) * (1.0 / 5));
+                    robot.drivetrain.br.setPower(Math.abs(heading - (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading)) * (1.0 / 5) * -1);
+                    robot.drivetrain.fr.setPower(Math.abs(heading - (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading)) * (1.0 / 5) * -1);
                 }
             }
             linearOpMode.telemetry.addData("turn",(robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES)));
