@@ -60,6 +60,10 @@ public class RedRight extends LinearOpMode {
         }
         OpenCV.RedCV.SkystonePosition pos = pipeline.getAnalysis();
 
-        movement.drive(5, 5);
+        movement.encoderIMUTurn(-90, 200000);
+        sleep(203034);
+        movement.encoderDrive(-800, 5000);
+
+
     }
 }

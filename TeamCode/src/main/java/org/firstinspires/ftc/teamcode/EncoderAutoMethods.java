@@ -23,27 +23,27 @@ public class EncoderAutoMethods {
     }
 
     public void drive(double distance, double timeout) {
-        double initPos = robot.drivetrain.br.getCurrentPosition();
+        double initPos = robot.lift.rotateLeft.getCurrentPosition();
         ElapsedTime runtime = new ElapsedTime();
         int neg = 1;
-        while (linearOpMode.opModeIsActive() && runtime.seconds() < timeout && Math.abs(robot.drivetrain.br.getCurrentPosition() - initPos) < Math.abs(distance)) {
-            if (distance - (robot.drivetrain.br.getCurrentPosition() - initPos) < 0) {
+        while (linearOpMode.opModeIsActive() && runtime.seconds() < timeout && Math.abs(encoderTicksToInches(robot.drivetrain.bl.getCurrentPosition() - initPos)) - Math.abs(distance) > 0.5) {
+            if (distance - (robot.drivetrain.bl.getCurrentPosition() - initPos) < 0) {
                 neg = -1;
             }
-            if (Math.abs(distance - encoderTicksToInches(robot.drivetrain.br.getCurrentPosition()) - initPos) * (1.0 / 8) >= 1) {
+            if (Math.abs(distance - encoderTicksToInches(robot.drivetrain.bl.getCurrentPosition()) - initPos) * (1.0 / 8) >= 1) {
                 robot.drivetrain.fl.setPower(1.0 * neg);
                 robot.drivetrain.bl.setPower(1.0 * neg);
                 robot.drivetrain.fr.setPower(1.0 * neg);
                 robot.drivetrain.br.setPower(1.0 * neg);
 
             } else {
-                robot.drivetrain.fl.setPower(distance - encoderTicksToInches((robot.drivetrain.br.getCurrentPosition() - initPos)) * (1.0 / 8));
-                robot.drivetrain.fr.setPower(distance - encoderTicksToInches((robot.drivetrain.br.getCurrentPosition() - initPos)) * (1.0 / 8));
-                robot.drivetrain.bl.setPower(distance - encoderTicksToInches((robot.drivetrain.br.getCurrentPosition() - initPos)) * (1.0 / 8));
-                robot.drivetrain.br.setPower(distance - encoderTicksToInches((robot.drivetrain.br.getCurrentPosition() - initPos)) * (1.0 / 8));
+                robot.drivetrain.fl.setPower(distance - encoderTicksToInches((robot.drivetrain.bl.getCurrentPosition() - initPos)) * (1.0 / 8));
+                robot.drivetrain.fr.setPower(distance - encoderTicksToInches((robot.drivetrain.bl.getCurrentPosition() - initPos)) * (1.0 / 8));
+                robot.drivetrain.bl.setPower(distance - encoderTicksToInches((robot.drivetrain.bl.getCurrentPosition() - initPos)) * (1.0 / 8));
+                robot.drivetrain.br.setPower(distance - encoderTicksToInches((robot.drivetrain.bl.getCurrentPosition() - initPos)) * (1.0 / 8));
             }
-            linearOpMode.telemetry.addData("foreward", encoderTicksToInches(robot.drivetrain.br.getCurrentPosition()));
-            linearOpMode.telemetry.addData("distance", robot.drivetrain.br.getCurrentPosition() - initPos - Math.abs(distance));
+            linearOpMode.telemetry.addData("foreward", encoderTicksToInches(robot.drivetrain.bl.getCurrentPosition()));
+            linearOpMode.telemetry.addData("distance", robot.drivetrain.bl.getCurrentPosition() - initPos - Math.abs(distance));
             linearOpMode.telemetry.update();
         }
 
@@ -55,7 +55,7 @@ public class EncoderAutoMethods {
         double initHeading = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
         ElapsedTime runtime = new ElapsedTime();
         int neg = 1;
-        while (runtime.seconds() < timeout && linearOpMode.opModeIsActive() && Math.abs(robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading - heading) < 0.5) {
+        while (runtime.seconds() < timeout && linearOpMode.opModeIsActive() && Math.abs(robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading) - Math.abs(heading) < 0.5) {
             if (heading - (robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - initHeading)< 0) {
                 neg = -1;
             }
@@ -132,17 +132,38 @@ public class EncoderAutoMethods {
     public void encoderDrive(int ticks, int milliseconds){
         ElapsedTime elapsedTime = new ElapsedTime();
         int initPos = robot.drivetrain.br.getCurrentPosition();
-        while(elapsedTime.milliseconds() < milliseconds && Math.abs((robot.drivetrain.br.getCurrentPosition() - initPos) - ticks) > 2){
+        while(elapsedTime.milliseconds() < milliseconds && !linearOpMode.isStopRequested() && Math.abs((robot.drivetrain.br.getCurrentPosition() - initPos) - ticks) > 1){
             int currentDistance = robot.drivetrain.br.getCurrentPosition() - initPos;
-            robot.drivetrain.fl.setPower(.5 * currentDistance - ticks > 0 ? 1: -1);
-            robot.drivetrain.bl.setPower(.5 * currentDistance - ticks > 0 ? 1: -1);
-            robot.drivetrain.fr.setPower(.5 * currentDistance - ticks > 0 ? 1: -1);
-            robot.drivetrain.br.setPower(.5 * currentDistance - ticks > 0 ? 1: -1);
+            int mult = currentDistance - ticks < 0 ? 1: -1;
+            robot.drivetrain.fl.setPower(.25 * mult);
+            robot.drivetrain.bl.setPower(.25 * mult);
+            robot.drivetrain.fr.setPower(.25 * mult);
+            robot.drivetrain.br.setPower(.25 * mult);
             linearOpMode.telemetry.addData("currentDistance", currentDistance);
             linearOpMode.telemetry.addData("targetDistance", ticks);
             linearOpMode.telemetry.update();
         }
         robot.drivetrain.setALLMotorPower(0);
+    }
+
+
+    public void encoderIMUTurn(double degrees, int milliseconds){
+        ElapsedTime elapsedTime = new ElapsedTime();
+        double initPos = robot.getImu().getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) + 180;
+        double targetPos = initPos + degrees;
+        if(targetPos > 360){
+            targetPos -= 360;
+        }
+        else if(targetPos < 0){
+            targetPos = 360 + targetPos;
+        }
+
+        while(elapsedTime.milliseconds() < milliseconds && !linearOpMode.isStopRequested() && Math.abs((robot.getImu().getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) + 180) - targetPos) > 0.9){
+            linearOpMode.telemetry.addData("curAngle", robot.getImu().getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) + 180);
+            linearOpMode.telemetry.addData("taget", targetPos);
+            linearOpMode.telemetry.addData("if", robot.getImu().getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) + 180 - targetPos);
+            linearOpMode.telemetry.update();
+        }
     }
 
 

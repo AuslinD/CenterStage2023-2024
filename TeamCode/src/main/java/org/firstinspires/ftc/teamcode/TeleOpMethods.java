@@ -295,6 +295,10 @@ public class TeleOpMethods {
             robot.hang.hangL.setPower(-1);
             robot.hang.hangR.setPower(-1);
         }
+        else{
+            robot.hang.hangL.setPower(0);
+            robot.hang.hangR.setPower(0);
+        }
 
     }
 
