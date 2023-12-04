@@ -26,7 +26,7 @@ public class EncoderAutoMethods {
         double initPos = robot.drivetrain.br.getCurrentPosition();
         ElapsedTime runtime = new ElapsedTime();
         int neg = 1;
-        while (linearOpMode.opModeIsActive() && runtime.seconds() < timeout && Math.abs(robot.drivetrain.br.getCurrentPosition() - initPos - Math.abs(distance)) < Math.abs(distance)) {
+        while (linearOpMode.opModeIsActive() && runtime.seconds() < timeout && Math.abs(robot.drivetrain.br.getCurrentPosition() - initPos) < Math.abs(distance)) {
             if (distance - (robot.drivetrain.br.getCurrentPosition() - initPos) < 0) {
                 neg = -1;
             }
