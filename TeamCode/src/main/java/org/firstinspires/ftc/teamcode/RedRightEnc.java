@@ -9,7 +9,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 
-@Autonomous(name = "RedRightEnc", group = "Encoder Auto")
+@Autonomous(name = "RedRightEncMaybeNot", group = "Encoder Auto")
 public class RedRightEnc extends LinearOpMode {
     EncoderAutoMethods movement;
     Robot robot;
@@ -17,18 +17,15 @@ public class RedRightEnc extends LinearOpMode {
     OpenCV.RedCV pipeline;
     @Override
     public void runOpMode() throws InterruptedException {
-
         movement = new EncoderAutoMethods(this);
-            /**
-             * NOTE: Many comments have been omitted from this sample for the
-             * sake of conciseness. If you're just starting out with EasyOpenCv,
-             * you should take a look at {@link InternalCamera1Example} or its
-             * webcam counterpart, {@link WebcamExample} first.
-             */
+
+
             int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
             phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
             pipeline = new OpenCV.RedCV();
             phoneCam.setPipeline(pipeline);
+
+
 
             // We set the viewport policy to optimized view so the preview doesn't appear 90 deg
             // out when the RC activity is in portrait. We do our actual image processing assuming
@@ -59,7 +56,15 @@ public class RedRightEnc extends LinearOpMode {
                 sleep(50);
             }
             OpenCV.RedCV.SkystonePosition pos = pipeline.getAnalysis();
-        movement.drive(5, 3);
+
+
+
+
+
+
+            movement.drive(5, 3);
+
+        /*
         switch(pipeline.getAnalysis()) {
             case LEFT:
                 movement.turn(90, 3);
@@ -80,8 +85,10 @@ public class RedRightEnc extends LinearOpMode {
                 //move pixel
                 //sleep(0);
         }
-        movement.drive(-3, 5);
-        movement.sideToSide(-4, 3);
+
+         */
+        //movement.encoderDrive(-300, 2000);
+        //movement.sideToSide(-4, 3);
             //movement.turn(90, 5);
             //movement.sideToSide(5,5);
     }

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.openftc.easyopencv.OpenCvCamera;
@@ -7,12 +8,14 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 
+@Autonomous(name = "redEncoderActual?", group = "auto")
 public class RedRight extends LinearOpMode {
     OpenCvInternalCamera phoneCam;
-    OpenCV.BlueCV pipeline;
+    OpenCV.RedCV pipeline;
 
     @Override
     public void runOpMode() throws InterruptedException {
+        EncoderAutoMethods movement = new EncoderAutoMethods(this);
         /**
          * NOTE: Many comments have been omitted from this sample for the
          * sake of conciseness. If you're just starting out with EasyOpenCv,
@@ -22,7 +25,7 @@ public class RedRight extends LinearOpMode {
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
-        pipeline = new OpenCV.BlueCV();
+        pipeline = new OpenCV.RedCV();
         phoneCam.setPipeline(pipeline);
 
         // We set the viewport policy to optimized view so the preview doesn't appear 90 deg
@@ -47,7 +50,7 @@ public class RedRight extends LinearOpMode {
 
         waitForStart();
 
-        while (opModeIsActive())
+        while (!isStarted() && !isStopRequested())
         {
             telemetry.addData("Analysis", pipeline.getAnalysis());
             telemetry.update();
@@ -55,5 +58,8 @@ public class RedRight extends LinearOpMode {
             // Don't burn CPU cycles busy-looping in this sample
             sleep(50);
         }
+        OpenCV.RedCV.SkystonePosition pos = pipeline.getAnalysis();
+
+        movement.drive(5, 5);
     }
 }
