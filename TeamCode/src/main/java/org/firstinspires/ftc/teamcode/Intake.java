@@ -11,7 +11,7 @@ public class Intake {
     //CHANGE THIS
     double ANG_DOWN = -0.5;
     double ANG_UP = 0.5;
-    private CRServo intakeLeft, intakeRight, transferLeft, transferRight;
+    private CRServo intakeLeft, intakeRight, transferLeft, transferRight, transferMiddle;
 
     private Servo intakeAngleLeft, intakeAngleRight;
 
@@ -22,6 +22,7 @@ public class Intake {
         transferRight = opMode.hardwareMap.get(CRServo.class, "trR");
         intakeAngleLeft = opMode.hardwareMap.get(Servo.class, "angL");
         intakeAngleRight = opMode.hardwareMap.get(Servo.class, "angR");
+        transferMiddle = opMode.hardwareMap.get(CRServo.class, "transfer");
         intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         transferRight.setDirection(DcMotorSimple.Direction.REVERSE);
         //transferLeft.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -34,6 +35,8 @@ public class Intake {
         transferRight = opMode.hardwareMap.get(CRServo.class, "trR");
         intakeAngleLeft = opMode.hardwareMap.get(Servo.class, "angL");
         intakeAngleRight = opMode.hardwareMap.get(Servo.class, "angR");
+        transferMiddle = opMode.hardwareMap.get(CRServo.class, "transfer");
+
         intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         transferRight.setDirection(DcMotorSimple.Direction.REVERSE);
         transferLeft.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -44,6 +47,7 @@ public class Intake {
         intakeRight.setPower(power);
         transferLeft.setPower(-power);
         transferRight.setPower(power);
+        transferMiddle.setPower(-power);
     }
 
     public void lowerIntake(){
