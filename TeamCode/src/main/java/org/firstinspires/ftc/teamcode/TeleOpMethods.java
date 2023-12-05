@@ -83,17 +83,19 @@ public class TeleOpMethods {
             robot.claw.clawDown();
         }
         if(gamepad2.dpad_up){
-            treeAngle += .005;
+            treeAngle += .02;
         }
         else if(gamepad2.dpad_down){
-            treeAngle -= .005;
+            treeAngle -= .02;
         }
 
-        if(treeAngle > .7){
+        if(treeAngle > .9){
             //treeAngle = .7;
+            treeAngle = .9;
         }
-        else if (treeAngle < .3){
+        else if (treeAngle < .01){
             //treeAngle = .3;
+            treeAngle = .01;
         }
 
 
@@ -287,11 +289,11 @@ public class TeleOpMethods {
     }
 
     private static void hang(Gamepad gamepad1, Gamepad gamepad2){
-        if(gamepad1.dpad_up){
+        if(gamepad1.dpad_down){
             robot.hang.hangL.setPower(1);
             robot.hang.hangR.setPower(1);
         }
-        else if(gamepad1.dpad_down){
+        else if(gamepad1.dpad_up){
             robot.hang.hangL.setPower(-1);
             robot.hang.hangR.setPower(-1);
         }
