@@ -16,6 +16,7 @@ public class RedRight extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         EncoderAutoMethods movement = new EncoderAutoMethods(this);
+        movement.robot.intake.stowIntake();
         /**
          * NOTE: Many comments have been omitted from this sample for the
          * sake of conciseness. If you're just starting out with EasyOpenCv,
@@ -47,20 +48,36 @@ public class RedRight extends LinearOpMode {
                 telemetry.addLine("No camera");
             }
         });
-
-        waitForStart();
-
+        OpenCV.RedCV.SkystonePosition pos = null;
         while (!isStarted() && !isStopRequested())
         {
             telemetry.addData("Analysis", pipeline.getAnalysis());
             telemetry.update();
-
+            pos = pipeline.getAnalysis();
             // Don't burn CPU cycles busy-looping in this sample
             sleep(50);
         }
-        OpenCV.RedCV.SkystonePosition pos = pipeline.getAnalysis();
+        waitForStart();
 
-        movement.encoderIMUTurn(-90, 200000);
+        
+        
+
+
+
+        if(pos == OpenCV.RedCV.SkystonePosition.RIGHT){
+            movement.encoderDrive(-970, 10500);
+            movement.encoderIMUTurn(85, 5000);
+            movement.encoderDrive(775, 5000);
+            movement.encoderIMUTurn(175, 10000);
+        }
+        else if(pos == OpenCV.RedCV.SkystonePosition.CENTER){
+            movement.encoderDrive(-775, 5000);
+        }
+        else{
+            movement.encoderDrive(-870, 6500);
+            movement.encoderIMUTurn(90, 200000);
+        }
+
         sleep(203034);
         movement.encoderDrive(-800, 5000);
 
