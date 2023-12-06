@@ -18,6 +18,9 @@ public class RedRightEnc extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         movement = new EncoderAutoMethods(this);
+
+
+
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
         pipeline = new OpenCV.RedCV();

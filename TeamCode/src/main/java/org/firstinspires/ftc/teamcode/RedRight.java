@@ -17,6 +17,8 @@ public class RedRight extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         EncoderAutoMethods movement = new EncoderAutoMethods(this);
         movement.robot.intake.stowIntake();
+        movement.robot.claw.setClawAngle(.9);
+        movement.robot.claw.clawDown();
         /**
          * NOTE: Many comments have been omitted from this sample for the
          * sake of conciseness. If you're just starting out with EasyOpenCv,
@@ -65,17 +67,27 @@ public class RedRight extends LinearOpMode {
 
 
         if(pos == OpenCV.RedCV.SkystonePosition.RIGHT){
-            movement.encoderDrive(-970, 10500);
+            movement.encoderDrive(-990, 11500);
             movement.encoderIMUTurn(85, 5000);
             movement.encoderDrive(775, 5000);
-            movement.encoderIMUTurn(175, 10000);
+            movement.robot.lift.setMotorsToGoUpOrDown(350);
+            movement.robot.claw.setClawAngle(.35);
+            movement.robot.claw.setClawPosition(.55);
+            movement.encoderIMUTurn(170, 10000);
         }
         else if(pos == OpenCV.RedCV.SkystonePosition.CENTER){
             movement.encoderDrive(-775, 5000);
+            movement.robot.lift.setMotorsToGoUpOrDown(350);
+            movement.robot.claw.setClawAngle(.35);
+            movement.robot.claw.setClawPosition(.55);
         }
         else{
-            movement.encoderDrive(-870, 6500);
+            movement.encoderDrive(-930, 6500);
             movement.encoderIMUTurn(90, 200000);
+            movement.robot.lift.setMotorsToGoUpOrDown(350);
+            movement.robot.claw.setClawAngle(.35);
+            movement.robot.claw.setClawPosition(.55);
+            
         }
 
         sleep(203034);

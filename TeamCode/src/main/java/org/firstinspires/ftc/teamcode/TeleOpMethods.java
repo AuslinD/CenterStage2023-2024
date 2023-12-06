@@ -12,7 +12,7 @@ public class TeleOpMethods {
     private static Robot robot;
     static OpMode opMode;
     static double initPos;
-    static double treeAngle = 1;
+    static double treeAngle = .47;
     //Manipulator
     static double rn1p, rn2p, up1p, up2p;
 
@@ -28,6 +28,7 @@ public class TeleOpMethods {
         robot.imu.resetYaw();
         initPos = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
         robot.plane.setPosition(.47);
+        treeAngle = .47;
     }
 
     public void teleOpControls(Gamepad gamepad1, Gamepad gamepad2)
