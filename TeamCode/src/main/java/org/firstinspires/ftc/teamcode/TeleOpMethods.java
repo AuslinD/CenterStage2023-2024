@@ -89,7 +89,13 @@ public class TeleOpMethods {
         else if(gamepad2.dpad_down){
             treeAngle -= .02;
         }
+        if (gamepad2.dpad_right){
+            int x = 0;
+            double[] change = {0.1499, 0.2699, 0.49, 0.55, 0.82};
+            treeAngle = change[x];
+            x++;
 
+        }
         if(treeAngle > .9){
             //treeAngle = .7;
             treeAngle = .9;
