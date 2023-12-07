@@ -64,14 +64,15 @@ public class RedRight extends LinearOpMode {
         
         
 
-        pos = OpenCV.RedCV.SkystonePosition.RIGHT;
+        //pos = OpenCV.RedCV.SkystonePosition.RIGHT;
 
+        //movement.liftAnglePosition(100, 4000);
         if(pos == OpenCV.RedCV.SkystonePosition.RIGHT){
             movement.encoderDrive(-990, 15500);
             movement.encoderIMUTurn(90, 5000);
             movement.encoderDrive(650, 5000);
             movement.robot.lift.setMotorsToGoUpOrDown(400);
-            movement.robot.claw.setClawAngle(.16);
+            movement.robot.claw.setClawAngle(.2);
             sleep(2000);
             movement.robot.claw.setClawPosition(.40);
             sleep(2000);
@@ -80,20 +81,21 @@ public class RedRight extends LinearOpMode {
 
         }
         else if(pos == OpenCV.RedCV.SkystonePosition.CENTER){
-            movement.encoderDrive(-775, 5000);
+            movement.encoderDrive(-875, 5000);
             movement.robot.lift.setMotorsToGoUpOrDown(400);
-            movement.robot.claw.setClawAngle(.16);
+            movement.robot.claw.setClawAngle(.2);
             sleep(2000);
             movement.robot.claw.setClawPosition(.40);
             sleep(2000);
-            movement.encoderIMUTurn(-75, 10000);
-            movement.encoderDrive(-790, 15500);
+            movement.robot.claw.setClawAngle(.47);
+            movement.encoderIMUTurn(-80, 10000);
+            movement.encoderDrive(-890, 15500);
         }
         else{
             movement.encoderDrive(-930, 6500);
             movement.encoderIMUTurn(90, 200000);
             movement.robot.lift.setMotorsToGoUpOrDown(400);
-            movement.robot.claw.setClawAngle(.35);
+            movement.robot.claw.setClawAngle(.2);
             movement.robot.claw.setClawPosition(.55);
             
         }
@@ -102,7 +104,7 @@ public class RedRight extends LinearOpMode {
         sleep(2000);
         movement.robot.claw.clawUp();
         sleep(1000);
-        movement.liftAnglePosition(-400, 4000);
+
         movement.robot.lift.setMotorsToGoUpOrDown(0);
         movement.encoderDrive(200, 3000);
 

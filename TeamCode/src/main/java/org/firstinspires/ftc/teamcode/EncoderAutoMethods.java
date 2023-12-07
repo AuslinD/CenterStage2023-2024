@@ -174,14 +174,12 @@ public class EncoderAutoMethods {
 
     public void liftAnglePosition(int ticks, int milliseconds){
         ElapsedTime elapsedTime = new ElapsedTime();
-        int initPos = robot.lift.rotateLeft.getCurrentPosition();
-        while(elapsedTime.milliseconds() < milliseconds && !linearOpMode.isStopRequested() && Math.abs((robot.lift.rotateLeft.getCurrentPosition() - initPos) - ticks) > 2){
-            int currentDistance = robot.drivetrain.br.getCurrentPosition() - initPos;
+        int initPos = robot.lift.rotateRight.getCurrentPosition();
+        while(elapsedTime.milliseconds() < milliseconds && !linearOpMode.isStopRequested() && Math.abs((robot.lift.rotateRight.getCurrentPosition() - initPos) - ticks) > 2){
+            int currentDistance = robot.lift.rotateRight.getCurrentPosition() - initPos;
             int mult = currentDistance - ticks < 0 ? 1: -1;
-            robot.drivetrain.fl.setPower(.5 * mult);
-            robot.drivetrain.bl.setPower(.5 * mult);
-            robot.drivetrain.fr.setPower(.5 * mult);
-            robot.drivetrain.br.setPower(.5 * mult);
+            robot.lift.rotateLeft.setPower(.5 * mult);
+            robot.lift.rotateRight.setPower(.5 * mult);
             linearOpMode.telemetry.addData("currentDistance", currentDistance);
             linearOpMode.telemetry.addData("targetDistance", ticks);
             linearOpMode.telemetry.update();
