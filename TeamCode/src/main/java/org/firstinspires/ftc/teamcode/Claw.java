@@ -14,7 +14,7 @@ public class Claw {
     private Servo tree, clawAngle;
 
     //CHANGE THIS
-    double down = 1;
+    double down = .8;
     double up = 0;
 
     double rotate1 = 0;

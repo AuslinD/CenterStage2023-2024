@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
@@ -13,6 +14,7 @@ public class TeleOpMethods {
     static OpMode opMode;
     static double initPos;
     static double treeAngle = .47;
+    int treeAngleIndex = 0;
     //Manipulator
     static double rn1p, rn2p, up1p, up2p;
 
@@ -39,6 +41,11 @@ public class TeleOpMethods {
         clawStuff(gamepad1, gamepad2);
         planeServoControl(gamepad1, gamepad2);
         hang(gamepad1, gamepad2);
+        if(robot.lift.liftLeft.getCurrentPosition() > 1600){
+            robot.lift.rotateRight.setPower(.35);
+            robot.lift.rotateLeft.setPower(.35);
+
+        }
         telemetry();
 
 
@@ -74,6 +81,7 @@ public class TeleOpMethods {
         }
     }
     private void clawStuff(Gamepad gamepad1, Gamepad gamepad2){
+
         if(gamepad2.right_trigger > .1){
             robot.claw.clawUp();
         }
@@ -90,11 +98,16 @@ public class TeleOpMethods {
             treeAngle -= .02;
         }
         if (gamepad2.dpad_right){
-            int x = 0;
-            double[] change = {0.1499, 0.2699, 0.49, 0.55, 0.82};
-            treeAngle = change[x];
-            x++;
-
+            ElapsedTime runtime = new ElapsedTime();
+            if(runtime.milliseconds() > 500){
+                runtime.reset();
+                double[] change = {0.1499, 0.2699, 0.49, 0.55, 0.82};
+                treeAngle = change[treeAngleIndex];
+                treeAngleIndex++;
+                if(treeAngleIndex > 4){
+                    treeAngleIndex = 0;
+                }
+            }
         }
         if(treeAngle > .9){
             //treeAngle = .7;
@@ -209,6 +222,7 @@ public class TeleOpMethods {
 
     private static void manipulatorStuff(Gamepad gamepad1, Gamepad gamepad2) {
 
+
         //Manipulator and lift stuff
         int multiplier = 35;
         if(Math.abs(gamepad2.left_stick_y) > 0.1) {
@@ -225,6 +239,9 @@ public class TeleOpMethods {
 
 
 
+
+
+
             //double max = Math.max(Math.max(Math.abs(rn1p) , Math.abs(rn2p)), Math.max((up1p), Math.abs(up2p)));
 
             /*if (Math.abs(max) > 1) {
@@ -234,6 +251,8 @@ public class TeleOpMethods {
                 up2p /= Math.abs(max);
             }*/
         }
+
+
 
         if(gamepad2.right_bumper){
             rn1p = .75;

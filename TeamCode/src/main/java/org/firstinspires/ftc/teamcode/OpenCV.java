@@ -116,8 +116,8 @@ public class OpenCV extends LinearOpMode
          * The core values which define the location and size of the sample regions
          */
         static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(9,200);
-        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(86,148);
-        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(278,148);
+        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(86,128);
+        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(288,128);
         static final int REGION_WIDTH = 20;
         static final int REGION_HEIGHT = 20;
 
@@ -520,7 +520,7 @@ public class OpenCV extends LinearOpMode
              * pixel value of the 3-channel image, and referenced the value
              * at index 2 here.
              */
-            avg1 = 173;
+            avg1 = 163;
             avg2 = (int) Core.mean(region2_Cb).val[0];
             avg3 = (int) Core.mean(region3_Cb).val[0];
 
