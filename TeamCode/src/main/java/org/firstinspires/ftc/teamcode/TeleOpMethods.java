@@ -41,11 +41,7 @@ public class TeleOpMethods {
         clawStuff(gamepad1, gamepad2);
         planeServoControl(gamepad1, gamepad2);
         hang(gamepad1, gamepad2);
-        if(robot.lift.liftLeft.getCurrentPosition() > 1600){
-            robot.lift.rotateRight.setPower(.35);
-            robot.lift.rotateLeft.setPower(.35);
 
-        }
         telemetry();
 
 
@@ -265,6 +261,11 @@ public class TeleOpMethods {
             rn2p = rn1p;
             robot.lift.rotateRight.setPower(rn1p);
             robot.lift.rotateLeft.setPower(rn2p);
+        }
+        else if(robot.lift.liftLeft.getCurrentPosition() > 1600){
+            robot.lift.rotateRight.setPower(.15);
+            robot.lift.rotateLeft.setPower(.15);
+
         }
         else{
             robot.lift.rotateRight.setPower(0);
