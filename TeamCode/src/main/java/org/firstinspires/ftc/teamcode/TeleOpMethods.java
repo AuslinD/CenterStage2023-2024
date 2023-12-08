@@ -15,6 +15,7 @@ public class TeleOpMethods {
     static double initPos;
     static double treeAngle = .47;
     int treeAngleIndex = 0;
+    boolean gameOn = false;
     //Manipulator
     static double rn1p, rn2p, up1p, up2p;
 
@@ -31,6 +32,7 @@ public class TeleOpMethods {
         initPos = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
         robot.plane.setPosition(.47);
         treeAngle = .47;
+        gameOn = false;
     }
 
     public void teleOpControls(Gamepad gamepad1, Gamepad gamepad2)
@@ -94,7 +96,7 @@ public class TeleOpMethods {
             treeAngle -= .02;
         }
         if (gamepad2.dpad_right){
-            ElapsedTime runtime = new ElapsedTime();
+            /*ElapsedTime runtime = new ElapsedTime();
             if(runtime.milliseconds() > 500){
                 runtime.reset();
                 double[] change = {0.1499, 0.2699, 0.49, 0.55, 0.82};
@@ -103,6 +105,28 @@ public class TeleOpMethods {
                 if(treeAngleIndex > 4){
                     treeAngleIndex = 0;
                 }
+            }*/
+            robot.lift.liftLeft.setTargetPosition(0); //retracts lift??
+            robot.lift.liftRight.setTargetPosition(0);
+
+            treeAngle = 0.1499; //angles tree
+            gameOn = true;
+            robot.claw.clawUp(); //retracts tree
+
+
+        }
+        if (gameOn){
+            if  (robot.lift.rotateRight.getCurrentPosition() < -1037){
+                up1p = -0.75;
+                up2p = -0.75;
+
+            }
+            if (robot.lift.rotateRight.getCurrentPosition() > - 1030){
+                up1p = 0.75;
+                up2p = 0.75;
+            }
+            if (-1030 < robot.lift.rotateRight.getCurrentPosition() && -1030 > robot.lift.rotateRight.getCurrentPosition()){
+                gameOn = false;
             }
         }
         if(treeAngle > .9){
