@@ -93,7 +93,10 @@ public class TeleOpMethods {
             robot.claw.setClawPosition( .355);
         }
         else{
-            robot.claw.clawDown();
+            if (!state[1]&&!state[0]&&!state[3]&&!state[2]&&!state[4]&&!state[5]&&!state[6]){
+                robot.claw.clawDown();
+            }
+
         }
         if(gamepad2.dpad_up){
             treeAngle += .02;

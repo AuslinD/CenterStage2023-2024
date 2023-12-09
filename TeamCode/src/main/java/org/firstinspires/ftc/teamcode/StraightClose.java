@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 public class StraightClose extends LinearOpMode{
     @Override
     public void runOpMode() throws InterruptedException {
-        
+
         Robot robot = new Robot(this);
         robot.intake.stowIntake();
         robot.claw.setClawAngle(.71);
@@ -31,6 +31,8 @@ public class StraightClose extends LinearOpMode{
         robot.intake.spinTake(-1);
         robot.intake.lowerIntake();*/
         sleep(5400);
+
+        robot.drivetrain.setALLMotorPower(0);
 
 
 
