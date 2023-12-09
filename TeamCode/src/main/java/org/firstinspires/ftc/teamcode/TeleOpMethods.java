@@ -89,7 +89,7 @@ public class TeleOpMethods {
             robot.claw.clawUp();
         }
         else if(gamepad2.left_trigger > .1){
-            robot.claw.setClawPosition( .55);
+            robot.claw.setClawPosition( .35);
         }
         else{
             robot.claw.clawDown();
