@@ -183,12 +183,12 @@ public class TeleOpMethods {
                 state[5] = false;
                 state[6] = true;
 
-            } else if (robot.lift.rotateRight.getCurrentPosition() > -130) {
+            } else if (robot.lift.rotateRight.getCurrentPosition() > -405) {
                 robot.lift.rotateRight.setPower(-0.5);
                 robot.lift.rotateLeft.setPower(-0.5);
 
 
-            } else if (robot.lift.rotateRight.getCurrentPosition() < -145) {
+            } else if (robot.lift.rotateRight.getCurrentPosition() < -420) {
                 robot.lift.rotateRight.setPower(0.5); // set power for angle of the list
                 robot.lift.rotateLeft.setPower(0.5);
             }
