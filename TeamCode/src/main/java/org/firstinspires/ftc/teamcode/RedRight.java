@@ -9,7 +9,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 
 
-@Autonomous(name = "redEncoderActual?", group = "auto")
+@Autonomous(name = "redEncoderRight", group = "auto")
 public class RedRight extends LinearOpMode {
     OpenCvInternalCamera phoneCam;
     OpenCV.RedCV pipeline;

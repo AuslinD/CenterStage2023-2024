@@ -14,6 +14,7 @@ public class TeleOpMethods {
     static OpMode opMode;
     static double initPos;
     static double treeAngle = .47;
+    private static boolean ignoreBounds = false;
     int treeAngleIndex = 0;
     boolean gameOn = false;
     //Manipulator
@@ -89,7 +90,7 @@ public class TeleOpMethods {
             robot.claw.clawUp();
         }
         else if(gamepad2.left_trigger > .1){
-            robot.claw.setClawPosition( .35);
+            robot.claw.setClawPosition( .355);
         }
         else{
             robot.claw.clawDown();
@@ -346,7 +347,10 @@ public class TeleOpMethods {
             up1p += -gamepad2.left_stick_y * multiplier;
 
             up2p = up1p;
-            if (up1p < -10)
+
+            if(gamepad1.dpad_left) ignoreBounds = true;
+
+            if (up1p < -10 && !ignoreBounds)
             {
                 //up1p = 0;
                 //up2p = 0;

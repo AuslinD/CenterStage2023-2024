@@ -2,21 +2,22 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-@Autonomous(name = "straightFar", group = "auto")
-public class StraightFar extends LinearOpMode{
+@Autonomous(name = "straightImmediate", group = "auto")
+public class StraightClose extends LinearOpMode{
     @Override
     public void runOpMode() throws InterruptedException {
+        
         Robot robot = new Robot(this);
         robot.intake.stowIntake();
         robot.claw.setClawAngle(.71);
         robot.claw.clawDown();
         robot.plane.setPosition(.47);//hello austin my pookie wookie bear <3
         waitForStart();
-        sleep(23000);
-        robot.drivetrain.fl.setPower(.5);
-        robot.drivetrain.bl.setPower(.5);
-        robot.drivetrain.fr.setPower(.5);
-        robot.drivetrain.br.setPower(.5);
+
+        robot.drivetrain.fl.setPower(.25);
+        robot.drivetrain.bl.setPower(.25);
+        robot.drivetrain.fr.setPower(.25);
+        robot.drivetrain.br.setPower(.25);
         /*sleep(20000);
         robot.drivetrain.fl.setPower(-.4);
         robot.drivetrain.bl.setPower(-.4);
@@ -29,7 +30,7 @@ public class StraightFar extends LinearOpMode{
         robot.drivetrain.br.setPower(0);
         robot.intake.spinTake(-1);
         robot.intake.lowerIntake();*/
-        sleep(6400);
+        sleep(5400);
 
 
 

@@ -117,8 +117,8 @@ public class RedLeft extends LinearOpMode {
 
         //movement.liftAnglePosition(800, 3500);
         sleep(2000);
-        movement.robot.claw.clawUp();
-        sleep(1000);
+        //movement.robot.claw.clawUp();
+        //sleep(1000);
 
         movement.robot.lift.setMotorsToGoUpOrDown(0);
         movement.encoderDrive(100, 3000);
