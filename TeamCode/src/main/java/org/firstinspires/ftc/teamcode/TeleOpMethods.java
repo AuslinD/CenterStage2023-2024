@@ -178,7 +178,7 @@ public class TeleOpMethods {
         }
         if(state[5]) // step 6
         {
-            if (robot.lift.rotateRight.getCurrentPosition() < -130 && robot.lift.rotateRight.getCurrentPosition() > -145) // check to see if the lift is btw the value
+            if (robot.lift.rotateRight.getCurrentPosition() < -405 && robot.lift.rotateRight.getCurrentPosition() > -420) // check to see if the lift is btw the value
             {
                 state[5] = false;
                 state[6] = true;
