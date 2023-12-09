@@ -9,10 +9,10 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 
 
-@Autonomous(name = "blueEncoderLeft", group = "auto")
-public class BlueLeft extends LinearOpMode {
+@Autonomous(name = "redEncoderLeft", group = "auto")
+public class RedLeft extends LinearOpMode {
     OpenCvInternalCamera phoneCam;
-    OpenCV.BlueCV pipeline;
+    OpenCV.RedCV pipeline;
 
     double treeAngleStraight = .41;
 
@@ -34,7 +34,7 @@ public class BlueLeft extends LinearOpMode {
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
-        pipeline = new OpenCV.BlueCV();
+        pipeline = new OpenCV.RedCV();
         phoneCam.setPipeline(pipeline);
 
         // We set the viewport policy to optimized view so the preview doesn't appear 90 deg
@@ -56,7 +56,7 @@ public class BlueLeft extends LinearOpMode {
                 telemetry.addLine("No camera");
             }
         });
-        OpenCV.BlueCV.SkystonePosition pos = null;
+        OpenCV.RedCV.SkystonePosition pos = null;
         while (!isStarted() && !isStopRequested())
         {
             telemetry.addData("Analysis", pipeline.getAnalysis());
@@ -73,9 +73,9 @@ public class BlueLeft extends LinearOpMode {
         //pos = OpenCV.RedCV.SkystonePosition.RIGHT;
 
         //movement.liftAnglePosition(100, 4000);
-        if(pos == OpenCV.BlueCV.SkystonePosition.RIGHT){
+        if(pos == OpenCV.RedCV.SkystonePosition.RIGHT){
             movement.encoderDrive(-990, 15500);
-            movement.encoderIMUTurn(-90, 5000);
+            movement.encoderIMUTurn(90, 5000);
             movement.encoderDrive(650, 5000);
             movement.robot.lift.setMotorsToGoUpOrDown(450);
             movement.robot.claw.setClawAngle(treeAngleDown);
@@ -88,7 +88,7 @@ public class BlueLeft extends LinearOpMode {
             //movement.encoderDrive(-450, 3000);
 
         }
-        else if(pos == OpenCV.BlueCV.SkystonePosition.CENTER){
+        else if(pos == OpenCV.RedCV.SkystonePosition.CENTER){
             movement.encoderDrive(-875, 5000);
             movement.robot.lift.setMotorsToGoUpOrDown(500);
             movement.robot.claw.setClawAngle(treeAngleDown);
@@ -97,12 +97,12 @@ public class BlueLeft extends LinearOpMode {
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
             movement.encoderDrive(100, 5000);
-            movement.encoderIMUTurn(80, 10000);
-            movement.encoderDrive(-1100, 15500);
+            //movement.encoderIMUTurn(-80, 10000);
+            //movement.encoderDrive(-1100, 15500);
         }
         else{
             movement.encoderDrive(-930, 6500);
-            movement.encoderIMUTurn(-90, 200000);
+            movement.encoderIMUTurn(90, 200000);
             movement.robot.lift.setMotorsToGoUpOrDown(500);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
@@ -110,8 +110,8 @@ public class BlueLeft extends LinearOpMode {
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
 
-            movement.encoderIMUTurn(-170, 10000);
-            movement.encoderDrive(-1100, 15500);
+            //movement.encoderIMUTurn(-170, 10000);
+            //movement.encoderDrive(-1100, 15500);
 
         }
 

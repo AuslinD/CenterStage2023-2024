@@ -15,7 +15,7 @@ public class Claw {
 
     //CHANGE THIS
     double down = .8;
-    double up = 0;
+    double up = -.1;
 
     double rotate1 = 0;
     double rotate2 = 0;

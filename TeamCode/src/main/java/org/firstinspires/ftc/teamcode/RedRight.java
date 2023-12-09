@@ -8,16 +8,22 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 
+
 @Autonomous(name = "redEncoderActual?", group = "auto")
 public class RedRight extends LinearOpMode {
     OpenCvInternalCamera phoneCam;
     OpenCV.RedCV pipeline;
 
+    double treeAngleStraight = .41;
+
+    double treeAngleUp = .71;
+    double treeAngleDown = .11;
+
     @Override
     public void runOpMode() throws InterruptedException {
         EncoderAutoMethods movement = new EncoderAutoMethods(this);
         movement.robot.intake.stowIntake();
-        movement.robot.claw.setClawAngle(.7);
+        movement.robot.claw.setClawAngle(treeAngleUp);
         movement.robot.claw.clawDown();
         /**
          * NOTE: Many comments have been omitted from this sample for the
@@ -71,42 +77,50 @@ public class RedRight extends LinearOpMode {
             movement.encoderDrive(-990, 15500);
             movement.encoderIMUTurn(90, 5000);
             movement.encoderDrive(650, 5000);
-            movement.robot.lift.setMotorsToGoUpOrDown(400);
-            movement.robot.claw.setClawAngle(.2);
+            movement.robot.lift.setMotorsToGoUpOrDown(450);
+            movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
-            movement.robot.claw.setClawPosition(.40);
+            movement.robot.claw.setClawPosition(.34);
             sleep(2000);
-            movement.robot.claw.setClawAngle(.47);
-            movement.encoderIMUTurn(159, 10000);
+            movement.encoderDrive(50, 500);
+            movement.robot.claw.setClawAngle(treeAngleStraight+.1);
+            movement.encoderIMUTurn(170, 10000);
+            movement.encoderDrive(-450, 3000);
 
         }
         else if(pos == OpenCV.RedCV.SkystonePosition.CENTER){
             movement.encoderDrive(-875, 5000);
-            movement.robot.lift.setMotorsToGoUpOrDown(400);
-            movement.robot.claw.setClawAngle(.2);
+            movement.robot.lift.setMotorsToGoUpOrDown(500);
+            movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
-            movement.robot.claw.setClawPosition(.40);
+            movement.robot.claw.setClawPosition(.34);
             sleep(2000);
-            movement.robot.claw.setClawAngle(.47);
+            movement.robot.claw.setClawAngle(treeAngleStraight+.1);
+            movement.encoderDrive(100, 5000);
             movement.encoderIMUTurn(-80, 10000);
-            movement.encoderDrive(-890, 15500);
+            movement.encoderDrive(-1100, 15500);
         }
         else{
             movement.encoderDrive(-930, 6500);
             movement.encoderIMUTurn(90, 200000);
-            movement.robot.lift.setMotorsToGoUpOrDown(400);
-            movement.robot.claw.setClawAngle(.2);
-            movement.robot.claw.setClawPosition(.55);
+            movement.robot.lift.setMotorsToGoUpOrDown(500);
+            movement.robot.claw.setClawAngle(treeAngleDown);
+            sleep(2000);
+            movement.robot.claw.setClawPosition(.34);
+            sleep(2000);
+            movement.robot.claw.setClawAngle(treeAngleStraight+.1);
+            movement.encoderIMUTurn(-170, 10000);
+            movement.encoderDrive(-1100, 15500);
             
         }
+
         //movement.liftAnglePosition(800, 3500);
-        movement.encoderDrive(-200, 3000);
         sleep(2000);
         movement.robot.claw.clawUp();
         sleep(1000);
 
         movement.robot.lift.setMotorsToGoUpOrDown(0);
-        movement.encoderDrive(200, 3000);
+        movement.encoderDrive(100, 3000);
 
 
 

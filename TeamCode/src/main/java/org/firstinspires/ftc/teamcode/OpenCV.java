@@ -384,8 +384,8 @@ public class OpenCV extends LinearOpMode
          * The core values which define the location and size of the sample regions
          */
         static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(9,200);
-        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(61,148);
-        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(260,162);
+        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(81,128);
+        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(285,125);
         static final int REGION_WIDTH = 20;
         static final int REGION_HEIGHT = 20;
 
