@@ -19,7 +19,7 @@ public class TeleOpMethods {
     //Manipulator
     boolean state [] = {false,false,false,false,false,false,false,false,false,false,false,false,false}; // 6 stats/steps = to false at start
     static double rn1p, rn2p, up1p, up2p;
-    
+
     private static double lockHeadingHeading;
     public TeleOpMethods(OpMode opMode)
     {   //manip later
@@ -149,6 +149,7 @@ public class TeleOpMethods {
         {
             treeAngle = 0.10999;
             state[2] = false;
+            state[3] = true;
         }
         if(state[3]) // step 4
         {
