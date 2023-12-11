@@ -106,7 +106,7 @@ public class TeleOpMethods {
             treeAngle -= .02;
         }
 
-        if (gamepad2.dpad_right){ //mathew's macro
+        if (gamepad2.dpad_right){ //mathew's macro  ngl im disapointed how you spelled my name
             /*ElapsedTime runtime = new ElapsedTime();
             if(runtime.milliseconds() > 500){
                 runtime.reset();
@@ -252,8 +252,6 @@ public class TeleOpMethods {
             //treeAngle = .3;
             treeAngle = .01;
         }
-
-
 
         robot.claw.setClawAngle(treeAngle);
     }
