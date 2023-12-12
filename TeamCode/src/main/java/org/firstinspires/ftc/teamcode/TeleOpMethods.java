@@ -20,6 +20,7 @@ public class TeleOpMethods {
     //Manipulator
     boolean state [] = {false,false,false,false,false,false,false,false,false,false,false,false,false}; // 6 stats/steps = to false at start
     static double rn1p, rn2p, up1p, up2p;
+    boolean down = false;
     ElapsedTime stateOneTime = new ElapsedTime();
     private static double lockHeadingHeading;
 
@@ -36,6 +37,7 @@ public class TeleOpMethods {
         robot.plane.setPosition(.47);
         treeAngle = .47;
         gameOn = false;
+        down = false;
     }
 
     public void teleOpControls(Gamepad gamepad1, Gamepad gamepad2)
@@ -51,10 +53,10 @@ public class TeleOpMethods {
             robot.lift.rotateLeft.setPower(.35);
 
         }
-        telemetry();
+        //telemetry();
 
 
-        opMode.telemetry.update();
+        //opMode.telemetry.update();
 
 
     }
@@ -117,7 +119,7 @@ public class TeleOpMethods {
                     treeAngleIndex = 0;
                 }
             }*/
-            /*
+            ///*
             state[0] = true; //rotate angle
 
 
@@ -131,23 +133,22 @@ public class TeleOpMethods {
             treeAngle = 0.1499; //angles tree
             state[0] = false;
             state[1] = true;
-            stateOneTime.reset();
             //so time would go here I think?
         }
         else if (state[1]) // step 2
         {
-            treeAngle = 0.10999;
-            opMode.telemetry.addData("time",stateOneTime.milliseconds());
+            treeAngle = 0.10;
+            opMode.telemetry.addData("time",stateOneTime.milliseconds()); //doesnt work unless comment out other telemetry
             opMode.telemetry.update();
             robot.claw.clawDown();
-            if (stateOneTime.milliseconds() > 1000){
+            if (!down){
                 //wait im trolling really hard, we should initialize time when we set state[1] to true since that's
                 //how long the robot has actually been doing the state. Rn it resets time everytime
                 //because it initializes(resets) inside the if statement, so time will never be > 1000 milliseconds
                 if (robot.lift.rotateRight.getCurrentPosition() < -46 && robot.lift.rotateRight.getCurrentPosition() > -66) // check to see if the lift is btw the value
                 {
-                    state[1] = false;
-                    state[2] = true;
+                    down = true;
+                    stateOneTime.reset();
                 }
                 else if(robot.lift.rotateRight.getCurrentPosition() > -46){
                     robot.lift.rotateRight.setPower(-0.5);
@@ -159,9 +160,14 @@ public class TeleOpMethods {
                     robot.lift.rotateLeft.setPower(0.5);
                 }
             }
+            else {
+                robot.claw.clawDown();
+                if (stateOneTime.milliseconds() > 1000){
+                    state[1] = false;
+                    state[2] = true;
+                }
 
-
-
+            }
         }
         if(state[2]) // step 3
         {
@@ -231,7 +237,7 @@ public class TeleOpMethods {
             robot.lift.rotateRight.setPower(0.5); // set power for angle of the list
             robot.lift.rotateLeft.setPower(0.5);
         }
-        */
+        //*/
         }
 
 
