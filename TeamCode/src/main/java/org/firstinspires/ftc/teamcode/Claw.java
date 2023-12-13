@@ -42,4 +42,8 @@ public class Claw {
         tree.setPosition(position);
     }
 
+    public double getClawAngle(){
+        return clawAngle.getPosition();
+    }
+
 }
