@@ -48,11 +48,11 @@ public class TeleOpMethods {
         clawStuff(gamepad1, gamepad2);
         planeServoControl(gamepad1, gamepad2);
         hang(gamepad1, gamepad2);
-        if(robot.lift.liftLeft.getCurrentPosition() > 1600){
-            robot.lift.rotateRight.setPower(.35);
-            robot.lift.rotateLeft.setPower(.35);
+//        if(robot.lift.liftLeft.getCurrentPosition() > 1600){
+//            robot.lift.rotateRight.setPower(.35);
+//            robot.lift.rotateLeft.setPower(.35);
 
-        }
+//        }
         //telemetry();
 
 
@@ -102,10 +102,10 @@ public class TeleOpMethods {
 
         }
         if(gamepad2.dpad_up){
-            treeAngle += .02;
+            treeAngle += .01;
         }
         else if(gamepad2.dpad_down){
-            treeAngle -= .02;
+            treeAngle -= .01;
         }
 
         if (gamepad2.dpad_right){ //mathew's macro  ngl im disapointed how you spelled my name
@@ -152,12 +152,12 @@ public class TeleOpMethods {
                 }
                 else if(robot.lift.rotateRight.getCurrentPosition() > -46){
                     robot.lift.rotateRight.setPower(-0.5);
-                    robot.lift.rotateLeft.setPower(-0.5);
+//                    robot.lift.rotateLeft.setPower(-0.5);
 
                 }
                 else if(robot.lift.rotateRight.getCurrentPosition() < -66){
                     robot.lift.rotateRight.setPower(0.5); // set power for angle of the list
-                    robot.lift.rotateLeft.setPower(0.5);
+//                    robot.lift.rotateLeft.setPower(0.5);
                 }
             }
             else {
@@ -184,12 +184,12 @@ public class TeleOpMethods {
 
             } else if (robot.lift.rotateRight.getCurrentPosition() > 844) {
                 robot.lift.rotateRight.setPower(-0.5);
-                robot.lift.rotateLeft.setPower(-0.5);
+//                robot.lift.rotateLeft.setPower(-0.5);
 
 
             } else if (robot.lift.rotateRight.getCurrentPosition() < 829) {
                 robot.lift.rotateRight.setPower(0.5); // set power for angle of the list
-                robot.lift.rotateLeft.setPower(0.5);
+//                robot.lift.rotateLeft.setPower(0.5);
             }
         }
         if(state[4]) // step 5
@@ -229,13 +229,13 @@ public class TeleOpMethods {
 
             } else if (robot.lift.rotateRight.getCurrentPosition() > 1109) {
             robot.lift.rotateRight.setPower(-0.5);
-            robot.lift.rotateLeft.setPower(-0.5);
+//            robot.lift.rotateLeft.setPower(-0.5);
 
 
         } else if (robot.lift.rotateRight.getCurrentPosition() < 1089)
         {
             robot.lift.rotateRight.setPower(0.5); // set power for angle of the list
-            robot.lift.rotateLeft.setPower(0.5);
+//            robot.lift.rotateLeft.setPower(0.5);
         }
         //*/
         }
@@ -398,19 +398,19 @@ public class TeleOpMethods {
 
         if(gamepad2.right_bumper){
             rn1p = .75;
-            rn2p = rn1p;
+//            rn2p = rn1p;
             robot.lift.rotateRight.setPower(rn1p);
-            robot.lift.rotateLeft.setPower(rn2p);
+//            robot.lift.Left.setPower(rn2p);
         }
         else if(gamepad2.left_bumper){
             rn1p = -.75;
-            rn2p = rn1p;
+//            rn2p = rn1p;
             robot.lift.rotateRight.setPower(rn1p);
-            robot.lift.rotateLeft.setPower(rn2p);
+//            robot.lift.rotateLeft.setPower(rn2p);
         }
         else{
             robot.lift.rotateRight.setPower(0);
-            robot.lift.rotateLeft.setPower(0);
+//            robot.lift.rotateLeft.setPower(0);
         }
 
 
@@ -484,7 +484,7 @@ public class TeleOpMethods {
         opMode.telemetry.addData("upgoal", up1p);
         opMode.telemetry.addData("up2goal", up2p);
         opMode.telemetry.addData("oursRotR", robot.lift.rotateRight.getCurrentPosition());
-        opMode.telemetry.addData("oursRotL", robot.lift.rotateLeft.getCurrentPosition());
+//        opMode.telemetry.addData("oursRotL", robot.lift.rotateLeft.getCurrentPosition());
         opMode.telemetry.addData("oursLiftL", robot.lift.liftLeft.getCurrentPosition());
         opMode.telemetry.addData("oursLiftR", robot.lift.liftRight.getCurrentPosition());
         opMode.telemetry.addData("treeAngle", treeAngle);
