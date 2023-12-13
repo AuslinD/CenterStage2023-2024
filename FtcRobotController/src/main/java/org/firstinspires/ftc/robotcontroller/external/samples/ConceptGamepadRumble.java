@@ -102,7 +102,8 @@ public class ConceptGamepadRumble extends LinearOpMode
     final double TRIGGER_THRESHOLD  = 0.75;     // Squeeze more than 3/4 to get rumble.
 
     @Override
-    public void runOpMode()
+    public void
+    runOpMode()
     {
         // Example 1. a)   start by creating a three-pulse rumble sequence: right, LEFT, LEFT
         customRumbleEffect = new Gamepad.RumbleEffect.Builder()
