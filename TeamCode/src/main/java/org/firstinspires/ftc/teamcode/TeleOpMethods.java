@@ -18,6 +18,7 @@ public class TeleOpMethods {
     int treeAngleIndex = 0;
     boolean gameOn = false;
     //Manipulator
+    boolean time = false;
     boolean state [] = {false,false,false,false,false,false,false,false,false,false,false,false,false}; // 6 stats/steps = to false at start
     static double rn1p, rn2p, up1p, up2p;
     boolean down = false;
@@ -121,6 +122,8 @@ public class TeleOpMethods {
             }*/
             ///*
             state[0] = true; //rotate angle
+            time = true;
+            down = false;
 
 
 
@@ -131,8 +134,15 @@ public class TeleOpMethods {
             robot.lift.liftRight.setTargetPosition(0);
             robot.claw.clawUp(); //retracts tree
             treeAngle = 0.1499; //angles tree
-            state[0] = false;
-            state[1] = true;
+            if (time) {
+                stateOneTime.reset();
+                time = false;
+            }
+            if (stateOneTime.milliseconds() > 1000){
+                state[0] = false;
+                state[1] = true;
+            }
+
             //so time would go here I think?
         }
         else if (state[1]) // step 2
