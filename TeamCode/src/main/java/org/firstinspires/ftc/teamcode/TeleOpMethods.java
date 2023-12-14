@@ -90,6 +90,9 @@ public class TeleOpMethods {
     }
     private void clawStuff(Gamepad gamepad1, Gamepad gamepad2){
 
+        boolean macroOff = !state[1]&&!state[0]&&!state[3]&&!state[2]&&!state[4]&&!state[5]&&!state[6];
+
+
         if(gamepad2.right_trigger > .1){
             robot.claw.clawUp();
         }
@@ -97,7 +100,7 @@ public class TeleOpMethods {
             robot.claw.setClawPosition( .355);
         }
         else{
-            if (!state[1]&&!state[0]&&!state[3]&&!state[2]&&!state[4]&&!state[5]&&!state[6]){
+            if (macroOff){
                 robot.claw.clawDown();
             }
 
@@ -108,8 +111,7 @@ public class TeleOpMethods {
         else if(gamepad2.dpad_down){
             treeAngle -= .01;
         }
-
-        if (gamepad2.dpad_right){ //mathew's macro  ngl im disapointed how you spelled my name
+        else if (gamepad2.dpad_right){ //mathew's macro  ngl im disapointed how you spelled my name
             /*ElapsedTime runtime = new ElapsedTime();
             if(runtime.milliseconds() > 500){
                 runtime.reset();
@@ -260,16 +262,15 @@ public class TeleOpMethods {
 
 
 
-        if(treeAngle > .9){
-            //treeAngle = .7;
-            treeAngle = .9;
+        if(macroOff) {
+            double offSet = robot.lift.rotateRight.getCurrentPosition() / 11356.25;
+            //offSet = treeAngle - offSet > .33 && treeAngle - offSet < .61? offSet : 0;
+            robot.claw.setClawAngle(treeAngle - offSet);
         }
-        else if (treeAngle < .01){
-            //treeAngle = .3;
-            treeAngle = .01;
+        else {
+            robot.claw.setClawAngle(treeAngle);
         }
 
-        robot.claw.setClawAngle(treeAngle);
     }
     private void planeServoControl(Gamepad gamepad1, Gamepad gamepad2) {
 
@@ -408,19 +409,35 @@ public class TeleOpMethods {
 
         if(gamepad2.right_bumper){
             rn1p = .75;
-//            rn2p = rn1p;
+            rn2p = rn1p;
             robot.lift.rotateRight.setPower(rn1p);
-//            robot.lift.Left.setPower(rn2p);
+            //robot.lift.rotateLeft.setPower(rn2p);
         }
         else if(gamepad2.left_bumper){
-            rn1p = -.75;
-//            rn2p = rn1p;
-            robot.lift.rotateRight.setPower(rn1p);
-//            robot.lift.rotateLeft.setPower(rn2p);
+            if(robot.lift.rotateRight.getCurrentPosition() > 0){
+                rn1p = -.75;
+                rn2p = rn1p;
+                robot.lift.rotateRight.setPower(rn1p);
+                //robot.lift.rotateLeft.setPower(rn2p);
+            }
+            else if (ignoreBounds){
+                rn1p = -.75;
+                rn2p = rn1p;
+                robot.lift.rotateRight.setPower(rn1p);
+                //robot.lift.rotateLeft.setPower(rn2p);
+            }
+
         }
         else{
-            robot.lift.rotateRight.setPower(0);
-//            robot.lift.rotateLeft.setPower(0);
+            if(robot.lift.liftLeft.getCurrentPosition() > 1600){
+                robot.lift.rotateRight.setPower(.15);
+                //robot.lift.rotateLeft.setPower(.15);
+
+            }
+            else {
+                robot.lift.rotateRight.setPower(0);
+                //.lift.rotateLeft.setPower(0);
+            }
         }
 
 
