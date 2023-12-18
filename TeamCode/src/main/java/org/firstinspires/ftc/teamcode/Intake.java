@@ -13,7 +13,7 @@ public class Intake {
     double ANG_UP = 0.5;
     private CRServo intakeLeft, intakeRight, transferLeft, transferRight, transferMiddle;
 
-    private Servo intakeAngleLeft, intakeAngleRight;
+    public Servo intakeAngleLeft, intakeAngleRight;
 
     public Intake(OpMode opMode){
         intakeLeft = opMode.hardwareMap.get(CRServo.class, "inL");
