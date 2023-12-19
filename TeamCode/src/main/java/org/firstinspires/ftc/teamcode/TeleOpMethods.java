@@ -149,7 +149,7 @@ public class TeleOpMethods {
         }
         else if (state[1]) // step 2
         {
-            treeAngle = 0.10;
+            treeAngle = 0.090;
             opMode.telemetry.addData("time",stateOneTime.milliseconds()); //doesnt work unless comment out other telemetry
             opMode.telemetry.update();
             robot.claw.clawDown();
@@ -157,17 +157,17 @@ public class TeleOpMethods {
                 //wait im trolling really hard, we should initialize time when we set state[1] to true since that's
                 //how long the robot has actually been doing the state. Rn it resets time everytime
                 //because it initializes(resets) inside the if statement, so time will never be > 1000 milliseconds
-                if (robot.lift.rotateRight.getCurrentPosition() < -46 && robot.lift.rotateRight.getCurrentPosition() > -66) // check to see if the lift is btw the value
+                if (robot.lift.rotateRight.getCurrentPosition() < -57 && robot.lift.rotateRight.getCurrentPosition() > -68) // check to see if the lift is btw the value
                 {
                     down = true;
                     stateOneTime.reset();
                 }
-                else if(robot.lift.rotateRight.getCurrentPosition() > -46){
+                else if(robot.lift.rotateRight.getCurrentPosition() > -57){
                     robot.lift.rotateRight.setPower(-0.5);
 //                    robot.lift.rotateLeft.setPower(-0.5);
 
                 }
-                else if(robot.lift.rotateRight.getCurrentPosition() < -66){
+                else if(robot.lift.rotateRight.getCurrentPosition() < -68){
                     robot.lift.rotateRight.setPower(0.5); // set power for angle of the list
 //                    robot.lift.rotateLeft.setPower(0.5);
                 }
@@ -176,7 +176,7 @@ public class TeleOpMethods {
                 robot.claw.clawDown();
                 if (stateOneTime.milliseconds() > 1000){
                     state[1] = false;
-                    state[2] = true;
+                    state[2] = false;
                 }
 
             }
@@ -185,7 +185,7 @@ public class TeleOpMethods {
         {
             treeAngle = 0.02999;
             state[2] = false;
-            state[3] = true;
+            state[3] = false;
         }
         if(state[3]) // step 4
         {
@@ -221,12 +221,12 @@ public class TeleOpMethods {
 
             } else if (robot.lift.rotateRight.getCurrentPosition() > 569) {
                 robot.lift.rotateRight.setPower(-0.5);
-                robot.lift.rotateLeft.setPower(-0.5);
+//                robot.lift.rotateLeft.setPower(-0.5);
 
 
             } else if (robot.lift.rotateRight.getCurrentPosition() < 554) {
                 robot.lift.rotateRight.setPower(0.5); // set power for angle of the list
-                robot.lift.rotateLeft.setPower(0.5);
+//                robot.lift.rotateLeft.setPower(0.5);
             }
 
         }
