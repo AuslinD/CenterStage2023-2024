@@ -176,23 +176,24 @@ public class TeleOpMethods {
                 robot.claw.clawDown();
                 if (stateOneTime.milliseconds() > 1000){
                     state[1] = false;
-                    state[2] = false;
+                    state[2] = true;
+                    stateOneTime.reset();
                 }
 
             }
         }
         if(state[2]) // step 3
         {
-            treeAngle = 0.02999;
-            state[2] = false;
-            state[3] = false;
+                treeAngle = 0.055;
+                state[2] = false;
+                state[3] = true;
         }
         if(state[3]) // step 4
         {
             if (robot.lift.rotateRight.getCurrentPosition() < 844 && robot.lift.rotateRight.getCurrentPosition() > 829) // check to see if the lift is btw the value
             {
                 state[3] = false;
-                state[4] = true;
+                state[4] = false;
 
             } else if (robot.lift.rotateRight.getCurrentPosition() > 844) {
                 robot.lift.rotateRight.setPower(-0.5);
@@ -215,7 +216,7 @@ public class TeleOpMethods {
         if(state[5]) // step 6
         {
             if (robot.lift.rotateRight.getCurrentPosition() < 569 && robot.lift.rotateRight.getCurrentPosition() > 554) // check to see if the lift is btw the value
-            {
+            {g
                 state[5] = false;
                 state[6] = true;
 
