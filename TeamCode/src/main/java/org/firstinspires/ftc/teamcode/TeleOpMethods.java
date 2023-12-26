@@ -124,18 +124,18 @@ public class TeleOpMethods {
             }*/
             ///*
             state[0] = true; //rotate angle
-            time = true;
-            down = false;
+            time = true;//reset
+            down = false;//reset
 
 
 
         }
-        if(state[0]) // step 1
+        if(state[0]) // step 1: resets and angles tree
         {
-            robot.lift.liftLeft.setTargetPosition(0); //retracts lift??
+            robot.lift.liftLeft.setTargetPosition(0); //retracts lift
             robot.lift.liftRight.setTargetPosition(0);
             robot.claw.clawUp(); //retracts tree
-            treeAngle = 0.1499; //angles tree
+            treeAngle = 0.1149; //angles tree
             if (time) {
                 stateOneTime.reset();
                 time = false;
@@ -147,9 +147,9 @@ public class TeleOpMethods {
 
             //so time would go here I think?
         }
-        else if (state[1]) // step 2
+        else if (state[1]) // step 2: gets pixel
         {
-            treeAngle = 0.090;
+            treeAngle = 0.1149;
             opMode.telemetry.addData("time",stateOneTime.milliseconds()); //doesnt work unless comment out other telemetry
             opMode.telemetry.update();
             robot.claw.clawDown();
@@ -176,7 +176,7 @@ public class TeleOpMethods {
                 robot.claw.clawDown();
                 if (stateOneTime.milliseconds() > 1000){
                     state[1] = false;
-                    state[2] = true;
+                    state[2] = false;
                     stateOneTime.reset();
                 }
 
@@ -216,7 +216,7 @@ public class TeleOpMethods {
         if(state[5]) // step 6
         {
             if (robot.lift.rotateRight.getCurrentPosition() < 569 && robot.lift.rotateRight.getCurrentPosition() > 554) // check to see if the lift is btw the value
-            {g
+            {
                 state[5] = false;
                 state[6] = true;
 
