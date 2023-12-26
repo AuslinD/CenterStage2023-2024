@@ -80,7 +80,7 @@ public class RedRight extends LinearOpMode {
             movement.robot.lift.setMotorsToGoUpOrDown(450);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
-            movement.robot.claw.setClawPosition(.34);
+            movement.robot.claw.setClawPosition(.2);
             sleep(2000);
             movement.encoderDrive(50, 500);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
@@ -93,7 +93,7 @@ public class RedRight extends LinearOpMode {
             movement.robot.lift.setMotorsToGoUpOrDown(500);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
-            movement.robot.claw.setClawPosition(.34);
+            movement.robot.claw.setClawPosition(.2);
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
             movement.encoderDrive(100, 5000);
@@ -106,7 +106,7 @@ public class RedRight extends LinearOpMode {
             movement.robot.lift.setMotorsToGoUpOrDown(500);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
-            movement.robot.claw.setClawPosition(.34);
+            movement.robot.claw.setClawPosition(.2);
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
             movement.encoderIMUTurn(-170, 10000);

@@ -84,8 +84,8 @@ public class BlueLeft extends LinearOpMode {
             sleep(2000);
             movement.encoderDrive(50, 500);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
-            //movement.encoderIMUTurn(170, 10000);
-            //movement.encoderDrive(-450, 3000);
+            movement.encoderIMUTurn(170, 10000);
+            movement.encoderDrive(-450, 3000);
 
         }
         else if(pos == OpenCV.BlueCV.SkystonePosition.CENTER){
