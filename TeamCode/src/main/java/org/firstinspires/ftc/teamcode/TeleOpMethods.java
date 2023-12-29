@@ -16,10 +16,10 @@ public class TeleOpMethods {
     static double treeAngle = .47;
     private static boolean ignoreBounds = false;
     int treeAngleIndex = 0;
-    boolean gameOn = false;
+    boolean gameOn;
     //Manipulator
     boolean time = false;
-    boolean state [] = {false,false,false,false,false,false,false,false,false,false,false,false,false}; // 6 stats/steps = to false at start
+    static boolean state [] = {false,false,false,false,false,false,false,false,false,false,false,false,false}; // 6 stats/steps = to false at start
     static double rn1p, rn2p, up1p, up2p;
     boolean down = false;
     ElapsedTime stateOneTime = new ElapsedTime();
@@ -38,7 +38,7 @@ public class TeleOpMethods {
         robot.plane.setPosition(.47);
         treeAngle = .47;
         gameOn = false;
-        down = false;
+        //down = false;
     }
 
     public void teleOpControls(Gamepad gamepad1, Gamepad gamepad2)
@@ -134,7 +134,7 @@ public class TeleOpMethods {
         {
             robot.lift.liftLeft.setTargetPosition(0); //retracts lift
             robot.lift.liftRight.setTargetPosition(0);
-            robot.claw.clawUp(); //retracts tree
+            robot.claw.setClawPosition(0); //retracts tree
             treeAngle = 0.1149; //angles tree
             if (time) {
                 stateOneTime.reset();
@@ -152,7 +152,7 @@ public class TeleOpMethods {
             treeAngle = 0.1149;
             opMode.telemetry.addData("time",stateOneTime.milliseconds()); //doesnt work unless comment out other telemetry
             opMode.telemetry.update();
-            robot.claw.clawDown();
+            robot.claw.setClawPosition(0.8);
             if (!down){
                 //wait im trolling really hard, we should initialize time when we set state[1] to true since that's
                 //how long the robot has actually been doing the state. Rn it resets time everytime
@@ -173,22 +173,22 @@ public class TeleOpMethods {
                 }
             }
             else {
-                robot.claw.clawDown();
-                if (stateOneTime.milliseconds() > 1000){
+                robot.intake.spinTake(1);
+                if (stateOneTime.milliseconds() > 2000){
                     state[1] = false;
-                    state[2] = false;
+                    state[2] = true;
                     stateOneTime.reset();
                 }
 
             }
         }
-        if(state[2]) // step 3
+        if(state[2]) // step 3: moves claw back
         {
-                treeAngle = 0.055;
+                treeAngle = 0;
                 state[2] = false;
-                state[3] = true;
+                state[3] = false;
         }
-        if(state[3]) // step 4
+        if(state[3]) // step 4: rotate up
         {
             if (robot.lift.rotateRight.getCurrentPosition() < 844 && robot.lift.rotateRight.getCurrentPosition() > 829) // check to see if the lift is btw the value
             {
@@ -202,10 +202,10 @@ public class TeleOpMethods {
 
             } else if (robot.lift.rotateRight.getCurrentPosition() < 829) {
                 robot.lift.rotateRight.setPower(0.5); // set power for angle of the list
-//                robot.lift.rotateLeft.setPower(0.5);
+//              robot.lift.rotateLeft.setPower(0.5);
             }
         }
-        if(state[4]) // step 5
+        /*if(state[8]) // step 5: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!AAAAAAAAA
         {
             robot.lift.liftRight.setTargetPosition(277);
             robot.lift.liftLeft.setTargetPosition(277);
@@ -213,12 +213,12 @@ public class TeleOpMethods {
             state[5] = true;
 
         }
-        if(state[5]) // step 6
+        if(state[4]) // step 6:AAAAAAAAAAAAAAA
         {
             if (robot.lift.rotateRight.getCurrentPosition() < 569 && robot.lift.rotateRight.getCurrentPosition() > 554) // check to see if the lift is btw the value
             {
+                state[4] = false;
                 state[5] = false;
-                state[6] = true;
 
             } else if (robot.lift.rotateRight.getCurrentPosition() > 569) {
                 robot.lift.rotateRight.setPower(-0.5);
@@ -251,7 +251,7 @@ public class TeleOpMethods {
 //            robot.lift.rotateLeft.setPower(0.5);
         }
         //*/
-        }
+        //}
 
 
 
@@ -519,6 +519,7 @@ public class TeleOpMethods {
         opMode.telemetry.addData("br", robot.drivetrain.br.getCurrentPosition());
         opMode.telemetry.addData("inLeft", robot.intake.intakeAngleLeft.getPosition());
         opMode.telemetry.addData("inRight", robot.intake.intakeAngleRight.getPosition());
+        opMode.telemetry.addData("MACROOOOOOOOOOOOOOOO", (!state[1]&&!state[0]&&!state[3]&&!state[2]&&!state[4]&&!state[5]&&!state[6]));
         opMode.telemetry.update();
     }
 
