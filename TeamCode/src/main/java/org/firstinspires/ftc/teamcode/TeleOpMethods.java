@@ -19,7 +19,10 @@ public class TeleOpMethods {
     boolean gameOn;
     //Manipulator
     boolean time = false;
-    static boolean state [] = {false,false,false,false,false,false,false,false,false,false,false,false,false}; // 6 stats/steps = to false at start
+    static boolean state [] = {false,false,false,false,false,false,false,false
+
+    }; // 6 stats/steps = to false at start
+
     static double rn1p, rn2p, up1p, up2p;
     boolean down = false;
     ElapsedTime stateOneTime = new ElapsedTime();
@@ -173,7 +176,7 @@ public class TeleOpMethods {
                 }
             }
             else {
-                robot.intake.spinTake(1);
+                //robot.intake.spinTake(1);
                 if (stateOneTime.milliseconds() > 2000){
                     state[1] = false;
                     state[2] = true;
@@ -197,10 +200,9 @@ public class TeleOpMethods {
 
             } else if (robot.lift.rotateRight.getCurrentPosition() > 844) {
                 robot.lift.rotateRight.setPower(-0.5);
-//                robot.lift.rotateLeft.setPower(-0.5);
+//                robot.lift.rotateLeft.setPower(-0.5);b
 
-
-            } else if (robot.lift.rotateRight.getCurrentPosition() < 829) {
+              } else if (robot.lift.rotateRight.getCurrentPosition() < 829) {
                 robot.lift.rotateRight.setPower(0.5); // set power for angle of the list
 //              robot.lift.rotateLeft.setPower(0.5);
             }
@@ -264,7 +266,7 @@ public class TeleOpMethods {
 
 
         if(macroOff) {
-            double offSet = robot.lift.rotateRight.getCurrentPosition() / 11356.25;
+            double offSet = robot.lift.rotateRight.getCurrentPosition() / 11356.25;// the
             //offSet = treeAngle - offSet > .33 && treeAngle - offSet < .61? offSet : 0;
             robot.claw.setClawAngle(treeAngle - offSet);
         }
