@@ -12,7 +12,7 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 @Autonomous(name = "blueEncoderRight", group = "auto")
 public class BlueRight extends LinearOpMode {
     OpenCvInternalCamera phoneCam;
-    OpenCV.RedCV pipeline;
+    OpenCV.BlueCV pipeline;
 
     double treeAngleStraight = .41;
 
@@ -34,7 +34,7 @@ public class BlueRight extends LinearOpMode {
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
-        pipeline = new OpenCV.RedCV();
+        pipeline = new OpenCV.BlueCV();
         phoneCam.setPipeline(pipeline);
 
         // We set the viewport policy to optimized view so the preview doesn't appear 90 deg
@@ -53,7 +53,7 @@ public class BlueRight extends LinearOpMode {
                 telemetry.addLine("No camera");
             }
         });
-        OpenCV.RedCV.SkystonePosition pos = null;
+        OpenCV.BlueCV.SkystonePosition pos = null;
         while (!isStarted() && !isStopRequested()) {
             telemetry.addData("Analysis", pipeline.getAnalysis());
             telemetry.update();
@@ -62,5 +62,47 @@ public class BlueRight extends LinearOpMode {
             sleep(50);
         }
         waitForStart();
+        if(pos == OpenCV.BlueCV.SkystonePosition.RIGHT){
+            movement.encoderDrive(-930, 6500);
+            movement.encoderIMUTurn(-90, 200000);
+            movement.robot.lift.setMotorsToGoUpOrDown(500);
+            movement.robot.claw.setClawAngle(treeAngleDown);
+            sleep(2000);
+            movement.robot.claw.setClawPosition(.34);
+            sleep(2000);
+            movement.encoderDrive(200, 2000);
+            movement.robot.claw.setClawAngle(treeAngleStraight+.1);
+            movement.encoderIMUTurn(-180, 10000);
+            movement.encoderDrive(-1290, 15500);
+
+        }
+        else if(pos == OpenCV.BlueCV.SkystonePosition.CENTER){
+            movement.encoderDrive(-875, 5000);
+            movement.robot.lift.setMotorsToGoUpOrDown(500);
+            movement.robot.claw.setClawAngle(treeAngleDown);
+            sleep(2000);
+            movement.robot.claw.setClawPosition(.34);
+            sleep(2000);
+            movement.robot.claw.setClawAngle(treeAngleStraight+.1);
+            movement.encoderDrive(100, 5000);
+            movement.encoderIMUTurn(90, 10000);
+            movement.encoderDrive(-1290, 15500);
+        }
+        else{
+            movement.encoderDrive(-950, 15500);
+            movement.encoderIMUTurn(-90, 5000);
+            movement.encoderDrive(670, 5000);
+            movement.robot.lift.setMotorsToGoUpOrDown(450);
+            movement.robot.claw.setClawAngle(treeAngleDown);
+            sleep(2000);
+            movement.robot.claw.setClawPosition(.34);
+            sleep(2000);
+            movement.encoderDrive(100,1000);
+            movement.encoderDrive(50, 500);
+            movement.robot.claw.setClawAngle(treeAngleStraight+.1);
+            movement.encoderIMUTurn(205, 10000);
+            movement.encoderDrive(-650, 3000);
+
+        }
     }
 }

@@ -74,15 +74,15 @@ public class RedLeft extends LinearOpMode {
 
         //movement.liftAnglePosition(100, 4000);
         if(pos == OpenCV.RedCV.SkystonePosition.RIGHT){
-            movement.encoderDrive(-990, 15500);
+            movement.encoderDrive(-1000, 15500);
             movement.encoderIMUTurn(88, 5000);
-            movement.encoderDrive(650, 5000);
+            movement.encoderDrive(700, 5000);
             movement.robot.lift.setMotorsToGoUpOrDown(450);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
             movement.robot.claw.setClawPosition(.34);
             sleep(2000);
-            movement.encoderDrive(50, 500);
+            movement.encoderDrive(150, 500);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
             //movement.encoderIMUTurn(170, 10000);
             //movement.encoderDrive(-450, 3000);
@@ -96,19 +96,24 @@ public class RedLeft extends LinearOpMode {
             movement.robot.claw.setClawPosition(.34);
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
+            movement.encoderIMUTurn(90, 5000);
             movement.encoderDrive(100, 5000);
             //movement.encoderIMUTurn(-80, 10000);
             //movement.encoderDrive(-1100, 15500);
         }
         else{
-            movement.encoderDrive(-930, 6500);
+            movement.encoderDrive(-955, 6500);
             movement.encoderIMUTurn(90, 200000);
+            movement.encoderDrive(-50, 500);
             movement.robot.lift.setMotorsToGoUpOrDown(500);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
             movement.robot.claw.setClawPosition(.34);
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
+            movement.encoderDrive(80, 5000);
+            movement.encoderIMUTurn(-175, 5000);
+            movement.encoderDrive(-300,500);
 
             //movement.encoderIMUTurn(-170, 10000);
             //movement.encoderDrive(-1100, 15500);
@@ -120,8 +125,8 @@ public class RedLeft extends LinearOpMode {
         //movement.robot.claw.clawUp();
         //sleep(1000);
 
-        movement.robot.lift.setMotorsToGoUpOrDown(0);
-        movement.encoderDrive(100, 3000);
+        //movement.robot.lift.setMotorsToGoUpOrDown(0); //uncomment when we have park
+        //movement.encoderDrive(100, 3000);
 
 
 
