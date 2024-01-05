@@ -51,13 +51,13 @@ public class Intake {
     }
 
     public void lowerIntake(){
-        intakeAngleLeft.setPosition(.99);
-        intakeAngleRight.setPosition(.372);
+        intakeAngleLeft.setPosition(0);
+        intakeAngleRight.setPosition(.552);
     }
 
     public void stowIntake(){
-        intakeAngleLeft.setPosition(.7);
-        intakeAngleRight.setPosition(.7);
+        intakeAngleLeft.setPosition(-.55);
+        intakeAngleRight.setPosition(.9);
     }
 
 }

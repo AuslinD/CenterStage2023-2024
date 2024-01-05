@@ -19,8 +19,8 @@ public class ServoTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Robot robot = new Robot(this);
-        CRServo hangL = hardwareMap.get(CRServo.class, "hangL");
-        CRServo hangR = hardwareMap.get(CRServo.class, "hangR");
+        intakeAngleLeft = hardwareMap.get(Servo.class, "angL");
+        intakeAngleRight = hardwareMap.get(Servo.class, "angR");
         robot.imu.resetYaw();
         double initPos = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
         robot.plane.setPosition(.47);
@@ -29,8 +29,8 @@ public class ServoTest extends LinearOpMode {
 
         waitForStart();
 
-        hangL.setPower(-1);
-        hangR.setPower(1);
+        //hangL.setPower(-1);
+        //hangR.setPower(1);
         /*
         intakeLeft.setPower(.5);
         intakeRight.setPower(.5);
@@ -38,7 +38,7 @@ public class ServoTest extends LinearOpMode {
         transferLeft.setPower(.5);
 
          */
-        sleep(10000);
+        sleep(1000);
 
         while(!isStopRequested()){
             /*
@@ -57,7 +57,15 @@ public class ServoTest extends LinearOpMode {
             telemetry.update();
             sleep(2000);
 
+
+
              */
+            intakeAngleLeft.setPosition(.075);
+            intakeAngleRight.setPosition(-1);
+            sleep(5000);
+            intakeAngleRight.setPosition(.552);
+            intakeAngleLeft.setPosition(0);
+            sleep(5000);
         }
 
 
