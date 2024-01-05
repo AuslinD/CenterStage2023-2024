@@ -80,12 +80,12 @@ public class RedRight extends LinearOpMode {
             movement.robot.lift.setMotorsToGoUpOrDown(450);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
-            movement.robot.claw.setClawPosition(.2);
+            movement.robot.claw.setClawPosition(.34);
             sleep(2000);
             movement.encoderDrive(50, 500);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
             movement.encoderIMUTurn(170, 10000);
-            movement.encoderDrive(-450, 3000);
+            movement.encoderDrive(-650, 3000);
 
         }
         else if(pos == OpenCV.RedCV.SkystonePosition.CENTER){
@@ -93,12 +93,12 @@ public class RedRight extends LinearOpMode {
             movement.robot.lift.setMotorsToGoUpOrDown(500);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
-            movement.robot.claw.setClawPosition(.2);
+            movement.robot.claw.setClawPosition(.34);
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
             movement.encoderDrive(100, 5000);
             movement.encoderIMUTurn(-80, 10000);
-            movement.encoderDrive(-1100, 15500);
+            movement.encoderDrive(-1280, 15500);
         }
         else{
             movement.encoderDrive(-930, 6500);
@@ -106,11 +106,11 @@ public class RedRight extends LinearOpMode {
             movement.robot.lift.setMotorsToGoUpOrDown(500);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
-            movement.robot.claw.setClawPosition(.2);
+            movement.robot.claw.setClawPosition(.34);
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
             movement.encoderIMUTurn(-170, 10000);
-            movement.encoderDrive(-1100, 15500);
+            movement.encoderDrive(-1280, 15500);
             
         }
 

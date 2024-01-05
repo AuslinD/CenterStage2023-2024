@@ -155,7 +155,6 @@ public class TeleOpMethods {
             treeAngle = 0.1149;
             opMode.telemetry.addData("time",stateOneTime.milliseconds()); //doesnt work unless comment out other telemetry
             opMode.telemetry.update();
-            robot.claw.setClawPosition(0.8);
             if (!down){
                 //wait im trolling really hard, we should initialize time when we set state[1] to true since that's
                 //how long the robot has actually been doing the state. Rn it resets time everytime
@@ -178,6 +177,7 @@ public class TeleOpMethods {
             else {
                 //robot.intake.spinTake(1);
                 if (stateOneTime.milliseconds() > 2000){
+                    robot.claw.setClawPosition(0.8);
                     state[1] = false;
                     state[2] = true;
                     stateOneTime.reset();
@@ -187,16 +187,15 @@ public class TeleOpMethods {
         }
         if(state[2]) // step 3: moves claw back
         {
-                treeAngle = 0;
+                treeAngle = 0.08;
                 state[2] = false;
-                state[3] = false;
+                state[3] = true;
         }
         if(state[3]) // step 4: rotate up
         {
             if (robot.lift.rotateRight.getCurrentPosition() < 844 && robot.lift.rotateRight.getCurrentPosition() > 829) // check to see if the lift is btw the value
             {
                 state[3] = false;
-                state[4] = false;
 
             } else if (robot.lift.rotateRight.getCurrentPosition() > 844) {
                 robot.lift.rotateRight.setPower(-0.5);

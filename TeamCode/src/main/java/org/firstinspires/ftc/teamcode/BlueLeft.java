@@ -81,9 +81,10 @@ public class BlueLeft extends LinearOpMode {
             sleep(2000);
             movement.robot.claw.setClawPosition(.34);
             sleep(2000);
+            movement.encoderDrive(200, 2000);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
-            movement.encoderIMUTurn(-170, 10000);
-            movement.encoderDrive(-1100, 15500);
+            movement.encoderIMUTurn(-180, 10000);
+            movement.encoderDrive(-1290, 15500);
 
         }
         else if(pos == OpenCV.BlueCV.SkystonePosition.CENTER){
@@ -95,22 +96,23 @@ public class BlueLeft extends LinearOpMode {
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
             movement.encoderDrive(100, 5000);
-            movement.encoderIMUTurn(80, 10000);
-            movement.encoderDrive(-1100, 15500);
+            movement.encoderIMUTurn(90, 10000);
+            movement.encoderDrive(-1290, 15500);
         }
         else{
             movement.encoderDrive(-990, 15500);
             movement.encoderIMUTurn(-90, 5000);
-            movement.encoderDrive(650, 5000);
+            movement.encoderDrive(670, 5000);
             movement.robot.lift.setMotorsToGoUpOrDown(450);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
             movement.robot.claw.setClawPosition(.34);
             sleep(2000);
+            movement.encoderDrive(100,1000);
             movement.encoderDrive(50, 500);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
-            movement.encoderIMUTurn(170, 10000);
-            movement.encoderDrive(-450, 3000);
+            movement.encoderIMUTurn(205, 10000);
+            movement.encoderDrive(-650, 3000);
 
         }
 
