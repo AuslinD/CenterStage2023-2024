@@ -267,6 +267,9 @@ public class TeleOpMethods {
         if(macroOff) {
             double offSet = robot.lift.rotateRight.getCurrentPosition() / 11356.25;// the
             //offSet = treeAngle - offSet > .33 && treeAngle - offSet < .61? offSet : 0;
+
+            //uncomment this to revert to relative
+            offSet = 0;
             robot.claw.setClawAngle(treeAngle - offSet);
         }
         else {
