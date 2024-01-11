@@ -109,10 +109,10 @@ public class TeleOpMethods {
 
         }
         if(gamepad2.dpad_up){
-            treeAngle += .01;
+            treeAngle += .02;
         }
         else if(gamepad2.dpad_down){
-            treeAngle -= .01;
+            treeAngle -= .02;
         }
         else if (gamepad2.dpad_right){ //mathew's macro  ngl im disapointed how you spelled my name
             /*ElapsedTime runtime = new ElapsedTime();
