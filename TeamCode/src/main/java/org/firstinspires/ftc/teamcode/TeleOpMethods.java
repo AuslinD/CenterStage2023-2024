@@ -176,8 +176,9 @@ public class TeleOpMethods {
             }
             else {
                 //robot.intake.spinTake(1);
+                robot.claw.setClawPosition(0.8);
                 if (stateOneTime.milliseconds() > 2000){
-                    robot.claw.setClawPosition(0.8);
+                    //robot.claw.setClawPosition(0.8);
                     state[1] = false;
                     state[2] = true;
                     stateOneTime.reset();
