@@ -152,7 +152,7 @@ public class TeleOpMethods {
         }
         else if (state[1]) // step 2: gets pixel
         {
-            treeAngle = 0.1149;
+            treeAngle = 0.1139;
             opMode.telemetry.addData("time",stateOneTime.milliseconds()); //doesnt work unless comment out other telemetry
             opMode.telemetry.update();
             if (!down){
@@ -380,7 +380,7 @@ public class TeleOpMethods {
 
 
         //Manipulator and lift stuff
-        int multiplier = 35;
+        int multiplier = 100;
         if(Math.abs(gamepad2.left_stick_y) > 0.1) {
             up1p += -gamepad2.left_stick_y * multiplier;
 
@@ -393,6 +393,9 @@ public class TeleOpMethods {
                 //up1p = 0;
                 //up2p = 0;
                 up1p = -10;
+            }
+            else if(up1p > 2600 && !ignoreBounds){
+                up1p = 2600;
             }
             robot.lift.setMotorsToGoUpOrDown((int)(up1p));
 
@@ -409,6 +412,9 @@ public class TeleOpMethods {
                 up1p /= Math.abs(max);
                 up2p /= Math.abs(max);
             }*/
+        }
+        else{
+            up1p = robot.lift.liftLeft.getCurrentPosition();
         }
 
 
