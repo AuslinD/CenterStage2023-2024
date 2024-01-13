@@ -5,47 +5,17 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name = "test", group = "test")
 public class TestTeleop extends OpMode {
     DcMotor rotateLeft, rotateRight, liftLeft, liftRight;
+
     Robot robot;
+    int treeAngle = 0;
     @Override
     public void init() {
         robot = new Robot(this);
-        /*
-        rotateLeft = hardwareMap.get(DcMotorEx.class, "rotleft");
-        rotateRight = hardwareMap.get(DcMotorEx.class, "rotright");
-        liftLeft = hardwareMap.get(DcMotorEx.class, "upleft");
-        liftRight = hardwareMap.get(DcMotorEx.class, "upright");
-
-        rotateLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rotateRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        liftLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        liftRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        rotateLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rotateRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        liftLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        liftRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        rotateLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rotateRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        liftLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        liftRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        rotateLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-        rotateRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        liftLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-        liftRight.setDirection(DcMotorSimple.Direction.REVERSE);
-*/
-        /*
-        rotateLeft.setTargetPosition(0);
-        rotateRight.setTargetPosition(0);
-        liftRight.setTargetPosition(0);
-        liftLeft.setTargetPosition(0);
-
-         */
 
 
 
@@ -70,14 +40,38 @@ public class TestTeleop extends OpMode {
             rotateRight.setPower(0);
             rotateLeft.setPower(0);
         }
-
          */
+        if(gamepad2.right_trigger > .1){
+            robot.claw.clawUp();
+        }
+        else if(gamepad2.left_trigger > .1){
+            robot.claw.setClawPosition( .355);
+        }
+        else{
+            robot.claw.clawDown();
 
+        }
+
+
+        if(gamepad2.dpad_up){
+            treeAngle += .02;
+        }
+        else if(gamepad2.dpad_down){
+            treeAngle -= .02;
+        }
+
+
+        robot.claw.setClawAngle(treeAngle);
+
+
+        /*
         telemetry.addData("left up per rot", liftLeft.getCurrentPosition() / (rotateLeft.getCurrentPosition()+.000001));
         telemetry.addData("right up per rot", liftRight.getCurrentPosition() / (rotateRight.getCurrentPosition()+.000001));
         telemetry.addData("left up per rot", liftLeft.getCurrentPosition() / (rotateRight.getCurrentPosition()+0.000001));
         telemetry.addData("parallel odom", robot.drivetrain.bl.getCurrentPosition());
         telemetry.update();
+
+         */
 
 
     }
