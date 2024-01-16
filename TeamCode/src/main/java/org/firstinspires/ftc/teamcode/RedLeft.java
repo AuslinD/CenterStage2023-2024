@@ -82,8 +82,8 @@ public class RedLeft extends LinearOpMode {
             sleep(2000);
             movement.robot.claw.setClawPosition(.34);
             sleep(2000);
-            movement.encoderDrive(150, 500);
-            movement.robot.claw.setClawAngle(treeAngleStraight+.1);
+            //movement.encoderDrive(150, 500);
+            //movement.robot.claw.setClawAngle(treeAngleStraight+.1);
             //movement.encoderIMUTurn(170, 10000);
             //movement.encoderDrive(-450, 3000);
 
@@ -96,8 +96,8 @@ public class RedLeft extends LinearOpMode {
             movement.robot.claw.setClawPosition(.34);
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
-            movement.encoderIMUTurn(90, 5000);
-            movement.encoderDrive(100, 5000);
+            //movement.encoderIMUTurn(90, 5000);
+            //movement.encoderDrive(100, 5000);
             //movement.encoderIMUTurn(-80, 10000);
             //movement.encoderDrive(-1100, 15500);
         }
@@ -111,9 +111,9 @@ public class RedLeft extends LinearOpMode {
             movement.robot.claw.setClawPosition(.34);
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
-            movement.encoderDrive(80, 5000);
-            movement.encoderIMUTurn(-175, 5000);
-            movement.encoderDrive(-300,500);
+            //movement.encoderDrive(80, 5000);
+            //movement.encoderIMUTurn(-175, 5000);
+            //movement.encoderDrive(-300,500);
 
             //movement.encoderIMUTurn(-170, 10000);
             //movement.encoderDrive(-1100, 15500);
@@ -121,11 +121,17 @@ public class RedLeft extends LinearOpMode {
         }
 
         //movement.liftAnglePosition(800, 3500);
-        sleep(2000);
         //movement.robot.claw.clawUp();
         //sleep(1000);
 
         //movement.robot.lift.setMotorsToGoUpOrDown(0); //uncomment when we have park
+        //movement.encoderDrive(100, 3000);
+        //sleep(2000);
+        //movement.robot.claw.clawUp();
+        sleep(1000);
+
+        movement.robot.lift.setMotorsToGoUpOrDown(0);
+        sleep(2000);
         //movement.encoderDrive(100, 3000);
 
 

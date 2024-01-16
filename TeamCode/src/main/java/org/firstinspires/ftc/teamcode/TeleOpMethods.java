@@ -86,6 +86,7 @@ public class TeleOpMethods {
         }
         if(gamepad2.x){
             robot.intake.lowerIntake();
+            robot.intake.spinTakeTroll(1);
         }
         else if(gamepad2.b){
             robot.intake.stowIntake();
@@ -126,7 +127,11 @@ public class TeleOpMethods {
                 }
             }*/
             ///*
+
             state[0] = true; //rotate angle
+            if(!macroOff){
+                state = new boolean[]{false, false, false, false, false, false, false, false};
+            }
             time = true;//reset
             down = false;//reset
 
@@ -135,8 +140,8 @@ public class TeleOpMethods {
         }
         if(state[0]) // step 1: resets and angles tree
         {
-            robot.lift.liftLeft.setTargetPosition(15); //retracts lift
-            robot.lift.liftRight.setTargetPosition(15);
+            robot.lift.liftLeft.setTargetPosition(55); //retracts lift
+            robot.lift.liftRight.setTargetPosition(55);
             robot.claw.setClawPosition(0); //retracts tree
             treeAngle = 0.1149; //angles tree
             if (time) {
@@ -156,20 +161,21 @@ public class TeleOpMethods {
             opMode.telemetry.addData("time",stateOneTime.milliseconds()); //doesnt work unless comment out other telemetry
             opMode.telemetry.update();
             if (!down){
+                robot.claw.setClawPosition(0.34);
                 //wait im trolling really hard, we should initialize time when we set state[1] to true since that's
                 //how long the robot has actually been doing the state. Rn it resets time everytime
                 //because it initializes(resets) inside the if statement, so time will never be > 1000 milliseconds
-                if (robot.lift.rotateRight.getCurrentPosition() < -57 && robot.lift.rotateRight.getCurrentPosition() > -68) // check to see if the lift is btw the value
+                if (robot.lift.rotateRight.getCurrentPosition() < -68 && robot.lift.rotateRight.getCurrentPosition() > -75) // check to see if the lift is btw the value
                 {
                     down = true;
                     stateOneTime.reset();
                 }
-                else if(robot.lift.rotateRight.getCurrentPosition() > -57){
+                else if(robot.lift.rotateRight.getCurrentPosition() > -68){
                     robot.lift.rotateRight.setPower(-0.5);
 //                    robot.lift.rotateLeft.setPower(-0.5);
 
                 }
-                else if(robot.lift.rotateRight.getCurrentPosition() < -68){
+                else if(robot.lift.rotateRight.getCurrentPosition() < -75){
                     robot.lift.rotateRight.setPower(0.5); // set power for angle of the list
 //                    robot.lift.rotateLeft.setPower(0.5);
                 }
@@ -194,15 +200,16 @@ public class TeleOpMethods {
         }
         if(state[3]) // step 4: rotate up
         {
-            if (robot.lift.rotateRight.getCurrentPosition() < 844 && robot.lift.rotateRight.getCurrentPosition() > 829) // check to see if the lift is btw the value
+            if (robot.lift.rotateRight.getCurrentPosition() < 830 && robot.lift.rotateRight.getCurrentPosition() > 820) // check to see if the lift is btw the value
             {
                 state[3] = false;
+                treeAngle = .41;
 
-            } else if (robot.lift.rotateRight.getCurrentPosition() > 844) {
+            } else if (robot.lift.rotateRight.getCurrentPosition() > 830) {
                 robot.lift.rotateRight.setPower(-0.5);
 //                robot.lift.rotateLeft.setPower(-0.5);b
 
-              } else if (robot.lift.rotateRight.getCurrentPosition() < 829) {
+              } else if (robot.lift.rotateRight.getCurrentPosition() < 820) {
                 robot.lift.rotateRight.setPower(0.5); // set power for angle of the list
 //              robot.lift.rotateLeft.setPower(0.5);
             }
@@ -394,8 +401,8 @@ public class TeleOpMethods {
                 //up2p = 0;
                 up1p = -10;
             }
-            else if(up1p > 2600 && !ignoreBounds){
-                up1p = 2600;
+            else if(up1p > 3600 && !ignoreBounds){
+                up1p = 3600;
             }
             robot.lift.setMotorsToGoUpOrDown((int)(up1p));
 

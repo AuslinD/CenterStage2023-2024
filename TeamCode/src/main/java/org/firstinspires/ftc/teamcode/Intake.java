@@ -57,6 +57,15 @@ public class Intake {
         transferMiddle.setPower(-power);
     }
 
+    public void spinTakeTroll(double power){
+        //intakeLeft.setPower(power);
+        //intakeRight.setPower(power);
+        intakeMotor.setPower(power * 1);
+        transferLeft.setPower(power);
+        transferRight.setPower(-power);
+        transferMiddle.setPower(power);
+    }
+
     public void lowerIntake(){
         intakeAngleLeft.setPosition(0);
         intakeAngleRight.setPosition(.552);
