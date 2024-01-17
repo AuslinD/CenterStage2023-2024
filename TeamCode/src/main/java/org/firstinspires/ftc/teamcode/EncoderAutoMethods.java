@@ -132,7 +132,7 @@ public class EncoderAutoMethods {
     public void encoderDrive(int ticks, int milliseconds){
         ElapsedTime elapsedTime = new ElapsedTime();
         int initPos = robot.drivetrain.br.getCurrentPosition();
-        while(elapsedTime.milliseconds() < milliseconds && !linearOpMode.isStopRequested() && Math.abs((robot.drivetrain.br.getCurrentPosition() - initPos) - ticks) > 2){
+        while(elapsedTime.milliseconds() < milliseconds && !linearOpMode.isStopRequested() && Math.abs((robot.drivetrain.br.getCurrentPosition() - initPos) - ticks) > 1){
             int currentDistance = robot.drivetrain.br.getCurrentPosition() - initPos;
             int mult = currentDistance - ticks < 0 ? 1: -1;
             robot.drivetrain.fl.setPower(.27 * mult);
@@ -164,10 +164,10 @@ public class EncoderAutoMethods {
             linearOpMode.telemetry.addData("target", targetPos);
             linearOpMode.telemetry.addData("if", robot.getImu().getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) + 180 - targetPos);
             linearOpMode.telemetry.update();
-            robot.drivetrain.bl.setPower(-.25 * mult);
-            robot.drivetrain.fl.setPower(-.25 * mult);
-            robot.drivetrain.fr.setPower(.25 * mult);
-            robot.drivetrain.br.setPower(.25 * mult);
+            robot.drivetrain.bl.setPower(-.21 * mult);
+            robot.drivetrain.fl.setPower(-.21 * mult);
+            robot.drivetrain.fr.setPower(.21 * mult);
+            robot.drivetrain.br.setPower(.21 * mult);
         }
         robot.drivetrain.setALLMotorPower(0);
     }
