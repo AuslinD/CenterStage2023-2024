@@ -104,8 +104,8 @@ public class RedLeft extends LinearOpMode {
             movement.robot.claw.setClawPosition(.335);
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight);
-            movement.encoderIMUTurn(90, 5000);
-            movement.encoderDrive(2200, 15000);
+            movement.encoderIMUTurn(93, 5000);
+            movement.encoderDrive(2500, 12000);
             //movement.encoderIMUTurn(90, 5000);
             //movement.encoderDrive(100, 5000);
             //movement.encoderIMUTurn(-80, 10000);
