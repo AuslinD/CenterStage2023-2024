@@ -132,13 +132,13 @@ public class EncoderAutoMethods {
     public void encoderDrive(int ticks, int milliseconds){
         ElapsedTime elapsedTime = new ElapsedTime();
         int initPos = robot.drivetrain.br.getCurrentPosition();
-        while(elapsedTime.milliseconds() < milliseconds && !linearOpMode.isStopRequested() && Math.abs((robot.drivetrain.br.getCurrentPosition() - initPos) - ticks) > 1){
+        while(elapsedTime.milliseconds() < milliseconds && !linearOpMode.isStopRequested() && Math.abs((robot.drivetrain.br.getCurrentPosition() - initPos) - ticks) > 2){
             int currentDistance = robot.drivetrain.br.getCurrentPosition() - initPos;
             int mult = currentDistance - ticks < 0 ? 1: -1;
-            robot.drivetrain.fl.setPower(.27 * mult);
-            robot.drivetrain.bl.setPower(.27 * mult);
-            robot.drivetrain.fr.setPower(.27 * mult);
-            robot.drivetrain.br.setPower(.27 * mult);
+            robot.drivetrain.fl.setPower(.26 * mult);
+            robot.drivetrain.bl.setPower(.26 * mult);
+            robot.drivetrain.fr.setPower(.26 * mult);
+            robot.drivetrain.br.setPower(.26 * mult);
             linearOpMode.telemetry.addData("currentDistance", currentDistance);
             linearOpMode.telemetry.addData("targetDistance", ticks);
             linearOpMode.telemetry.update();
@@ -183,6 +183,18 @@ public class EncoderAutoMethods {
             linearOpMode.telemetry.addData("currentDistance", currentDistance);
             linearOpMode.telemetry.addData("targetDistance", ticks);
             linearOpMode.telemetry.update();
+        }
+    }
+
+    public void strafe(double power, int milliseconds){
+        ElapsedTime elapsedTime = new ElapsedTime();
+        while(elapsedTime.milliseconds() < milliseconds){
+            robot.drivetrain.fl.setPower(power);
+            robot.drivetrain.br.setPower(power);
+            robot.drivetrain.fr.setPower(-power);
+            robot.drivetrain.bl.setPower(-power);
+
+
         }
     }
 

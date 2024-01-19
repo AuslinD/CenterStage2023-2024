@@ -79,12 +79,14 @@ public class RedRight extends LinearOpMode {
             movement.encoderDrive(650, 5000);
             movement.robot.lift.setMotorsToGoUpOrDown(450);
             movement.robot.claw.setClawAngle(treeAngleDown);
+            movement.robot.claw.setClawAngle(treeAngleDown + treeAngleStraight / 5);
+            movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
             movement.robot.claw.setClawPosition(.34);
             sleep(2000);
             movement.encoderDrive(50, 500);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
-            movement.encoderIMUTurn(165, 10000);
+            movement.encoderIMUTurn(163, 10000);
             movement.encoderDrive(-650, 3000);
 
         }
@@ -92,12 +94,14 @@ public class RedRight extends LinearOpMode {
             movement.encoderDrive(-875, 5000);
             movement.robot.lift.setMotorsToGoUpOrDown(500);
             movement.robot.claw.setClawAngle(treeAngleDown);
+            movement.robot.claw.setClawAngle(treeAngleDown + treeAngleStraight / 5);
+            movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
             movement.robot.claw.setClawPosition(.34);
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
             movement.encoderDrive(100, 5000);
-            movement.encoderIMUTurn(-79, 10000);
+            movement.encoderIMUTurn(-81, 10000);
             movement.encoderDrive(-1280, 8500);
         }
         else{
@@ -106,13 +110,15 @@ public class RedRight extends LinearOpMode {
             movement.encoderDrive(-50, 5000);
             movement.robot.lift.setMotorsToGoUpOrDown(500);
             movement.robot.claw.setClawAngle(treeAngleDown);
+            movement.robot.claw.setClawAngle(treeAngleDown + treeAngleStraight / 5);
+            movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
             movement.robot.claw.setClawPosition(.34);
             sleep(2000);
             movement.encoderDrive(100, 5000);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
-            movement.encoderIMUTurn(-165, 10000);
-            movement.encoderDrive(-1280, 8500);
+            movement.encoderIMUTurn(-171, 10000);
+            movement.encoderDrive(-1200, 8500);
             
         }
 
