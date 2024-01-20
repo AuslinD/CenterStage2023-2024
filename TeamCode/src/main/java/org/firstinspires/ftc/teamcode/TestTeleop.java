@@ -1,14 +1,18 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.graphics.Color;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name = "test", group = "test")
 public class TestTeleop extends OpMode {
+    float gain = 2;
     DcMotor rotateLeft, rotateRight, liftLeft, liftRight;
 
     Robot robot;
@@ -41,6 +45,7 @@ public class TestTeleop extends OpMode {
             rotateLeft.setPower(0);
         }
          */
+        /*
         if(gamepad2.right_trigger > .1){
             robot.claw.clawUp();
         }
@@ -63,16 +68,44 @@ public class TestTeleop extends OpMode {
 
         robot.claw.setClawAngle(treeAngle);
 
-
-        /*
-        telemetry.addData("left up per rot", liftLeft.getCurrentPosition() / (rotateLeft.getCurrentPosition()+.000001));
-        telemetry.addData("right up per rot", liftRight.getCurrentPosition() / (rotateRight.getCurrentPosition()+.000001));
-        telemetry.addData("left up per rot", liftLeft.getCurrentPosition() / (rotateRight.getCurrentPosition()+0.000001));
-        telemetry.addData("parallel odom", robot.drivetrain.bl.getCurrentPosition());
-        telemetry.update();
-
          */
 
+
+        if (gamepad2.dpad_up) {
+            // Only increase the gain by a small amount, since this loop will occur multiple times per second.
+            gain += 0.005;
+        } else if (gamepad2.dpad_down && gain > 1) { // A gain of less than 1 will make the values smaller, which is not helpful.
+            gain -= 0.005;
+        }
+
+        float[] hsvValuesTop = new float[3];
+        float[] hsvValuesBot = new float[3];
+        NormalizedRGBA colorsTop = robot.colorSensorTop.getNormalizedColors();
+        NormalizedRGBA colorsBot = robot.colorSensorBottom.getNormalizedColors();
+        Color.colorToHSV(colorsTop.toColor(), hsvValuesTop);
+        Color.colorToHSV(colorsBot.toColor(), hsvValuesBot);
+
+        telemetry.addLine()
+                .addData("Red", "%.3f", colorsTop.red)
+                .addData("Green", "%.3f", colorsTop.green)
+                .addData("Blue", "%.3f", colorsTop.blue);
+        telemetry.addLine()
+                .addData("Hue", "%.3f", hsvValuesTop[0])
+                .addData("Saturation", "%.3f", hsvValuesTop[1])
+                .addData("Value", "%.3f", hsvValuesTop[2]);
+        telemetry.addData("Alpha", "%.3f", colorsTop.alpha);
+
+        telemetry.addLine()
+                .addData("Red", "%.3f", colorsBot.red)
+                .addData("Green", "%.3f", colorsBot.green)
+                .addData("Blue", "%.3f", colorsBot.blue);
+        telemetry.addLine()
+                .addData("Hue", "%.3f", hsvValuesBot[0])
+                .addData("Saturation", "%.3f", hsvValuesBot[1])
+                .addData("Value", "%.3f", hsvValuesBot[2]);
+        telemetry.addData("Alpha", "%.3f", colorsBot.alpha);
+        telemetry.addData("Gain", gain);
+        telemetry.update();
 
     }
 }

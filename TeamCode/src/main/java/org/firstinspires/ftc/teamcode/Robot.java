@@ -4,7 +4,9 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.SwitchableLight;
 
 public class Robot {
     Drivetrain drivetrain;
@@ -18,6 +20,9 @@ public class Robot {
     IMU imu;
 
     Servo plane;
+
+    NormalizedColorSensor colorSensorTop;
+    NormalizedColorSensor colorSensorBottom;
 
 
     public Robot(OpMode opmode){
@@ -38,8 +43,14 @@ public class Robot {
 
         plane = opmode.hardwareMap.get(Servo.class, "plane");
 
-
-
+        colorSensorTop = opmode.hardwareMap.get(NormalizedColorSensor.class, "colortop");
+        colorSensorBottom = opmode.hardwareMap.get(NormalizedColorSensor.class, "colorbottom");
+        if (colorSensorTop instanceof SwitchableLight) {
+            ((SwitchableLight)colorSensorTop).enableLight(true);
+        }
+        if (colorSensorBottom instanceof SwitchableLight) {
+            ((SwitchableLight)colorSensorBottom).enableLight(true);
+        }
 
 
     }

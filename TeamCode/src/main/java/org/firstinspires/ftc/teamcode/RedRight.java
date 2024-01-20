@@ -128,7 +128,8 @@ public class RedRight extends LinearOpMode {
         sleep(1000);
 
         movement.robot.lift.setMotorsToGoUpOrDown(0);
-        movement.encoderDrive(100, 3000);
+        movement.encoderDrive(100, 1500);
+        movement.strafe(.3, 2000);
 
 
 

@@ -57,6 +57,8 @@ public class TeleOpMethods {
 //            robot.lift.rotateLeft.setPower(.35);
 
 //        }
+
+
         telemetry();
 
 
