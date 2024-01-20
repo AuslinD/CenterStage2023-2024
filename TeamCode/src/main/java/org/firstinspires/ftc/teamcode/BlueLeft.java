@@ -74,8 +74,9 @@ public class BlueLeft extends LinearOpMode {
 
         //movement.liftAnglePosition(100, 4000);
         if(pos == OpenCV.BlueCV.SkystonePosition.RIGHT){
-            movement.encoderDrive(-900, 6500);
+            movement.encoderDrive(-820, 6500);
             movement.encoderIMUTurn(-90, 200000);
+            movement.encoderDrive(100, 2000);
             movement.robot.lift.setMotorsToGoUpOrDown(500);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
@@ -83,8 +84,8 @@ public class BlueLeft extends LinearOpMode {
             sleep(2000);
             movement.encoderDrive(200, 2000);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
-            movement.encoderIMUTurn(-180, 10000);
-            movement.encoderDrive(-1290, 15500);
+            movement.encoderIMUTurn(168, 10000);
+            movement.encoderDrive(-1000, 9500);
 
         }
         else if(pos == OpenCV.BlueCV.SkystonePosition.CENTER){
@@ -95,14 +96,17 @@ public class BlueLeft extends LinearOpMode {
             movement.robot.claw.setClawPosition(.34);
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
+            movement.robot.claw.setClawAngle(treeAngleDown + treeAngleStraight / 5);
+            sleep(100);
+            movement.robot.claw.setClawAngle(treeAngleDown);
             movement.encoderDrive(100, 5000);
             movement.encoderIMUTurn(90, 10000);
             movement.encoderDrive(-1290, 15500);
         }
         else{
-            movement.encoderDrive(-990, 15500);
-            movement.encoderIMUTurn(-90, 5000);
-            movement.encoderDrive(670, 5000);
+            movement.encoderDrive(-820, 10500);
+            movement.encoderIMUTurn(-90, 200000);
+            movement.encoderDrive(570, 5000);
             movement.robot.lift.setMotorsToGoUpOrDown(450);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
@@ -111,18 +115,18 @@ public class BlueLeft extends LinearOpMode {
             movement.encoderDrive(100,1000);
             movement.encoderDrive(50, 500);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
-            movement.encoderIMUTurn(195, 10000);
+            movement.encoderIMUTurn(-175, 10000);
             movement.encoderDrive(-650, 3000);
 
         }
 
         //movement.liftAnglePosition(800, 3500);
-        sleep(2000);
         movement.robot.claw.clawUp();
         sleep(1000);
 
         movement.robot.lift.setMotorsToGoUpOrDown(0);
         movement.encoderDrive(100, 3000);
+        movement.strafe(-1, 5000);
 
 
 

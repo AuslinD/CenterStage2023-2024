@@ -188,11 +188,11 @@ public class EncoderAutoMethods {
 
     public void strafe(double power, int milliseconds){
         ElapsedTime elapsedTime = new ElapsedTime();
-        while(elapsedTime.milliseconds() < milliseconds){
-            robot.drivetrain.fl.setPower(power * .5);
-            robot.drivetrain.br.setPower(power * .5);
-            robot.drivetrain.fr.setPower(-power * .5);
-            robot.drivetrain.bl.setPower(-power * .5);
+        while(elapsedTime.milliseconds() < milliseconds && !linearOpMode.isStopRequested()){
+            robot.drivetrain.fl.setPower(-power * .5);
+            robot.drivetrain.br.setPower(-power * .5);
+            robot.drivetrain.fr.setPower(power * .5);
+            robot.drivetrain.bl.setPower(power * .5);
         }
         robot.drivetrain.setALLMotorPower(0);
     }

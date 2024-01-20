@@ -70,6 +70,13 @@ public class Robot {
         imu.initialize(parameters);
         imu.resetYaw();
 
+        if (colorSensorTop instanceof SwitchableLight) {
+            ((SwitchableLight)colorSensorTop).enableLight(false);
+        }
+        if (colorSensorBottom instanceof SwitchableLight) {
+            ((SwitchableLight)colorSensorBottom).enableLight(false);
+        }
+
         plane = linearOpMode.hardwareMap.get(Servo.class, "plane");
     }
 
