@@ -142,8 +142,8 @@ public class TeleOpMethods {
         }
         if(state[0]) // step 1: resets and angles tree
         {
-            robot.lift.liftLeft.setTargetPosition(55); //retracts lift
-            robot.lift.liftRight.setTargetPosition(55);
+            robot.lift.liftLeft.setTargetPosition(45); //retracts lift
+            robot.lift.liftRight.setTargetPosition(45);
             robot.claw.setClawPosition(0); //retracts tree
             treeAngle = 0.08; //angles tree
             if (time) {
@@ -166,34 +166,34 @@ public class TeleOpMethods {
                 //wait im trolling really hard, we should initialize time when we set state[1] to true since that's
                 //how long the robot has actually been doing the state. Rn it resets time everytime
                 //because it initializes(resets) inside the if statement, so time will never be > 1000 milliseconds
-                if (robot.lift.rotateRight.getCurrentPosition() < -68 && robot.lift.rotateRight.getCurrentPosition() > -75) // check to see if the lift is btw the value
+                if (robot.lift.rotateRight.getCurrentPosition() < -60 && robot.lift.rotateRight.getCurrentPosition() > -75) // check to see if the lift is btw the value
                 {
                     down = true;
                     stateOneTime.reset();
                 }
-                else if(robot.lift.rotateRight.getCurrentPosition() > -68){
-                    robot.lift.rotateRight.setPower(-0.5);
+                else if(robot.lift.rotateRight.getCurrentPosition() > -60){
+                    robot.lift.rotateRight.setPower(-0.35);
 //                    robot.lift.rotateLeft.setPower(-0.5);
 
                 }
                 else if(robot.lift.rotateRight.getCurrentPosition() < -75){
-                    robot.lift.rotateRight.setPower(0.5); // set power for angle of the list
+                    robot.lift.rotateRight.setPower(0.35); // set power for angle of the list
 //                    robot.lift.rotateLeft.setPower(0.5);
                 }
             }
             else {
                 //robot.intake.spinTake(1);
-                robot.claw.setClawPosition(0.5);
-                treeAngle = 0.1;
-                if (stateOneTime.milliseconds() > 200) {
+                robot.claw.setClawPosition(0.6);
+                treeAngle = 0.190[].',/';
+                if (stateOneTime.milliseconds() > 300) {
                     robot.claw.setClawPosition(0);//retracts tree
-                    treeAngle = 0.1149;
+                    treeAngle = 0.1195;
                 }
-                if (stateOneTime.milliseconds() > 1000) {
+                if (stateOneTime.milliseconds() > 1200) {
                     robot.claw.setClawPosition(0.8); //claw goes down and picks pixel up
                 }
             
-                if (stateOneTime.milliseconds() > 2000){
+                if (stateOneTime.milliseconds() > 2500){
                     //robot.claw.setClawPosition(0.8);
                     state[1] = false;
                     state[2] = true;
@@ -210,16 +210,16 @@ public class TeleOpMethods {
         }
         if(state[3]) // step 4: rotate up
         {
-            if (robot.lift.rotateRight.getCurrentPosition() < 830 && robot.lift.rotateRight.getCurrentPosition() > 820) // check to see if the lift is btw the value
+            if (robot.lift.rotateRight.getCurrentPosition() < 600 && robot.lift.rotateRight.getCurrentPosition() > 565) // check to see if the lift is btw the value
             {
                 state[3] = false;
                 treeAngle = .41;
 
-            } else if (robot.lift.rotateRight.getCurrentPosition() > 830) {
+            } else if (robot.lift.rotateRight.getCurrentPosition() > 600) {
                 robot.lift.rotateRight.setPower(-0.5);
 //                robot.lift.rotateLeft.setPower(-0.5);b
 
-              } else if (robot.lift.rotateRight.getCurrentPosition() < 820) {
+              } else if (robot.lift.rotateRight.getCurrentPosition() < 565) {
                 robot.lift.rotateRight.setPower(0.5); // set power for angle of the list
 //              robot.lift.rotateLeft.setPower(0.5);
             }
