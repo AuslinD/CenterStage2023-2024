@@ -26,6 +26,7 @@ public class TeleOpMethods {
     static double rn1p, rn2p, up1p, up2p;
     boolean down = false;
     ElapsedTime stateOneTime = new ElapsedTime();
+    ElapsedTime macrooo = new ElapsedTime();
     private static double lockHeadingHeading;
 
     public TeleOpMethods(OpMode opMode)
@@ -117,7 +118,7 @@ public class TeleOpMethods {
         else if(gamepad2.dpad_down){
             treeAngle -= .02;
         }
-        else if (gamepad2.dpad_right){ //mathew's macro  ngl im disapointed how you spelled my name
+        else if (gamepad2.dpad_right && macrooo.milliseconds() > 300){ //mathew's macro  ngl im disapointed how you spelled my name
             /*ElapsedTime runtime = new ElapsedTime();
             if(runtime.milliseconds() > 500){
                 runtime.reset();
@@ -131,6 +132,7 @@ public class TeleOpMethods {
             ///*
 
             state[0] = true; //rotate angle
+            macrooo.reset();
             if(!macroOff){
                 state = new boolean[]{false, false, false, false, false, false, false, false};
             }
@@ -145,7 +147,7 @@ public class TeleOpMethods {
             robot.lift.liftLeft.setTargetPosition(45); //retracts lift
             robot.lift.liftRight.setTargetPosition(45);
             robot.claw.setClawPosition(0); //retracts tree
-            treeAngle = 0.08; //angles tree
+            treeAngle = 0; //angles tree
             if (time) {
                 stateOneTime.reset();
                 time = false;
@@ -183,14 +185,14 @@ public class TeleOpMethods {
             }
             else {
                 //robot.intake.spinTake(1);
-                robot.claw.setClawPosition(0.6);
-                treeAngle = 0.190;
+                robot.claw.setClawPosition(0.5);
+                treeAngle = 0.180;
                 if (stateOneTime.milliseconds() > 300) {
                     robot.claw.setClawPosition(0);//retracts tree
-                    treeAngle = 0.1195;
+                    treeAngle = 0.1155;
                 }
                 if (stateOneTime.milliseconds() > 1200) {
-                    robot.claw.setClawPosition(0.8); //claw goes down and picks pixel up
+                    robot.claw.setClawPosition(0.65); //claw goes down and picks pixel up
                 }
             
                 if (stateOneTime.milliseconds() > 2500){
