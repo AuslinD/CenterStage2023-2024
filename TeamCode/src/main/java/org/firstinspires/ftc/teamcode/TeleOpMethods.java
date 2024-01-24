@@ -432,6 +432,9 @@ public class TeleOpMethods {
                 up2p /= Math.abs(max);
             }*/
         }
+        else{
+            up1p = robot.lift.liftLeft.getCurrentPosition();
+        }
 
 
 
