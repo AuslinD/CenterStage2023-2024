@@ -15,6 +15,7 @@ public class Claw {
 
     //CHANGE THIS
     double down = .8;
+    double half = .34;
     double up = 0;
 
     double rotate1 = 0;
@@ -31,7 +32,10 @@ public class Claw {
     public void clawDown(){
         tree.setPosition(down);
     }
-    public void clawUp(){
+    public void clawHalf() {
+        tree.setPosition(half);
+    }
+    public void clawUp() {
         tree.setPosition(up);
     }
     public void setClawAngle(double position){

@@ -162,7 +162,7 @@ public class TeleOpMethods {
             opMode.telemetry.addData("time",stateOneTime.milliseconds()); //doesnt work unless comment out other telemetry
             opMode.telemetry.update();
             if (!down){
-                robot.claw.setClawPosition(0.34);
+                robot.claw.clawHalf();
                 //wait im trolling really hard, we should initialize time when we set state[1] to true since that's
                 //how long the robot has actually been doing the state. Rn it resets time everytime
                 //because it initializes(resets) inside the if statement, so time will never be > 1000 milliseconds
@@ -287,7 +287,7 @@ public class TeleOpMethods {
             //offSet = treeAngle - offSet > .33 && treeAngle - offSet < .61? offSet : 0;
 
             //uncomment this to revert to relative
-            offSet = 0;
+            //offSet = 0;
             robot.claw.setClawAngle(treeAngle - offSet);
         }
         else {

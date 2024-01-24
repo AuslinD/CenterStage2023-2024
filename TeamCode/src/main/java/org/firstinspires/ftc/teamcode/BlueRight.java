@@ -14,7 +14,7 @@ public class BlueRight extends LinearOpMode {
     OpenCvInternalCamera phoneCam;
     OpenCV.BlueCV pipeline;
 
-    double treeAngleStraight = .41;
+    double treeAngleStraight = .51;
 
     double treeAngleUp = .71;
     double treeAngleDown = .11;
@@ -69,7 +69,7 @@ public class BlueRight extends LinearOpMode {
             movement.robot.lift.setMotorsToGoUpOrDown(500);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
-            movement.robot.claw.setClawPosition(.34);
+            movement.robot.claw.clawHalf();
             sleep(2000);
             //movement.encoderDrive(200, 2000);
             //movement.robot.claw.setClawAngle(treeAngleStraight+.1);
@@ -82,7 +82,7 @@ public class BlueRight extends LinearOpMode {
             movement.robot.lift.setMotorsToGoUpOrDown(500);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
-            movement.robot.claw.setClawPosition(.34);
+            movement.robot.claw.clawHalf();
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
             //movement.encoderDrive(100, 5000);
@@ -96,7 +96,7 @@ public class BlueRight extends LinearOpMode {
             movement.robot.lift.setMotorsToGoUpOrDown(450);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
-            movement.robot.claw.setClawPosition(.34);
+            movement.robot.claw.clawHalf();
             //sleep(2000);
             //movement.encoderDrive(100,1000);
             //movement.encoderDrive(50, 500);

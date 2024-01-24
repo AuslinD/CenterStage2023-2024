@@ -14,7 +14,7 @@ public class RedRight extends LinearOpMode {
     OpenCvInternalCamera phoneCam;
     OpenCV.RedCV pipeline;
 
-    double treeAngleStraight = .41;
+    double treeAngleStraight = .51;
 
     double treeAngleUp = .71;
     double treeAngleDown = .11;
@@ -82,7 +82,7 @@ public class RedRight extends LinearOpMode {
             movement.robot.claw.setClawAngle(treeAngleDown + treeAngleStraight / 5);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
-            movement.robot.claw.setClawPosition(.34);
+            movement.robot.claw.clawHalf();
             sleep(2000);
             movement.encoderDrive(50, 500);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
@@ -97,7 +97,7 @@ public class RedRight extends LinearOpMode {
             movement.robot.claw.setClawAngle(treeAngleDown + treeAngleStraight / 5);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
-            movement.robot.claw.setClawPosition(.34);
+            movement.robot.claw.clawHalf();
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
             movement.encoderDrive(100, 5000);
@@ -113,7 +113,7 @@ public class RedRight extends LinearOpMode {
             movement.robot.claw.setClawAngle(treeAngleDown + treeAngleStraight / 5);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
-            movement.robot.claw.setClawPosition(.34);
+            movement.robot.claw.clawHalf();
             sleep(2000);
             movement.encoderDrive(100, 5000);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);

@@ -132,7 +132,7 @@ public class EncoderAutoMethods {
     public void encoderDrive(int ticks, int milliseconds){
         ElapsedTime elapsedTime = new ElapsedTime();
         int initPos = robot.drivetrain.br.getCurrentPosition();
-        while(elapsedTime.milliseconds() < milliseconds && !linearOpMode.isStopRequested() && Math.abs((robot.drivetrain.br.getCurrentPosition() - initPos) - ticks) > 2){
+        while(elapsedTime.milliseconds() < milliseconds && !linearOpMode.isStopRequested() && Math.abs((robot.drivetrain.br.getCurrentPosition() - initPos) - ticks) > 5){
             int currentDistance = robot.drivetrain.br.getCurrentPosition() - initPos;
             int mult = currentDistance - ticks < 0 ? 1: -1;
             robot.drivetrain.fl.setPower(.26 * mult);

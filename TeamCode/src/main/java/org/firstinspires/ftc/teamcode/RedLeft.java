@@ -14,7 +14,7 @@ public class RedLeft extends LinearOpMode {
     OpenCvInternalCamera phoneCam;
     OpenCV.RedCV pipeline;
 
-    double treeAngleStraight = .41;
+    double treeAngleStraight = .51;
 
     double treeAngleUp = .71;
     double treeAngleDown = .11;
@@ -22,6 +22,7 @@ public class RedLeft extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         EncoderAutoMethods movement = new EncoderAutoMethods(this);
+        Robot robot = movement.robot;
         movement.robot.intake.stowIntake();
         movement.robot.claw.setClawAngle(treeAngleUp);
         movement.robot.claw.clawDown();
@@ -82,7 +83,7 @@ public class RedLeft extends LinearOpMode {
             movement.robot.claw.setClawAngle(treeAngleDown + treeAngleStraight / 5);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
-            movement.robot.claw.setClawPosition(.335);
+            robot.claw.clawHalf();
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight);
             movement.encoderDrive(1815, 15000);
@@ -101,7 +102,7 @@ public class RedLeft extends LinearOpMode {
 
 
             sleep(2000);
-            movement.robot.claw.setClawPosition(.335);
+            robot.claw.clawHalf();
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight);
             movement.encoderIMUTurn(93, 5000);
@@ -120,7 +121,7 @@ public class RedLeft extends LinearOpMode {
             movement.robot.claw.setClawAngle(treeAngleDown + treeAngleStraight / 5);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
-            movement.robot.claw.setClawPosition(.335);
+            robot.claw.clawHalf();
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight);
             //movement.encoderDrive(80, 5000);
