@@ -17,14 +17,15 @@ public class BlueRight extends LinearOpMode {
     double treeAngleStraight = .51;
 
     double treeAngleUp = .71;
-    double treeAngleDown = .11;
+    double treeAngleDown = .21;
 
     @Override
     public void runOpMode() throws InterruptedException {
         EncoderAutoMethods movement = new EncoderAutoMethods(this);
-        movement.robot.intake.stowIntake();
-        movement.robot.claw.setClawAngle(treeAngleUp);
-        movement.robot.claw.clawDown();
+        Robot robot = new Robot(this);
+        robot.intake.stowIntake();
+        robot.claw.setClawAngle(treeAngleUp);
+        robot.claw.clawDown();
         /**
          * NOTE: Many comments have been omitted from this sample for the
          * sake of conciseness. If you're just starting out with EasyOpenCv,
@@ -66,10 +67,10 @@ public class BlueRight extends LinearOpMode {
             movement.encoderDrive(-930, 6500);
             movement.encoderIMUTurn(-90, 200000);
             movement.encoderDrive(100, 2000);
-            movement.robot.lift.setMotorsToGoUpOrDown(500);
-            movement.robot.claw.setClawAngle(treeAngleDown);
+            robot.lift.setMotorsToGoUpOrDown(500);
+            robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
-            movement.robot.claw.clawHalf();
+            robot.claw.clawHalf();
             sleep(2000);
             //movement.encoderDrive(200, 2000);
             //movement.robot.claw.setClawAngle(treeAngleStraight+.1);
@@ -79,7 +80,7 @@ public class BlueRight extends LinearOpMode {
         }
         else if(pos == OpenCV.BlueCV.SkystonePosition.CENTER){
             movement.encoderDrive(-875, 5000);
-            movement.robot.lift.setMotorsToGoUpOrDown(500);
+            robot.lift.setMotorsToGoUpOrDown(500);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
             movement.robot.claw.clawHalf();
@@ -92,7 +93,7 @@ public class BlueRight extends LinearOpMode {
         else{
             movement.encoderDrive(-870, 15500);
             movement.encoderIMUTurn(-90, 5000);
-            movement.encoderDrive(770, 5000);
+            movement.encoderDrive(870, 5000);
             movement.robot.lift.setMotorsToGoUpOrDown(450);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
