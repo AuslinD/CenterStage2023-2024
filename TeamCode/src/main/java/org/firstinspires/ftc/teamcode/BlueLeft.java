@@ -17,7 +17,7 @@ public class BlueLeft extends LinearOpMode {
     double treeAngleStraight = .51;
 
     double treeAngleUp = .71;
-    double treeAngleDown = .21;
+    double treeAngleDown = .11;
 
     @Override
     public void runOpMode() throws InterruptedException {
