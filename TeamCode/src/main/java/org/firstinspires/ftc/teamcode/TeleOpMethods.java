@@ -104,7 +104,7 @@ public class TeleOpMethods {
             robot.claw.clawUp();
         }
         else if(gamepad2.left_trigger > .1){
-            robot.claw.setClawPosition( .355);
+            robot.claw.setClawPosition(.22);
         }
         else{
             if (macroOff){
