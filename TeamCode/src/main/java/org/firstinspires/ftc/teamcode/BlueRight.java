@@ -93,7 +93,7 @@ public class BlueRight extends LinearOpMode {
         else{
             movement.encoderDrive(-870, 15500);
             movement.encoderIMUTurn(-90, 5000);
-            movement.encoderDrive(870, 5000);
+            movement.encoderDrive(795, 5000);
             movement.robot.lift.setMotorsToGoUpOrDown(450);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);

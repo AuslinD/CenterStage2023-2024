@@ -77,7 +77,7 @@ public class RedLeft extends LinearOpMode {
         if(pos == OpenCV.RedCV.SkystonePosition.RIGHT){
             movement.encoderDrive(-1000, 10500);
             movement.encoderIMUTurn(90, 5000);
-            movement.encoderDrive(700, 5000);
+            movement.encoderDrive(650, 5000);
             movement.robot.lift.setMotorsToGoUpOrDown(450);
             movement.robot.claw.setClawAngle(treeAngleDown);
             movement.robot.claw.setClawAngle(treeAngleDown + treeAngleStraight / 5);
@@ -105,7 +105,7 @@ public class RedLeft extends LinearOpMode {
             robot.claw.clawHalf();
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight);
-            movement.encoderIMUTurn(93, 5000);
+            //movement.encoderIMUTurn(93, 5000);
             //movement.encoderDrive(2500, 12000);
             //movement.encoderIMUTurn(90, 5000);
             //movement.encoderDrive(100, 5000);

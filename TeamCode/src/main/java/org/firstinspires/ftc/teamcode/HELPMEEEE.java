@@ -18,7 +18,7 @@
 //    {
 //        super(deviceClient, true);
 //
-//        this.deviceClient.setI2cAddress(ADDRESS_I2C_DEFAULT);
+////        this.deviceClient.setI2cAddress(ADDRESS_I2C_DEFAULT);
 //
 //        super.registerArmingStateCallback(false);
 //        this.deviceClient.engage();

@@ -118,7 +118,7 @@ public class TeleOpMethods {
         else if(gamepad2.dpad_down){
             treeAngle -= .02;
         }
-        else if (gamepad2.dpad_right && macrooo.milliseconds() > 500){ //mathew's macro  ngl im disapointed how you spelled my name
+        else if (gamepad2.dpad_right && macrooo.milliseconds() > 800){ //mathew's macro  ngl im disapointed how you spelled my name
             /*ElapsedTime runtime = new ElapsedTime();
             if(runtime.milliseconds() > 500){
                 runtime.reset();
@@ -206,6 +206,7 @@ public class TeleOpMethods {
         }
         if(state[2]) // step 3: moves claw back
         {
+                robot.claw.setClawPosition(0.5);
                 treeAngle = 0.08;
                 state[2] = false;
                 state[3] = true;

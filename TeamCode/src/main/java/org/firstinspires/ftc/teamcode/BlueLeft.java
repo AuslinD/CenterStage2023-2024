@@ -107,7 +107,7 @@ public class BlueLeft extends LinearOpMode {
         else{
             movement.encoderDrive(-820, 10500);
             movement.encoderIMUTurn(-90, 200000);
-            movement.encoderDrive(850, 5000);
+            movement.encoderDrive(800, 5000);
             movement.robot.lift.setMotorsToGoUpOrDown(450);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
