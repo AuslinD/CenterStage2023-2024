@@ -1,5 +1,4 @@
 package org.firstinspires.ftc.teamcode;
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -15,7 +14,7 @@ public class Claw {
 
     //CHANGE THIS
     double down = .8;
-    double half = .34;
+    double half = .05;
     double up = 0;
 
     double rotate1 = 0;

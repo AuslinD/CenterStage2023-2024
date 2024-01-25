@@ -6,9 +6,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-
-
-
 public class Lift {
     public DcMotor rotateLeft, rotateRight, liftLeft, liftRight; // rn stands for rotational motor
     double setPower = 0.9;
