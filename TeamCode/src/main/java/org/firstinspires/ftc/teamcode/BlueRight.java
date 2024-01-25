@@ -17,7 +17,7 @@ public class BlueRight extends LinearOpMode {
     double treeAngleStraight = .51;
 
     double treeAngleUp = .71;
-    double treeAngleDown = .21;
+    double treeAngleDown = .11;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -48,7 +48,7 @@ public class BlueRight extends LinearOpMode {
             public void onOpened() {
                 phoneCam.startStreaming(320, 240, OpenCvCameraRotation.SIDEWAYS_LEFT);
             }
-
+//matthew was here
             @Override
             public void onError(int errorCode) {
                 telemetry.addLine("No camera");
@@ -105,6 +105,8 @@ public class BlueRight extends LinearOpMode {
             //movement.encoderIMUTurn(205, 10000);
             //movement.encoderDrive(-2150, 3000);
 
+
+            //matthew was here
         }
         sleep(2000);
         //movement.robot.claw.clawUp();

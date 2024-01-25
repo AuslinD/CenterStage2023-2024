@@ -13,7 +13,7 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 public class RedLeft extends LinearOpMode {
     OpenCvInternalCamera phoneCam;
     OpenCV.RedCV pipeline;
-
+//matthew was here
     double treeAngleStraight = .51;
 
     double treeAngleUp = .71;
@@ -86,7 +86,7 @@ public class RedLeft extends LinearOpMode {
             robot.claw.clawHalf();
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight);
-            movement.encoderDrive(1815, 15000);
+            //movement.encoderDrive(1815, 15000);
             //movement.encoderDrive(150, 500);
             //movement.robot.claw.setClawAngle(treeAngleStraight+.1);
             //movement.encoderIMUTurn(170, 10000);
@@ -106,7 +106,7 @@ public class RedLeft extends LinearOpMode {
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight);
             movement.encoderIMUTurn(93, 5000);
-            movement.encoderDrive(2500, 12000);
+            //movement.encoderDrive(2500, 12000);
             //movement.encoderIMUTurn(90, 5000);
             //movement.encoderDrive(100, 5000);
             //movement.encoderIMUTurn(-80, 10000);
@@ -127,7 +127,7 @@ public class RedLeft extends LinearOpMode {
             //movement.encoderDrive(80, 5000);
             //movement.encoderIMUTurn(-175, 5000);
             //movement.encoderDrive(-300,500);
-            movement.encoderDrive(2515, 15000);
+            //movement.encoderDrive(2515, 15000);
 
             //movement.encoderIMUTurn(-170, 10000);
             //movement.encoderDrive(-1100, 15500);
