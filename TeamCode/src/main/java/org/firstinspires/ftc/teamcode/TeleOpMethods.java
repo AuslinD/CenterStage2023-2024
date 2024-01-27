@@ -187,11 +187,14 @@ public class TeleOpMethods {
                 //robot.intake.spinTake(1);
                 robot.claw.setClawPosition(0.5);
                 treeAngle = 0.180;
-                if (stateOneTime.milliseconds() > 300) {
+                if (stateOneTime.milliseconds() > 300){
+                    treeAngle = 0;
+                }
+                if (stateOneTime.milliseconds() > 600) {
                     robot.claw.setClawPosition(0);//retracts tree
                     treeAngle = 0.1155;
                 }
-                if (stateOneTime.milliseconds() > 1200) {
+                if (stateOneTime.milliseconds() > 1400) {
                     robot.claw.setClawPosition(0.65); //claw goes down and picks pixel up
                 }
             
