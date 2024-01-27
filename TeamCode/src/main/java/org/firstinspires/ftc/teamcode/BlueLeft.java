@@ -17,7 +17,7 @@ public class BlueLeft extends LinearOpMode {
     double treeAngleStraight = .51;
 
     double treeAngleUp = .71;
-    double treeAngleDown = .11;
+    double treeAngleDown = .13;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -83,9 +83,9 @@ public class BlueLeft extends LinearOpMode {
             movement.robot.claw.clawHalf();
             sleep(2000);
             movement.encoderDrive(200, 2000);
-            movement.robot.claw.setClawAngle(treeAngleStraight+.1);
-            movement.encoderIMUTurn(168, 10000);
-            movement.encoderDrive(-1000, 9500);
+            movement.robot.claw.setClawAngle(treeAngleStraight);
+            movement.encoderIMUTurn(168.5, 10000);
+            movement.encoderDrive(-1180, 9500);
 
         }
         else if(pos == OpenCV.BlueCV.SkystonePosition.CENTER){
@@ -100,9 +100,9 @@ public class BlueLeft extends LinearOpMode {
             sleep(100);
             movement.robot.claw.setClawAngle(treeAngleDown);
             movement.encoderDrive(100, 5000);
-            movement.robot.claw.setClawAngle(treeAngleStraight+.1);
+            movement.robot.claw.setClawAngle(treeAngleStraight);
             movement.encoderIMUTurn(90, 10000);
-            movement.encoderDrive(-1290, 15500);
+            movement.encoderDrive(-1300, 15500);
         }
         else{
             movement.encoderDrive(-820, 10500);
@@ -115,7 +115,7 @@ public class BlueLeft extends LinearOpMode {
             sleep(2000);
             movement.encoderDrive(100,1000);
             movement.encoderDrive(50, 500);
-            movement.robot.claw.setClawAngle(treeAngleStraight+.1);
+            movement.robot.claw.setClawAngle(treeAngleStraight);
             movement.encoderIMUTurn(-178, 10000);
             movement.encoderDrive(-400, 3000);
 

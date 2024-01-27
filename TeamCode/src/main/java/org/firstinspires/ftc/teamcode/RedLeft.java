@@ -17,7 +17,7 @@ public class RedLeft extends LinearOpMode {
     double treeAngleStraight = .51;
 
     double treeAngleUp = .71;
-    double treeAngleDown = .21;
+    double treeAngleDown = .14;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -75,12 +75,13 @@ public class RedLeft extends LinearOpMode {
 
         //movement.liftAnglePosition(100, 4000);
         if(pos == OpenCV.RedCV.SkystonePosition.RIGHT){
-            movement.encoderDrive(-1000, 10500);
+            movement.encoderDrive(-1100, 10500);
             movement.encoderIMUTurn(90, 5000);
             movement.encoderDrive(650, 5000);
             movement.robot.lift.setMotorsToGoUpOrDown(450);
             movement.robot.claw.setClawAngle(treeAngleDown);
             movement.robot.claw.setClawAngle(treeAngleDown + treeAngleStraight / 5);
+            sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
             robot.claw.clawHalf();
@@ -98,6 +99,7 @@ public class RedLeft extends LinearOpMode {
             movement.robot.lift.setMotorsToGoUpOrDown(500);
             movement.robot.claw.setClawAngle(treeAngleDown);
             movement.robot.claw.setClawAngle(treeAngleDown + treeAngleStraight / 5);
+            sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleDown);
 
 
@@ -114,11 +116,12 @@ public class RedLeft extends LinearOpMode {
         }
         else{
             movement.encoderDrive(-955, 6500);
-            movement.encoderIMUTurn(90, 200000);
+            movement.encoderIMUTurn(80, 200000);
             //movement.encoderDrive(-50, 500);
             movement.robot.lift.setMotorsToGoUpOrDown(500);
             movement.robot.claw.setClawAngle(treeAngleDown);
             movement.robot.claw.setClawAngle(treeAngleDown + treeAngleStraight / 5);
+            sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
             robot.claw.clawHalf();

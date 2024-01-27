@@ -17,7 +17,7 @@ public class RedRight extends LinearOpMode {
     double treeAngleStraight = .51;
 
     double treeAngleUp = .71;
-    double treeAngleDown = .21;
+    double treeAngleDown = .13;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -74,7 +74,7 @@ public class RedRight extends LinearOpMode {
 
         //movement.liftAnglePosition(100, 4000);
         if(pos == OpenCV.RedCV.SkystonePosition.RIGHT){
-            movement.encoderDrive(-925, 15500);
+            movement.encoderDrive(-980, 15500);
             movement.encoderIMUTurn(90, 5000);
             movement.encoderDrive(650, 5000);
             movement.robot.lift.setMotorsToGoUpOrDown(450);
@@ -85,9 +85,9 @@ public class RedRight extends LinearOpMode {
             movement.robot.claw.clawHalf();
             sleep(2000);
             movement.encoderDrive(50, 500);
-            movement.robot.claw.setClawAngle(treeAngleStraight+.1);
-            movement.encoderIMUTurn(163, 10000);
-            movement.encoderDrive(-600, 3000);
+            movement.robot.claw.setClawAngle(treeAngleStraight);
+            movement.encoderIMUTurn(163.5, 10000);
+            movement.encoderDrive(-755, 3000);
 
         }
         else if(pos == OpenCV.RedCV.SkystonePosition.CENTER){
@@ -95,14 +95,15 @@ public class RedRight extends LinearOpMode {
             movement.robot.lift.setMotorsToGoUpOrDown(500);
             movement.robot.claw.setClawAngle(treeAngleDown);
             movement.robot.claw.setClawAngle(treeAngleDown + treeAngleStraight / 5);
+            sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
             movement.robot.claw.clawHalf();
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
             movement.encoderDrive(100, 5000);
-            movement.encoderIMUTurn(-84, 10000);
-            movement.encoderDrive(-1200, 5500);
+            movement.encoderIMUTurn(-85.5, 10000);
+            movement.encoderDrive(-1275, 5500);
         }
         else{
             movement.encoderDrive(-980, 6500);
@@ -117,15 +118,14 @@ public class RedRight extends LinearOpMode {
             sleep(2000);
             movement.encoderDrive(100, 5000);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
-            movement.encoderIMUTurn(-171, 10000);
-            movement.encoderDrive(-1250, 5500);
-            
+            movement.encoderIMUTurn(-171, 13000);
+            movement.encoderDrive(-1290, 5500);
         }
 
         //movement.liftAnglePosition(800, 3500);
         sleep(2000);
         movement.robot.claw.clawUp();
-        sleep(1000);
+        sleep(2500);
 
         movement.robot.lift.setMotorsToGoUpOrDown(0);
         movement.encoderDrive(100, 1500);
