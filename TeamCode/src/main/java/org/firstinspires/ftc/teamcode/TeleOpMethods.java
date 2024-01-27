@@ -25,6 +25,7 @@ public class TeleOpMethods {
 
     static double rn1p, rn2p, up1p, up2p;
     boolean down = false;
+    boolean lockToAngle = false;
     ElapsedTime stateOneTime = new ElapsedTime();
     ElapsedTime macrooo = new ElapsedTime();
     private static double lockHeadingHeading;
@@ -289,12 +290,22 @@ public class TeleOpMethods {
 
 
         if(macroOff) {
+            //comment this to make non rel
             double offSet = robot.lift.rotateRight.getCurrentPosition() / 11356.25;// the
             //offSet = treeAngle - offSet > .33 && treeAngle - offSet < .61? offSet : 0;
 
             //uncomment this to revert to relative
-            //offSet = 0;
+            //double offSet = 0;
+            if(robot.lift.liftLeft.getCurrentPosition() > 300 && !lockToAngle){
+                lockToAngle = true;
+                robot.claw.setClawAngle(.37 - offSet);
+            }
+            else{
+                lockToAngle = false;
+            }
             robot.claw.setClawAngle(treeAngle - offSet);
+
+
         }
         else {
             robot.claw.setClawAngle(treeAngle);
