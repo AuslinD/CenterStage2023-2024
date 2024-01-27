@@ -110,7 +110,8 @@ public class BlueRight extends LinearOpMode {
         }
         sleep(2000);
         //movement.robot.claw.clawUp();
-        sleep(1000);
+        movement.robot.claw.setClawAngle(treeAngleStraight);
+        sleep(3000);
 
         movement.robot.lift.setMotorsToGoUpOrDown(0);
         sleep(2000);
