@@ -287,6 +287,7 @@ public class SampleMecanumDrive extends MecanumDrive {
 
     @Override
     public void setMotorPowers(double v, double v1, double v2, double v3) {
+        double[] vs = getCorrectiveVelocities(new double[]{v, v1, v2, v3});
         leftFront.setPower(v);
         leftRear.setPower(v1);
         rightRear.setPower(v2);
@@ -312,5 +313,19 @@ public class SampleMecanumDrive extends MecanumDrive {
 
     public static TrajectoryAccelerationConstraint getAccelerationConstraint(double maxAccel) {
         return new ProfileAccelerationConstraint(maxAccel);
+    }
+
+    public double[] getCorrectiveVelocities(double[] powers){
+        double[] newPowers = new double[4];
+
+        List<Double> velocities = getWheelVelocities();
+        for(int i = 0; i < 4; i++){
+            assert velocities != null;
+            newPowers[i] = powers[i] - velocities.get(i);
+
+            //constant to scale down our velociteis
+            newPowers[i] /= 60;
+        }
+        return newPowers;
     }
 }
