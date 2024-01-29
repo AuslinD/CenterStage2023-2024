@@ -122,7 +122,7 @@ public class RedLeft extends LinearOpMode {
             movement.robot.claw.setClawAngle(treeAngleDown);
             movement.robot.claw.setClawAngle(treeAngleDown + treeAngleStraight / 5);
             sleep(2000);
-            movement.robot.claw.setClawAngle(treeAngleDown);
+            //movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
             robot.claw.clawHalf();
             sleep(2000);
