@@ -76,7 +76,7 @@ public class BlueLeft extends LinearOpMode {
         if(pos == OpenCV.BlueCV.SkystonePosition.RIGHT){
             movement.encoderDrive(-820, 6500);
             movement.encoderIMUTurn(-90, 200000);
-            movement.encoderDrive(50, 2000);
+            movement.encoderDrive(25, 2000);
             movement.robot.lift.setMotorsToGoUpOrDown(500);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
