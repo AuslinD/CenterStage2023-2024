@@ -72,6 +72,14 @@ public class BlueRight extends LinearOpMode {
             sleep(2000);
             robot.claw.clawHalf();
             sleep(2000);
+            movement.encoderIMUTurn(90, 8000);
+            movement.encoderDrive(930, 5000);
+            movement.encoderIMUTurn(-90, 6500);
+            movement.encoderDrive(-3000, 6500);
+            sleep(1000);
+            //movement.robot.claw.setClawAngle(treeAngleStraight);
+            movement.robot.lift.setMotorsToGoUpOrDown(0);
+            sleep(2000);
             //movement.encoderDrive(200, 2000);
             //movement.robot.claw.setClawAngle(treeAngleStraight+.1);
             //movement.encoderIMUTurn(-180, 10000);
@@ -86,6 +94,13 @@ public class BlueRight extends LinearOpMode {
             movement.robot.claw.clawHalf();
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
+            movement.encoderDrive(875, 5000);
+            movement.encoderIMUTurn(-90, 6500);
+            movement.encoderDrive(-3000, 6500);
+            sleep(1000);
+            //movement.robot.claw.setClawAngle(treeAngleStraight);
+            movement.robot.lift.setMotorsToGoUpOrDown(0);
+            sleep(2000);
             //movement.encoderDrive(100, 5000);
             //movement.encoderIMUTurn(90, 10000);
             //movement.encoderDrive(-2290, 15500);
@@ -98,6 +113,14 @@ public class BlueRight extends LinearOpMode {
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
             movement.robot.claw.clawHalf();
+            movement.encoderIMUTurn(-90, 8000);
+            movement.encoderDrive(870, 5000);
+            movement.encoderIMUTurn(-90, 6500);
+            movement.encoderDrive(-3000, 6500);
+            sleep(1000);
+            //movement.robot.claw.setClawAngle(treeAngleStraight);
+            movement.robot.lift.setMotorsToGoUpOrDown(0);
+            sleep(2000);
             //sleep(2000);
             //movement.encoderDrive(100,1000);
             //movement.encoderDrive(50, 500);
@@ -110,11 +133,11 @@ public class BlueRight extends LinearOpMode {
         }
         sleep(2000);
         //movement.robot.claw.clawUp();
-        movement.robot.claw.setClawAngle(treeAngleStraight);
-        sleep(3000);
+        //movement.robot.claw.setClawAngle(treeAngleStraight);
+        //sleep(3000);
 
-        movement.robot.lift.setMotorsToGoUpOrDown(0);
-        sleep(2000);
+        //movement.robot.lift.setMotorsToGoUpOrDown(0);
+        //sleep(2000);
         //movement.encoderDrive(100, 3000);
     }
 }
