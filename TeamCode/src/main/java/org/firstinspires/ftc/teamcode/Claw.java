@@ -15,7 +15,7 @@ public class Claw {
     //CHANGE THIS
     double down = .8;
 
-    double half = .26;//matthew was here
+    double half = .22;//matthew was here
 
     double up = 0;
 

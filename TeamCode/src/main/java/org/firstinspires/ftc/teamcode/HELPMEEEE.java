@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.Robot;
 public class HELPMEEEE extends OpMode {
 
     ElapsedTime stateOneTime = new ElapsedTime();
-    private static final int NUM_PIXELS = 60;
+    private static final int NUM_PIXELS = 24;
 
     float gain = 2;
 
@@ -42,7 +42,6 @@ public class HELPMEEEE extends OpMode {
 
     @Override
     public void loop() {
-        wait(500);
         neopixels.fill("#0000ff");
         neopixels.show();
 
