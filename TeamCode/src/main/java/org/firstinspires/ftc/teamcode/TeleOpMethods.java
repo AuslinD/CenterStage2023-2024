@@ -16,6 +16,7 @@ public class TeleOpMethods {
     static double initPos;
     static double treeAngle = .47;
     private static boolean ignoreBounds = false;
+    boolean[] pixels = new boolean[]{false, false};
     int treeAngleIndex = 0;
     boolean gameOn;
     //Manipulator
@@ -126,6 +127,29 @@ public class TeleOpMethods {
         else if(gamepad2.b){
             robot.intake.stowIntake();
         }
+
+        if(robot.intake.getHsvValuesTop()[0] > 100){
+            gamepad1.rumble(.75, .75, 500);
+        }
+        else if(robot.intake.getHsvValuesBot()[0] > 100){
+            gamepad1.rumble(.01, 0, 500);
+        }
+        /* ONE rumble code
+        if(robot.intake.getHsvValuesTop()[0] < 100){
+            pixels[1] = false;
+        }
+        else if(!pixels[1] && pixels[0]){
+            pixels[1] = true;
+            gamepad1.rumble(.75, .75, 500);
+        }
+        if(robot.intake.getHsvValuesBot()[0] < 100){
+            pixels[0] = false;
+        }
+        else if(!pixels[0]){
+            pixels[0] = true;
+            gamepad1.rumble(.25, .25, 500);
+        }
+         */
     }
 
 

@@ -21,8 +21,7 @@ public class Robot {
 
     Servo plane;
 
-    NormalizedColorSensor colorSensorTop;
-    NormalizedColorSensor colorSensorBottom;
+
 
 
     public Robot(OpMode opmode){
@@ -43,15 +42,6 @@ public class Robot {
 
         plane = opmode.hardwareMap.get(Servo.class, "plane");
 
-        colorSensorTop = opmode.hardwareMap.get(NormalizedColorSensor.class, "colortop");
-        colorSensorBottom = opmode.hardwareMap.get(NormalizedColorSensor.class, "colorbottom");
-        if (colorSensorTop instanceof SwitchableLight) {
-            ((SwitchableLight)colorSensorTop).enableLight(true);
-        }
-        if (colorSensorBottom instanceof SwitchableLight) {
-            ((SwitchableLight)colorSensorBottom).enableLight(true);
-        }
-
 
     }
     public Robot(LinearOpMode linearOpMode){
@@ -69,13 +59,6 @@ public class Robot {
         // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
         imu.initialize(parameters);
         imu.resetYaw();
-
-        if (colorSensorTop instanceof SwitchableLight) {
-            ((SwitchableLight)colorSensorTop).enableLight(false);
-        }
-        if (colorSensorBottom instanceof SwitchableLight) {
-            ((SwitchableLight)colorSensorBottom).enableLight(false);
-        }
 
         plane = linearOpMode.hardwareMap.get(Servo.class, "plane");
     }

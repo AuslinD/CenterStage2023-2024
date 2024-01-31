@@ -9,11 +9,13 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 @TeleOp(name = "test", group = "test")
 public class TestTeleop extends OpMode {
     float gain = 2;
+    ElapsedTime elapsedTime;
     DcMotor rotateLeft, rotateRight, liftLeft, liftRight;
 
     Robot robot;
@@ -21,13 +23,14 @@ public class TestTeleop extends OpMode {
     @Override
     public void init() {
         robot = new Robot(this);
-
+        elapsedTime = new ElapsedTime();
 
 
     }
 
     @Override
     public void loop() {
+
         /*
         if(Math.abs(gamepad2.left_stick_y) > 0.1){
             liftLeft.setPower(1 * gamepad2.left_stick_y);
@@ -70,7 +73,10 @@ public class TestTeleop extends OpMode {
         robot.claw.setClawAngle(treeAngle);
 
          */
-
+        if(elapsedTime.milliseconds() > 5000){
+            elapsedTime.reset();
+            gamepad1.rumble(.5,.5,500);
+        }
 
         if (gamepad2.dpad_up) {
             // Only increase the gain by a small amount, since this loop will occur multiple times per second.
@@ -81,8 +87,8 @@ public class TestTeleop extends OpMode {
 
         float[] hsvValuesTop = new float[3];
         float[] hsvValuesBot = new float[3];
-        NormalizedRGBA colorsTop = robot.colorSensorTop.getNormalizedColors();
-        NormalizedRGBA colorsBot = robot.colorSensorBottom.getNormalizedColors();
+        NormalizedRGBA colorsTop = robot.intake.colorSensorTop.getNormalizedColors();
+        NormalizedRGBA colorsBot = robot.intake.colorSensorBottom.getNormalizedColors();
         Color.colorToHSV(colorsTop.toColor(), hsvValuesTop);
         Color.colorToHSV(colorsBot.toColor(), hsvValuesBot);
 

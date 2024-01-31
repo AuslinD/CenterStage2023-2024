@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -9,12 +10,14 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 public class Lift {
     public DcMotor rotateLeft, rotateRight, liftLeft, liftRight; // rn stands for rotational motor
     double setPower = 0.9;
+    AnalogInput potentiometer;
 
     public Lift(OpMode opMode){
 //        rotateLeft = opMode.hardwareMap.get(DcMotorEx.class, "rotleft");
         rotateRight = opMode.hardwareMap.get(DcMotorEx.class, "rotright");
         liftLeft = opMode.hardwareMap.get(DcMotorEx.class, "upleft");
         liftRight = opMode.hardwareMap.get(DcMotorEx.class, "upright");
+        potentiometer = opMode.hardwareMap.get(AnalogInput.class, "potentiometer");
 
 //        rotateLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rotateRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -61,6 +64,7 @@ public class Lift {
         rotateRight = linearOpMode.hardwareMap.get(DcMotorEx.class, "rotright");
         liftLeft = linearOpMode.hardwareMap.get(DcMotorEx.class, "upleft");
         liftRight = linearOpMode.hardwareMap.get(DcMotorEx.class, "upright");
+        potentiometer = linearOpMode.hardwareMap.get(AnalogInput.class, "potentiometer");
 
 //        rotateLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rotateRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -119,6 +123,10 @@ public class Lift {
         rotateRight.setPower(power);
         liftLeft.setPower(power);
         liftRight.setPower(power);
+    }
+
+    public double getLiftAngle(){
+        return potentiometer.getVoltage();
     }
 
 

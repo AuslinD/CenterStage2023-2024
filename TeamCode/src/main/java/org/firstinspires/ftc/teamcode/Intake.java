@@ -1,12 +1,17 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.graphics.Color;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
+import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.SwitchableLight;
 
 public class Intake {
 
@@ -17,6 +22,12 @@ public class Intake {
     public DcMotor intakeMotor;
 
     public Servo intakeAngleLeft, intakeAngleRight;
+
+    NormalizedColorSensor colorSensorTop;
+    NormalizedColorSensor colorSensorBottom;
+    float[] hsvValuesTop = new float[3];
+    float[] hsvValuesBot = new float[3];
+
 
     public Intake(OpMode opMode){
 
@@ -31,6 +42,16 @@ public class Intake {
         //intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         transferRight.setDirection(DcMotorSimple.Direction.REVERSE);
         //transferLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        colorSensorTop = opMode.hardwareMap.get(NormalizedColorSensor.class, "colortop");
+        colorSensorBottom = opMode.hardwareMap.get(NormalizedColorSensor.class, "colorbottom");
+        if (colorSensorTop instanceof SwitchableLight) {
+            ((SwitchableLight)colorSensorTop).enableLight(true);
+        }
+        if (colorSensorBottom instanceof SwitchableLight) {
+            ((SwitchableLight)colorSensorBottom).enableLight(true);
+        }
+
+
     }
 
     public Intake(LinearOpMode opMode){
@@ -46,6 +67,17 @@ public class Intake {
         //intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         transferRight.setDirection(DcMotorSimple.Direction.REVERSE);
         transferLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        /*
+        colorSensorTop = opMode.hardwareMap.get(NormalizedColorSensor.class, "colortop");
+        colorSensorBottom = opMode.hardwareMap.get(NormalizedColorSensor.class, "colorbottom");
+        if (colorSensorTop instanceof SwitchableLight) {
+            ((SwitchableLight)colorSensorTop).enableLight(true);
+        }
+        if (colorSensorBottom instanceof SwitchableLight) {
+            ((SwitchableLight)colorSensorBottom).enableLight(true);
+        }
+         */
     }
 
     public void spinTake(double power){
@@ -76,4 +108,15 @@ public class Intake {
         intakeAngleRight.setPosition(.9);
     }
 
+    public float[] getHsvValuesTop(){
+        NormalizedRGBA colorsTop = colorSensorTop.getNormalizedColors();
+        Color.colorToHSV(colorsTop.toColor(), hsvValuesTop);
+        return hsvValuesTop;
+    }
+
+    public float[] getHsvValuesBot() {
+        NormalizedRGBA colorsBot = colorSensorBottom.getNormalizedColors();
+        Color.colorToHSV(colorsBot.toColor(), hsvValuesBot);
+        return hsvValuesBot;
+    }
 }
