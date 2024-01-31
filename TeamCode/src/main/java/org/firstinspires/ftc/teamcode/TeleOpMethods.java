@@ -127,6 +127,10 @@ public class TeleOpMethods {
             robot.intake.stowIntake();
         }
     }
+
+
+    public static int[] macro_timing = {700, 300, 600, 1400, 2500};
+
     private void clawStuff(Gamepad gamepad1, Gamepad gamepad2){
 
         boolean macroOff = !state[1]&&!state[0]&&!state[3]&&!state[2]&&!state[4]&&!state[5]&&!state[6];
@@ -184,7 +188,7 @@ public class TeleOpMethods {
                 stateOneTime.reset();
                 time = false;
             }
-            if (stateOneTime.milliseconds() > 700){
+            if (stateOneTime.milliseconds() > macro_timing[0]){
                 state[0] = false;
                 state[1] = true;
             }
@@ -219,18 +223,18 @@ public class TeleOpMethods {
                 //robot.intake.spinTake(1);
                 robot.claw.setClawPosition(0.5);
                 treeAngle = 0.180;
-                if (stateOneTime.milliseconds() > 300){
+                if (stateOneTime.milliseconds() > macro_timing[1]){
                     treeAngle = 0;
                 }
-                if (stateOneTime.milliseconds() > 600) {
+                if (stateOneTime.milliseconds() > macro_timing[2]) {
                     robot.claw.setClawPosition(0);//retracts tree
                     treeAngle = 0.1155;
                 }
-                if (stateOneTime.milliseconds() > 1400) {
+                if (stateOneTime.milliseconds() > macro_timing[3]) {
                     robot.claw.setClawPosition(0.65); //claw goes down and picks pixel up
                 }
             
-                if (stateOneTime.milliseconds() > 2500){
+                if (stateOneTime.milliseconds() > macro_timing[4]){
                     //robot.claw.setClawPosition(0.8);
                     state[1] = false;
                     state[2] = true;
