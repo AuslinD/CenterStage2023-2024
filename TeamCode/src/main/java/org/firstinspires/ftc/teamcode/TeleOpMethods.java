@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -7,7 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-
+@Config
 public class TeleOpMethods {
 
     private static Robot robot;
@@ -29,6 +30,43 @@ public class TeleOpMethods {
     ElapsedTime stateOneTime = new ElapsedTime();
     ElapsedTime macrooo = new ElapsedTime();
     private static double lockHeadingHeading;
+
+
+    public static double Kp = 1.00;
+    public static double Ki = 0.00;
+    public static double Kd = 0.00;
+    public static void liftAngleToPos(int desiredPosition){
+
+        boolean setPointReached = false;
+        double tolerance = 5;
+
+        if (robot.lift.rotateRight.getCurrentPosition() + tolerance > desiredPosition && desiredPosition < robot.lift.rotateRight.getCurrentPosition() - tolerance){
+            setPointReached = true;
+        }
+
+        double integralSum = 0;
+        double lastError = 0;
+
+        ElapsedTime liftAngleToPosTimer = new ElapsedTime();
+
+        while (!setPointReached) {
+            if (robot.lift.rotateRight.getCurrentPosition() + tolerance > desiredPosition && desiredPosition < robot.lift.rotateRight.getCurrentPosition() - tolerance){
+                setPointReached = true;
+            }
+            int encoderPosition = robot.lift.rotateRight.getCurrentPosition();
+            int error = desiredPosition - encoderPosition;
+            double derivative = (error - lastError) / liftAngleToPosTimer.seconds();
+            integralSum = integralSum + (error * liftAngleToPosTimer.seconds());
+            double out = (Kp * error) + (Ki * integralSum) + (Kd * derivative);
+            robot.lift.rotateRight.setPower(out);
+            opMode.telemetry.addData("out", out); //doesnt work unless comment out other telemetry
+            opMode.telemetry.update();
+            lastError = error;
+            liftAngleToPosTimer.reset();
+
+        }
+    }
+
 
     public TeleOpMethods(OpMode opMode)
     {   //manip later
@@ -59,14 +97,7 @@ public class TeleOpMethods {
 //            robot.lift.rotateLeft.setPower(.35);
 
 //        }
-
-
         telemetry();
-
-
-
-
-
     }
 
     private void misc(){
@@ -78,7 +109,7 @@ public class TeleOpMethods {
 
     private void intakeStuff(Gamepad gamepad1, Gamepad gamepad2) {
         if(gamepad2.a){
-            robot.intake.spinTake(1);
+            robot.intake.spinTake(0.6);
             robot.intake.lowerIntake();
         }
         else if(gamepad2.y){
@@ -162,8 +193,8 @@ public class TeleOpMethods {
         }
         else if (state[1]) // step 2: gets pixel
         {
-            opMode.telemetry.addData("time",stateOneTime.milliseconds()); //doesnt work unless comment out other telemetry
-            opMode.telemetry.update();
+//            opMode.telemetry.addData("time",stateOneTime.milliseconds()); //doesnt work unless comment out other telemetry
+//            opMode.telemetry.update();
             if (!down){
                 robot.claw.clawHalf();
                 //wait im trolling really hard, we should initialize time when we set state[1] to true since that's
@@ -174,15 +205,15 @@ public class TeleOpMethods {
                     down = true;
                     stateOneTime.reset();
                 }
-                else if(robot.lift.rotateRight.getCurrentPosition() > -60){
-                    robot.lift.rotateRight.setPower(-0.35);
-//                    robot.lift.rotateLeft.setPower(-0.5);
 
+                else if(robot.lift.rotateRight.getCurrentPosition() > -60){
+                    robot.lift.rotateRight.setPower(-0.5);
                 }
                 else if(robot.lift.rotateRight.getCurrentPosition() < -75){
-                    robot.lift.rotateRight.setPower(0.35); // set power for angle of the list
-//                    robot.lift.rotateLeft.setPower(0.5);
+                    robot.lift.rotateRight.setPower(0.5);
                 }
+
+//                liftAngleToPos(-68);
             }
             else {
                 //robot.intake.spinTake(1);
@@ -314,7 +345,7 @@ public class TeleOpMethods {
     }
     private void planeServoControl(Gamepad gamepad1, Gamepad gamepad2) {
 
-        if (gamepad1.a || gamepad2.a) {
+        if (gamepad1.a) {
             robot.setPlanePosition(0.47);
         } else if (gamepad1.b) {
             robot.setPlanePosition(0.8);
@@ -378,8 +409,8 @@ public class TeleOpMethods {
                 headingError = ((2 * Math.PI) - mathBotHeading) - mathLockHeadingHeading;
             }
             double correctionPower = headingError / Math.PI;
-            opMode.telemetry.addData("headingError", headingError);
-            opMode.telemetry.addData("correctionPower", correctionPower);
+//            opMode.telemetry.addData("headingError", headingError);
+//            opMode.telemetry.addData("correctionPower", correctionPower);
 
 
             if(correctionPower > 0.1){
@@ -549,24 +580,24 @@ public class TeleOpMethods {
     private static void telemetry(){
         double botHeading = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
 
-        opMode.telemetry.addData("botHeading", Math.toDegrees(botHeading));
-        opMode.telemetry.addData("Yaw", robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS));
-        opMode.telemetry.addData("Pitch", robot.imu.getRobotYawPitchRollAngles().getPitch(AngleUnit.RADIANS));
-        opMode.telemetry.addData("Roll", robot.imu.getRobotYawPitchRollAngles().getRoll(AngleUnit.RADIANS));
-        opMode.telemetry.addData("2goal", rn2p);
-        opMode.telemetry.addData("goal", rn1p);
-        opMode.telemetry.addData("upgoal", up1p);
-        opMode.telemetry.addData("up2goal", up2p);
-        opMode.telemetry.addData("oursRotR", robot.lift.rotateRight.getCurrentPosition());
-        //opMode.telemetry.addData("oursRotL", robot.lift.rotateLeft.getCurrentPosition());
-        opMode.telemetry.addData("oursLiftL", robot.lift.liftLeft.getCurrentPosition());
-        opMode.telemetry.addData("oursLiftR", robot.lift.liftRight.getCurrentPosition());
-        opMode.telemetry.addData("treeAngle", treeAngle);
-        opMode.telemetry.addData("br", robot.drivetrain.br.getCurrentPosition());
-        opMode.telemetry.addData("inLeft", robot.intake.intakeAngleLeft.getPosition());
-        opMode.telemetry.addData("inRight", robot.intake.intakeAngleRight.getPosition());
-        opMode.telemetry.addData("MACROOOOOOOOOOOOOOOO", (!state[1]&&!state[0]&&!state[3]&&!state[2]&&!state[4]&&!state[5]&&!state[6]));
-        opMode.telemetry.update();
+//        opMode.telemetry.addData("botHeading", Math.toDegrees(botHeading));
+//        opMode.telemetry.addData("Yaw", robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS));
+//        opMode.telemetry.addData("Pitch", robot.imu.getRobotYawPitchRollAngles().getPitch(AngleUnit.RADIANS));
+//        opMode.telemetry.addData("Roll", robot.imu.getRobotYawPitchRollAngles().getRoll(AngleUnit.RADIANS));
+//        opMode.telemetry.addData("2goal", rn2p);
+//        opMode.telemetry.addData("goal", rn1p);
+//        opMode.telemetry.addData("upgoal", up1p);
+//        opMode.telemetry.addData("up2goal", up2p);
+//        opMode.telemetry.addData("oursRotR", robot.lift.rotateRight.getCurrentPosition());
+//        //opMode.telemetry.addData("oursRotL", robot.lift.rotateLeft.getCurrentPosition());
+//        opMode.telemetry.addData("oursLiftL", robot.lift.liftLeft.getCurrentPosition());
+//        opMode.telemetry.addData("oursLiftR", robot.lift.liftRight.getCurrentPosition());
+//        opMode.telemetry.addData("treeAngle", treeAngle);
+//        opMode.telemetry.addData("br", robot.drivetrain.br.getCurrentPosition());
+//        opMode.telemetry.addData("inLeft", robot.intake.intakeAngleLeft.getPosition());
+//        opMode.telemetry.addData("inRight", robot.intake.intakeAngleRight.getPosition());
+//        opMode.telemetry.addData("MACROOOOOOOOOOOOOOOO", (!state[1]&&!state[0]&&!state[3]&&!state[2]&&!state[4]&&!state[5]&&!state[6]));
+//        opMode.telemetry.update();
     }
 
 
