@@ -76,7 +76,7 @@ public class TeleOpMethods {
         up1p = 0;
         up2p = 0;
         this.robot = new Robot(opMode);
-        this.opMode = opMode; 
+        this.opMode = opMode;
         robot.imu.resetYaw();
         initPos = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
         robot.plane.setPosition(.47);
@@ -153,7 +153,7 @@ public class TeleOpMethods {
     }
 
 
-    public static int[] macro_timing = {700, 300, 600, 1400, 2500};
+    public static int[] macro_timing = {0, 0, 0, 175, 750};
 
     private void clawStuff(Gamepad gamepad1, Gamepad gamepad2){
 
@@ -207,7 +207,7 @@ public class TeleOpMethods {
             robot.lift.liftLeft.setTargetPosition(45); //retracts lift
             robot.lift.liftRight.setTargetPosition(45);
             robot.claw.setClawPosition(0); //retracts tree
-            treeAngle = 0; //angles tree
+            treeAngle = 0.1; //angles tree
             if (time) {
                 stateOneTime.reset();
                 time = false;
@@ -235,10 +235,10 @@ public class TeleOpMethods {
                 }
 
                 else if(robot.lift.rotateRight.getCurrentPosition() > -60){
-                    robot.lift.rotateRight.setPower(-0.5);
+                    robot.lift.rotateRight.setPower(-0.7);
                 }
                 else if(robot.lift.rotateRight.getCurrentPosition() < -75){
-                    robot.lift.rotateRight.setPower(0.5);
+                    robot.lift.rotateRight.setPower(0.7);
                 }
 
 //                liftAngleToPos(-68);
@@ -255,9 +255,9 @@ public class TeleOpMethods {
                     treeAngle = 0.1155;
                 }
                 if (stateOneTime.milliseconds() > macro_timing[3]) {
-                    robot.claw.setClawPosition(0.65); //claw goes down and picks pixel up
+                    robot.claw.setClawPosition(0.75); //claw goes down and picks pixel up
                 }
-            
+
                 if (stateOneTime.milliseconds() > macro_timing[4]){
                     //robot.claw.setClawPosition(0.8);
                     state[1] = false;
@@ -269,10 +269,10 @@ public class TeleOpMethods {
         }
         if(state[2]) // step 3: moves claw back
         {
-                robot.claw.setClawPosition(0.5);
-                treeAngle = 0.08;
-                state[2] = false;
-                state[3] = true;
+            robot.claw.setClawPosition(0.5);
+            treeAngle = 0.08;
+            state[2] = false;
+            state[3] = true;
         }
         if(state[3]) // step 4: rotate up
         {
@@ -285,7 +285,7 @@ public class TeleOpMethods {
                 robot.lift.rotateRight.setPower(-0.5);
 //                robot.lift.rotateLeft.setPower(-0.5);b
 
-              } else if (robot.lift.rotateRight.getCurrentPosition() < 565) {
+            } else if (robot.lift.rotateRight.getCurrentPosition() < 565) {
                 robot.lift.rotateRight.setPower(0.5); // set power for angle of the list
 //              robot.lift.rotateLeft.setPower(0.5);
             }
