@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
 @Config
 public class TeleOpMethods {
@@ -110,7 +111,7 @@ public class TeleOpMethods {
 
     private void intakeStuff(Gamepad gamepad1, Gamepad gamepad2) {
         if(gamepad2.a){
-            robot.intake.spinTake(1);
+            robot.intake.spinTake(0.75);
             robot.intake.lowerIntake();
         }
         else if(gamepad2.y){
@@ -127,10 +128,17 @@ public class TeleOpMethods {
         else if(gamepad2.b){
             robot.intake.stowIntake();
         }
-        // Rumble if amperage go upey
-//        if(robot.intake.intakeMotor.getCurrent() > 0.75) {
-//            gamepad1.rumble(1,1,1);
-//        }
+        // Rumble if amperage goes up significantly
+        double currentThreshold = 0.75; // Adjust this value based on your motor and testing
+        double rumbleStrength = 1.0; // Rumble strength (0.0 to 1.0)
+        int rumbleDuration = 500; // Rumble duration in milliseconds
+
+        double intakeCurrent = robot.intake.intakeMotor.getCurrent(CurrentUnit.AMPS);
+
+        if (intakeCurrent > currentThreshold) {
+            // Trigger rumble with specified strength and duration
+            gamepad1.rumble(rumbleStrength, rumbleStrength, rumbleDuration);
+        }
         if(robot.intake.getHsvValuesTop()[0] > 100){
             gamepad1.rumble(.75, .75, 500);
             gamepad2.rumble(.75, .75, 500);
