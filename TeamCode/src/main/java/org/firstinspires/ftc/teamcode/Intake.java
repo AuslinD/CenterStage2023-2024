@@ -117,6 +117,7 @@ public class Intake {
     public float[] getHsvValuesBot() {
         NormalizedRGBA colorsBot = colorSensorBottom.getNormalizedColors();
         Color.colorToHSV(colorsBot.toColor(), hsvValuesBot);
+        
         return hsvValuesBot;
     }
 }

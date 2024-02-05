@@ -613,24 +613,25 @@ public class TeleOpMethods {
     private static void telemetry(){
         double botHeading = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
 
-//        opMode.telemetry.addData("botHeading", Math.toDegrees(botHeading));
-//        opMode.telemetry.addData("Yaw", robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS));
-//        opMode.telemetry.addData("Pitch", robot.imu.getRobotYawPitchRollAngles().getPitch(AngleUnit.RADIANS));
-//        opMode.telemetry.addData("Roll", robot.imu.getRobotYawPitchRollAngles().getRoll(AngleUnit.RADIANS));
-//        opMode.telemetry.addData("2goal", rn2p);
-//        opMode.telemetry.addData("goal", rn1p);
-//        opMode.telemetry.addData("upgoal", up1p);
-//        opMode.telemetry.addData("up2goal", up2p);
-//        opMode.telemetry.addData("oursRotR", robot.lift.rotateRight.getCurrentPosition());
-//        //opMode.telemetry.addData("oursRotL", robot.lift.rotateLeft.getCurrentPosition());
-//        opMode.telemetry.addData("oursLiftL", robot.lift.liftLeft.getCurrentPosition());
-//        opMode.telemetry.addData("oursLiftR", robot.lift.liftRight.getCurrentPosition());
-//        opMode.telemetry.addData("treeAngle", treeAngle);
-//        opMode.telemetry.addData("br", robot.drivetrain.br.getCurrentPosition());
-//        opMode.telemetry.addData("inLeft", robot.intake.intakeAngleLeft.getPosition());
-//        opMode.telemetry.addData("inRight", robot.intake.intakeAngleRight.getPosition());
-//        opMode.telemetry.addData("MACROOOOOOOOOOOOOOOO", (!state[1]&&!state[0]&&!state[3]&&!state[2]&&!state[4]&&!state[5]&&!state[6]));
-//        opMode.telemetry.update();
+        opMode.telemetry.addData("botHeading", Math.toDegrees(botHeading));
+        opMode.telemetry.addData("Yaw", robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS));
+        opMode.telemetry.addData("Pitch", robot.imu.getRobotYawPitchRollAngles().getPitch(AngleUnit.RADIANS));
+        opMode.telemetry.addData("Roll", robot.imu.getRobotYawPitchRollAngles().getRoll(AngleUnit.RADIANS));
+        opMode.telemetry.addData("2goal", rn2p);
+        opMode.telemetry.addData("goal", rn1p);
+        opMode.telemetry.addData("upgoal", up1p);
+        opMode.telemetry.addData("up2goal", up2p);
+        opMode.telemetry.addData("oursRotR", robot.lift.rotateRight.getCurrentPosition());
+        //opMode.telemetry.addData("oursRotL", robot.lift.rotateLeft.getCurrentPosition());
+        opMode.telemetry.addData("oursLiftL", robot.lift.liftLeft.getCurrentPosition());
+        opMode.telemetry.addData("oursLiftR", robot.lift.liftRight.getCurrentPosition());
+        opMode.telemetry.addData("treeAngle", treeAngle);
+        opMode.telemetry.addData("br", robot.drivetrain.br.getCurrentPosition());
+        opMode.telemetry.addData("inLeft", robot.intake.intakeAngleLeft.getPosition());
+        opMode.telemetry.addData("inRight", robot.intake.intakeAngleRight.getPosition());
+        opMode.telemetry.addData("MACROOOOOOOOOOOOOOOO", (!state[1]&&!state[0]&&!state[3]&&!state[2]&&!state[4]&&!state[5]&&!state[6]));
+        opMode.telemetry.addData("potentiometer", robot.lift.potentiometer.getVoltage());
+        opMode.telemetry.update();
     }
 
 
