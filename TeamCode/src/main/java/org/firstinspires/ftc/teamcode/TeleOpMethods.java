@@ -131,7 +131,7 @@ public class TeleOpMethods {
         // Rumble if amperage goes up significantly
         double currentThreshold = 0.75; // Adjust this value based on your motor and testing
         double rumbleStrength = 1.0; // Rumble strength (0.0 to 1.0)
-        int rumbleDuration = 500; // Rumble duration in milliseconds
+        int rumbleDuration = 10; // Rumble duration in milliseconds
 
         double intakeCurrent = robot.intake.intakeMotor.getCurrent(CurrentUnit.AMPS);
 
@@ -139,14 +139,14 @@ public class TeleOpMethods {
             // Trigger rumble with specified strength and duration
             gamepad1.rumble(rumbleStrength, rumbleStrength, rumbleDuration);
         }
-        if(robot.intake.getHsvValuesTop()[0] > 100){
-            gamepad1.rumble(.75, .75, 500);
-            gamepad2.rumble(.75, .75, 500);
-        }
-        else if(robot.intake.getHsvValuesBot()[0] > 100){
-            gamepad1.rumble(.01, 0, 500);
-            gamepad2.rumble(.01, 0, 500);
-        }
+//        if(robot.intake.getHsvValuesTop()[0] > 100){
+//            gamepad1.rumble(.75, .75, 10);
+//            gamepad2.rumble(.75, .75, 10);
+//        }
+//        else if(robot.intake.getHsvValuesBot()[0] > 100){
+//            gamepad1.rumble(.01, 0, 10);
+//            gamepad2.rumble(.01, 0, 10);
+//        }
         /* ONE rumble code
         if(robot.intake.getHsvValuesTop()[0] < 100){
             pixels[1] = false;
