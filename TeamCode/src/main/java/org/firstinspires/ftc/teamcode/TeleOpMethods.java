@@ -639,6 +639,8 @@ public class TeleOpMethods {
         opMode.telemetry.addData("inRight", robot.intake.intakeAngleRight.getPosition());
         opMode.telemetry.addData("MACROOOOOOOOOOOOOOOO", (!state[1]&&!state[0]&&!state[3]&&!state[2]&&!state[4]&&!state[5]&&!state[6]));
         opMode.telemetry.addData("potentiometer", robot.lift.potentiometer.getVoltage());
+        double intakeCurrent = robot.intake.intakeMotor.getCurrent(CurrentUnit.AMPS);
+        opMode.telemetry.addData("Intake Motor Current", intakeCurrent + " Amps");
         opMode.telemetry.update();
     }
 
