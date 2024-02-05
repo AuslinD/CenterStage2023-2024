@@ -19,7 +19,7 @@ public class Intake {
     double ANG_DOWN = -0.5;
     double ANG_UP = 0.5;
     private CRServo intakeLeft, intakeRight, transferLeft, transferRight, transferMiddle;
-    public DcMotor intakeMotor;
+    public DcMotorEx intakeMotor;
 
     public Servo intakeAngleLeft, intakeAngleRight;
 

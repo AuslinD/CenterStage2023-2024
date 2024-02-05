@@ -110,7 +110,7 @@ public class TeleOpMethods {
 
     private void intakeStuff(Gamepad gamepad1, Gamepad gamepad2) {
         if(gamepad2.a){
-            robot.intake.spinTake(0.6);
+            robot.intake.spinTake(1);
             robot.intake.lowerIntake();
         }
         else if(gamepad2.y){
@@ -127,12 +127,17 @@ public class TeleOpMethods {
         else if(gamepad2.b){
             robot.intake.stowIntake();
         }
-
+        // Rumble if amperage go upey
+//        if(robot.intake.intakeMotor.getCurrent() > 0.75) {
+//            gamepad1.rumble(1,1,1);
+//        }
         if(robot.intake.getHsvValuesTop()[0] > 100){
             gamepad1.rumble(.75, .75, 500);
+            gamepad2.rumble(.75, .75, 500);
         }
         else if(robot.intake.getHsvValuesBot()[0] > 100){
             gamepad1.rumble(.01, 0, 500);
+            gamepad2.rumble(.01, 0, 500);
         }
         /* ONE rumble code
         if(robot.intake.getHsvValuesTop()[0] < 100){

@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.Robot;
 public class HELPMEEEE extends OpMode {
 
     ElapsedTime stateOneTime = new ElapsedTime();
-    private static final int NUM_PIXELS = 24;
+    private static final int NUM_PIXELS = 59;
 
     float gain = 2;
 
@@ -63,7 +63,7 @@ public class HELPMEEEE extends OpMode {
 
         int neopixelColor = Color.rgb(setColorRed, setColorGreen, setColorBlue);
 
-        neopixels.fill(neopixelColor);
+        neopixels.fill(Color.rgb(255,0,255));
         neopixels.show();
 
         telemetry.addLine()
