@@ -136,7 +136,7 @@ public class RedLeftEncMID extends LinearOpMode {
             //movement.encoderDrive(-50, 500);
             movement.robot.lift.setMotorsToGoUpOrDown(500);
             //movement.robot.claw.setClawAngle(treeAngleDown);
-            movement.robot.claw.setClawAngle(treeAngleDown);
+            movement.robot.claw.setClawAngle(treeAngleDown - 0.05);
             sleep(2000);
             //movement.robot.claw.setClawAngle(treeAngleDown);
             //sleep(2000);
@@ -149,7 +149,7 @@ public class RedLeftEncMID extends LinearOpMode {
             movement.encoderIMUTurn(-80, 8000);
             movement.encoderDrive(-650, 3000);
             movement.encoderIMUTurn(-85, 6500);
-            movement.encoderDrive(3000, 6500);
+            movement.encoderDrive(-3000, 6500);
 
             sleep(1000);
             //movement.encoderDrive(80, 5000);
