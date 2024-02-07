@@ -129,7 +129,7 @@ public class TeleOpMethods {
             robot.intake.stowIntake();
         }
         // Rumble if amperage goes up significantly
-        double currentThreshold = 0.75; // Adjust this value based on your motor and testing
+        double currentThreshold = 2; // Adjust this value based on your motor and testing
         double rumbleStrength = 1.0; // Rumble strength (0.0 to 1.0)
         int rumbleDuration = 10; // Rumble duration in milliseconds
 
@@ -137,7 +137,8 @@ public class TeleOpMethods {
 
         if (intakeCurrent > currentThreshold) {
             // Trigger rumble with specified strength and duration
-            gamepad1.rumble(rumbleStrength, rumbleStrength, rumbleDuration);
+            gamepad2.rumble(100, 100, 200);
+            gamepad1.rumble(100, 100, 200);
         }
 //        if(robot.intake.getHsvValuesTop()[0] > 100){
 //            gamepad1.rumble(.75, .75, 10);
@@ -166,7 +167,7 @@ public class TeleOpMethods {
     }
 
 
-    public static int[] macro_timing = {0, 0, 0, 175, 750};
+    public static int[] macro_timing = {0, 1000, 0, 175, 750};
 
     private void clawStuff(Gamepad gamepad1, Gamepad gamepad2){
 
@@ -192,6 +193,7 @@ public class TeleOpMethods {
             treeAngle -= .02;
         }
         else if (gamepad2.dpad_right && macrooo.milliseconds() > 800){ //mathew's macro  ngl im disapointed how you spelled my name
+
             /*ElapsedTime runtime = new ElapsedTime();
             if(runtime.milliseconds() > 500){
                 runtime.reset();
@@ -248,10 +250,10 @@ public class TeleOpMethods {
                 }
 
                 else if(robot.lift.rotateRight.getCurrentPosition() > -60){
-                    robot.lift.rotateRight.setPower(-0.7);
+                    robot.lift.rotateRight.setPower(-0.5);
                 }
-                else if(robot.lift.rotateRight.getCurrentPosition() < -75){
-                    robot.lift.rotateRight.setPower(0.7);
+                else if(robot.lift.rotateRight.getCurrentPosition() < -70){
+                    robot.lift.rotateRight.setPower(0.5);
                 }
 
 //                liftAngleToPos(-68);
@@ -268,7 +270,7 @@ public class TeleOpMethods {
                     treeAngle = 0.1155;
                 }
                 if (stateOneTime.milliseconds() > macro_timing[3]) {
-                    robot.claw.setClawPosition(0.75); //claw goes down and picks pixel up
+                    robot.claw.setClawPosition(0.8); //claw goes down and picks pixel up
                 }
 
                 if (stateOneTime.milliseconds() > macro_timing[4]){
@@ -486,7 +488,7 @@ public class TeleOpMethods {
 
 
         //Manipulator and lift stuff
-        int multiplier = 100;
+        int multiplier = 120;
         if(Math.abs(gamepad2.left_stick_y) > 0.1) {
             up1p += -gamepad2.left_stick_y * multiplier;
 
@@ -504,9 +506,6 @@ public class TeleOpMethods {
                 up1p = 3600;
             }
             robot.lift.setMotorsToGoUpOrDown((int)(up1p));
-
-
-
 
 
 
