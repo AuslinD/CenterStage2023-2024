@@ -12,6 +12,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 @Config
 public class TeleOpMethods {
 
+    Macro macro;
+
     private static Robot robot;
     static OpMode opMode;
     static double initPos;
@@ -32,42 +34,6 @@ public class TeleOpMethods {
     ElapsedTime stateOneTime = new ElapsedTime();
     ElapsedTime macrooo = new ElapsedTime();
     private static double lockHeadingHeading;
-
-
-    public static double Kp = 1.00;
-    public static double Ki = 0.00;
-    public static double Kd = 0.00;
-    public static void liftAngleToPos(int desiredPosition){
-
-        boolean setPointReached = false;
-        double tolerance = 5;
-
-        if (robot.lift.rotateRight.getCurrentPosition() + tolerance > desiredPosition && desiredPosition < robot.lift.rotateRight.getCurrentPosition() - tolerance){
-            setPointReached = true;
-        }
-
-        double integralSum = 0;
-        double lastError = 0;
-
-        ElapsedTime liftAngleToPosTimer = new ElapsedTime();
-
-        while (!setPointReached) {
-            if (robot.lift.rotateRight.getCurrentPosition() + tolerance > desiredPosition && desiredPosition < robot.lift.rotateRight.getCurrentPosition() - tolerance){
-                setPointReached = true;
-            }
-            int encoderPosition = robot.lift.rotateRight.getCurrentPosition();
-            int error = desiredPosition - encoderPosition;
-            double derivative = (error - lastError) / liftAngleToPosTimer.seconds();
-            integralSum = integralSum + (error * liftAngleToPosTimer.seconds());
-            double out = (Kp * error) + (Ki * integralSum) + (Kd * derivative);
-            robot.lift.rotateRight.setPower(out);
-            opMode.telemetry.addData("out", out); //doesnt work unless comment out other telemetry
-            opMode.telemetry.update();
-            lastError = error;
-            liftAngleToPosTimer.reset();
-
-        }
-    }
 
 
     public TeleOpMethods(OpMode opMode)
@@ -105,9 +71,6 @@ public class TeleOpMethods {
     private void misc(){
 
     }
-
-
-
 
     private void intakeStuff(Gamepad gamepad1, Gamepad gamepad2) {
         if(gamepad2.a){
@@ -193,7 +156,7 @@ public class TeleOpMethods {
             treeAngle -= .02;
         }
         else if (gamepad2.dpad_right && macrooo.milliseconds() > 800){ //mathew's macro  ngl im disapointed how you spelled my name
-
+//            Macro.macro_run();
             /*ElapsedTime runtime = new ElapsedTime();
             if(runtime.milliseconds() > 500){
                 runtime.reset();
