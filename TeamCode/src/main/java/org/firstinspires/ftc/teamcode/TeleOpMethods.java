@@ -35,7 +35,6 @@ public class TeleOpMethods {
     ElapsedTime macrooo = new ElapsedTime();
     private static double lockHeadingHeading;
 
-
     public TeleOpMethods(OpMode opMode)
     {   //manip later
         rn1p = 0;
@@ -155,8 +154,21 @@ public class TeleOpMethods {
         else if(gamepad2.dpad_down){
             treeAngle -= .02;
         }
+        else if(gamepad2.dpad_left){
+            robot.lift.liftLeft.setTargetPosition(600);
+            robot.lift.liftRight.setTargetPosition(600);
+
+            robot.claw.setClawPosition(0.4);
+
+            if(robot.lift.rotateRight.getCurrentPosition() > 1450){
+                robot.lift.rotateRight.setPower(-0.2);
+            }
+            else if(robot.lift.rotateRight.getCurrentPosition() < 1500){
+                robot.lift.rotateRight.setPower(0.2);
+            }
+        }
         else if (gamepad2.dpad_right && macrooo.milliseconds() > 800){ //mathew's macro  ngl im disapointed how you spelled my name
-//            Macro.macro_run();
+            Macro.macro_run(opMode);
             /*ElapsedTime runtime = new ElapsedTime();
             if(runtime.milliseconds() > 500){
                 runtime.reset();
@@ -169,7 +181,7 @@ public class TeleOpMethods {
             }*/
             ///*
 
-            state[0] = true; //rotate angle
+            state[0] = false; //rotate angle
             macrooo.reset();
             if(!macroOff){
                 state = new boolean[]{false, false, false, false, false, false, false, false};
