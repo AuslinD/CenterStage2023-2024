@@ -197,6 +197,21 @@ public class EncoderAutoMethods {
         robot.drivetrain.setALLMotorPower(0);
     }
 
+    public void holdLiftAngle(double voltage, int milliseconds){
+        ElapsedTime elapsedTime = new ElapsedTime();
+        while(elapsedTime.milliseconds() < milliseconds){
+            if(robot.lift.potentiometer.getVoltage() < voltage){
+                //robot.lift.rotateLeft.setPower(-.5);
+                robot.lift.rotateRight.setPower(-.5);
+            }
+            else if(robot.lift.potentiometer.getVoltage() > voltage){
+                robot.lift.rotateRight.setPower(0);
+                //robot.lift.rotateLeft.setPower(0);
+            }
+
+        }
+    }
+
 
 
 }
