@@ -75,14 +75,15 @@ public class RedLeftEncMID extends LinearOpMode {
 
         //movement.liftAnglePosition(100, 4000);
         if(pos == OpenCV.RedCV.SkystonePosition.RIGHT){
-            movement.encoderDrive(-900, 10500);
-            movement.encoderIMUTurn(-80, 5000);
-            movement.encoderDrive(85, 5000);
+            movement.encoderDrive(-850, 9000);
+            movement.encoderIMUTurn(-80, 7000);
+            movement.encoderDrive(20, 5000);
             movement.robot.lift.setMotorsToGoUpOrDown(450);
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
             robot.claw.clawHalf();
+            sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight);
             sleep(1000);
             movement.robot.lift.setMotorsToGoUpOrDown(0);
@@ -100,12 +101,12 @@ public class RedLeftEncMID extends LinearOpMode {
 
         }
         else if(pos == OpenCV.RedCV.SkystonePosition.CENTER){
-            movement.encoderDrive(-895, 5000);
+            movement.encoderDrive(-870, 7500);
             movement.robot.lift.setMotorsToGoUpOrDown(500);
             //movement.robot.claw.setClawAngle(treeAngleDown);
             //movement.robot.claw.setClawAngle(treeAngleDown + treeAngleStraight / 5);
             //sleep(2000);
-            movement.encoderIMUTurn(180,8000);
+            //movement.encoderIMUTurn(180,15000);
             movement.robot.claw.setClawAngle(treeAngleDown);
 
 
@@ -116,10 +117,10 @@ public class RedLeftEncMID extends LinearOpMode {
             sleep(1000);
             movement.robot.lift.setMotorsToGoUpOrDown(0);
             sleep(2000);
-            movement.encoderDrive(600, 5000);
-            movement.encoderIMUTurn(-85, 6500);
-            movement.encoderDrive(3000, 6500);
-            sleep(1000);
+            //movement.encoderDrive(600, 5000);
+            //movement.encoderIMUTurn(-85, 6500);
+            //movement.encoderDrive(3000, 6500);
+            //sleep(1000);
             //movement.robot.claw.setClawAngle(treeAngleStraight);
             movement.robot.lift.setMotorsToGoUpOrDown(0);
             sleep(2000);
@@ -148,7 +149,7 @@ public class RedLeftEncMID extends LinearOpMode {
             sleep(2000);
             movement.encoderIMUTurn(-80, 8000);
             movement.encoderDrive(-650, 3000);
-            movement.encoderIMUTurn(-85, 6500);
+            movement.encoderIMUTurn(-90, 6500);
             movement.encoderDrive(-3000, 6500);
 
             sleep(1000);
