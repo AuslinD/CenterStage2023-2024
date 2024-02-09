@@ -16,44 +16,31 @@ public class Macro {
     
 //    public static double kp = 1.00, ki = 1.00, kd = 1.00;
     public static int[] macro_timing = {1,2,3,4,5};
-    
-    
-    public static void liftAngleToPos(int desiredPosition){
 
-        boolean setPointReached = false;
+
+    public static void liftAngleToPos(int desiredPosition) {
         double tolerance = 100;
-
-        if (lift.rotateRight.getCurrentPosition() + tolerance > desiredPosition && desiredPosition < lift.rotateRight.getCurrentPosition() - tolerance){
-            setPointReached = true;
-        }
-
-//        double integralSum = 0;
-//        double lastError = 0;
-
         ElapsedTime liftAngleToPosTimer = new ElapsedTime();
+        liftAngleToPosTimer.reset();
+        double timeout = 5.0; // 5 seconds timeout for safety
 
-        while (!setPointReached) {
-            if (lift.rotateRight.getCurrentPosition() + tolerance > desiredPosition && desiredPosition < lift.rotateRight.getCurrentPosition() - tolerance){
-                setPointReached = true;
-                break;
+        while (liftAngleToPosTimer.seconds() < timeout) {
+            int currentPos = lift.rotateRight.getCurrentPosition();
+            if (Math.abs(currentPos - desiredPosition) <= tolerance) {
+                break; // Desired position reached within tolerance
             }
-            if(desiredPosition + tolerance > lift.rotateRight.getCurrentPosition ()){
-                lift.rotateRight.setPower (0.2);
+
+            if (desiredPosition > currentPos) {
+                lift.rotateRight.setPower(0.2); // Move up
+            } else if (desiredPosition < currentPos) {
+                lift.rotateRight.setPower(-0.2); // Move down
             }
-            if(desiredPosition - tolerance < lift.rotateRight.getCurrentPosition ()){
-                lift.rotateRight.setPower (-0.2);
-            }
-//            int encoderPosition = lift.rotateRight.getCurrentPosition();
-//            int error = desiredPosition - encoderPosition;
-//            double derivative = (error - lastError) / liftAngleToPosTimer.seconds();
-//            integralSum = integralSum + (error * liftAngleToPosTimer.seconds());
-//            double out = (kp * error) + (ki * integralSum) + (kd * derivative);
-//            lift.rotateRight.setPower(out);
-//            lastError = error;
-//            liftAngleToPosTimer.reset();
         }
+
+        lift.rotateRight.setPower(0); // Stop the motor after exiting the loop
     }
-    
+
+
     public static void macro_run(OpMode opmode){
         //Macro Vars for FTC dashboard
         
