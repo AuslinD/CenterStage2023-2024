@@ -42,6 +42,7 @@ public class TeleOpMethods {
         up1p = 0;
         up2p = 0;
         this.robot = new Robot(opMode);
+        this.macro = new Macro (robot);
         this.opMode = opMode;
         robot.imu.resetYaw();
         initPos = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
@@ -168,7 +169,6 @@ public class TeleOpMethods {
             }
         }
         else if (gamepad2.dpad_right && macrooo.milliseconds() > 800){ //mathew's macro  ngl im disapointed how you spelled my name
-            Macro.macro_run(opMode);
             /*ElapsedTime runtime = new ElapsedTime();
             if(runtime.milliseconds() > 500){
                 runtime.reset();
@@ -181,7 +181,7 @@ public class TeleOpMethods {
             }*/
             ///*
 
-            state[0] = false; //rotate angle
+            state[0] = true; //rotate angle
             macrooo.reset();
             if(!macroOff){
                 state = new boolean[]{false, false, false, false, false, false, false, false};
@@ -194,18 +194,20 @@ public class TeleOpMethods {
         }
         if(state[0]) // step 1: resets and angles tree
         {
-            robot.lift.liftLeft.setTargetPosition(45); //retracts lift
-            robot.lift.liftRight.setTargetPosition(45);
-            robot.claw.setClawPosition(0); //retracts tree
-            treeAngle = 0.1; //angles tree
-            if (time) {
-                stateOneTime.reset();
-                time = false;
-            }
-            if (stateOneTime.milliseconds() > macro_timing[0]){
-                state[0] = false;
-                state[1] = true;
-            }
+            Macro.macro_run(opMode);
+            state[0] = false;
+//            robot.lift.liftLeft.setTargetPosition(45); //retracts lift
+//            robot.lift.liftRight.setTargetPosition(45);
+//            robot.claw.setClawPosition(0); //retracts tree
+//            treeAngle = 0.1; //angles tree
+//            if (time) {
+//                stateOneTime.reset();
+//                time = false;
+//            }
+//            if (stateOneTime.milliseconds() > macro_timing[0]){
+//                state[0] = false;
+//                state[1] = true;
+//            }
 
             //so time would go here I think?
         }
@@ -357,7 +359,7 @@ public class TeleOpMethods {
 
         }
         else {
-            robot.claw.setClawAngle(treeAngle);
+            //robot.claw.setClawAngle(treeAngle);
         }
 
     }
@@ -507,19 +509,9 @@ public class TeleOpMethods {
             //robot.lift.rotateLeft.setPower(rn2p);
         }
         else if(gamepad2.left_bumper){
-            if(robot.lift.rotateRight.getCurrentPosition() > 0){
-                rn1p = -.75;
-                rn2p = rn1p;
-                robot.lift.rotateRight.setPower(rn1p);
-                //robot.lift.rotateLeft.setPower(rn2p);
-            }
-            else if (ignoreBounds){
-                rn1p = -.75;
-                rn2p = rn1p;
-                robot.lift.rotateRight.setPower(rn1p);
-                //robot.lift.rotateLeft.setPower(rn2p);
-            }
-
+            rn1p = -.75;
+            rn2p = rn1p;
+            robot.lift.rotateRight.setPower(rn1p);
         }
         else{
             if(robot.lift.liftLeft.getCurrentPosition() > 1600){
