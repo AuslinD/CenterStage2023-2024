@@ -194,8 +194,13 @@ public class TeleOpMethods {
         }
         if(state[0]) // step 1: resets and angles tree
         {
-            Macro.macro_run(opMode);
-            state[0] = false;
+            if(Math.abs(robot.lift.potentiometer.getVoltage() - 1.9) < .01)
+                state[0] = false;
+            PID liftPID = new PID(.95, 0.01, 0, 1.9);
+            double newPower = liftPID.loop(robot.lift.potentiometer.getVoltage(), macrooo.milliseconds());
+            robot.lift.rotateRight.setPower(newPower);
+
+
 //            robot.lift.liftLeft.setTargetPosition(45); //retracts lift
 //            robot.lift.liftRight.setTargetPosition(45);
 //            robot.claw.setClawPosition(0); //retracts tree
