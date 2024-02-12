@@ -168,7 +168,7 @@ public class TeleOpMethods {
                 robot.lift.rotateRight.setPower(0.2);
             }
         }
-        else if (gamepad2.dpad_right && macrooo.milliseconds() > 800){ //mathew's macro  ngl im disapointed how you spelled my name
+        else if (gamepad2.dpad_right){ //mathew's macro  ngl im disapointed how you spelled my name
             /*ElapsedTime runtime = new ElapsedTime();
             if(runtime.milliseconds() > 500){
                 runtime.reset();
