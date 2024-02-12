@@ -38,6 +38,7 @@ public class Macro {
     
     public static void macro_run(OpMode opmode) {
         timer.reset();
+        
         robot.claw.setClawPosition(0);
         robot.claw.setClawAngle(0.1);
         liftAngleToPos(1000);
@@ -47,36 +48,42 @@ public class Macro {
         Thread macroThread = new Thread(() -> {
             while (macro_run) {
                 liftAngleToPos(73);
-                while (!timer.hasElapsed (macro_timing[0])) {
-                }
+                waitUntilTimeElapsed(macro_timing[0]);
                 
                 robot.claw.setClawPosition(0.3);
-                while (!timer.hasElapsed (macro_timing[1])) {
-                }
+                waitUntilTimeElapsed(macro_timing[1]);
                 
                 robot.lift.liftLeft.setTargetPosition(85);
                 robot.lift.liftRight.setTargetPosition(85);
                 liftAngleToPos(100);
                 robot.claw.setClawAngle(0.115);
                 robot.claw.setClawPosition(0.00);
-                while (!timer.hasElapsed (macro_timing[2])) {
-                }
+                waitUntilTimeElapsed(macro_timing[2]);
                 
                 liftAngleToPos(60);
                 robot.claw.setClawPosition(0.8);
-                while (!timer.hasElapsed (macro_timing[3])) {
-                }
+                waitUntilTimeElapsed(macro_timing[3]);
                 
                 robot.claw.setClawPosition(0.5);
                 robot.claw.setClawAngle(0.1);
-                while (!timer.hasElapsed (macro_timing[4])) {
-                }
+                waitUntilTimeElapsed(macro_timing[4]);
                 
                 liftAngleToPos(800);
                 robot.claw.setClawAngle(0.41);
                 macro_run = false;
             }
         });
+        
         macroThread.start();
     }
-}
+    
+    private static void waitUntilTimeElapsed(double targetTime) {
+        while (timer.seconds() < targetTime) {
+            // Wait until target time is reached
+            try {
+                Thread.sleep(10); // Adjust sleep duration as needed
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }

@@ -10,8 +10,11 @@ public class Timer {
     public boolean hasElapsed(double seconds) {
         return (System.currentTimeMillis() - startTime >= (seconds * 1000));
     }
-
-
+    
+    public double seconds() {
+        return (System.currentTimeMillis() - startTime) / 1000;
+    }
+    
     public void reset() {
         this.startTime = System.currentTimeMillis();
     }
