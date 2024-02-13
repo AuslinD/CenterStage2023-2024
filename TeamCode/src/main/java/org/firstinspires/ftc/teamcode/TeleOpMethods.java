@@ -169,6 +169,7 @@ public class TeleOpMethods {
             }
         }
         else if (gamepad2.dpad_right && macrooo.milliseconds() > 800){ //mathew's macro  ngl im disapointed how you spelled my name
+            Macro.initMacro ();
             /*ElapsedTime runtime = new ElapsedTime();
             if(runtime.milliseconds() > 500){
                 runtime.reset();
@@ -180,22 +181,28 @@ public class TeleOpMethods {
                 }
             }*/
             ///*
-
-            state[0] = true; //rotate angle
+            
+            //state[0] = true; //rotate angle
             macrooo.reset();
-            if(!macroOff){
-                state = new boolean[]{false, false, false, false, false, false, false, false};
-            }
-            time = true;//reset
-            down = false;//reset
+//            if(!macro.macroYay()){
+//                macro.macroAllOff();
+//            }
+//            time = true;//reset
+//            down = false;//reset
 
+        
+        
 
 
         }
-        if(state[0]) // step 1: resets and angles tree
+        if (Macro.macroYay() )
         {
             Macro.macro_run(opMode);
-            state[0] = false;
+        }
+//        if(state[0]) // step 1: resets and angles tree
+//        {
+////            Macro.macro_run(opMode);
+////            state[0] = false;
 //            robot.lift.liftLeft.setTargetPosition(45); //retracts lift
 //            robot.lift.liftRight.setTargetPosition(45);
 //            robot.claw.setClawPosition(0); //retracts tree
@@ -208,80 +215,80 @@ public class TeleOpMethods {
 //                state[0] = false;
 //                state[1] = true;
 //            }
-
-            //so time would go here I think?
-        }
-        else if (state[1]) // step 2: gets pixel
-        {
-//            opMode.telemetry.addData("time",stateOneTime.milliseconds()); //doesnt work unless comment out other telemetry
-//            opMode.telemetry.update();
-            if (!down){
-                robot.claw.clawHalf();
-                //wait im trolling really hard, we should initialize time when we set state[1] to true since that's
-                //how long the robot has actually been doing the state. Rn it resets time everytime
-                //because it initializes(resets) inside the if statement, so time will never be > 1000 milliseconds
-                if (robot.lift.rotateRight.getCurrentPosition() < -60 && robot.lift.rotateRight.getCurrentPosition() > -75) // check to see if the lift is btw the value
-                {
-                    down = true;
-                    stateOneTime.reset();
-                }
-
-                else if(robot.lift.rotateRight.getCurrentPosition() > -60){
-                    robot.lift.rotateRight.setPower(-0.5);
-                }
-                else if(robot.lift.rotateRight.getCurrentPosition() < -70){
-                    robot.lift.rotateRight.setPower(0.5);
-                }
-
-//                liftAngleToPos(-68);
-            }
-            else {
-                //robot.intake.spinTake(1);
-                robot.claw.setClawPosition(0.5);
-                treeAngle = 0.180;
-                if (stateOneTime.milliseconds() > macro_timing[1]){
-                    treeAngle = 0;
-                }
-                if (stateOneTime.milliseconds() > macro_timing[2]) {
-                    robot.claw.setClawPosition(0);//retracts tree
-                    treeAngle = 0.1155;
-                }
-                if (stateOneTime.milliseconds() > macro_timing[3]) {
-                    robot.claw.setClawPosition(0.8); //claw goes down and picks pixel up
-                }
-
-                if (stateOneTime.milliseconds() > macro_timing[4]){
-                    //robot.claw.setClawPosition(0.8);
-                    state[1] = false;
-                    state[2] = true;
-                    stateOneTime.reset();
-                }
-
-            }
-        }
-        if(state[2]) // step 3: moves claw back
-        {
-            robot.claw.setClawPosition(0.5);
-            treeAngle = 0.08;
-            state[2] = false;
-            state[3] = true;
-        }
-        if(state[3]) // step 4: rotate up
-        {
-            if (robot.lift.rotateRight.getCurrentPosition() < 600 && robot.lift.rotateRight.getCurrentPosition() > 565) // check to see if the lift is btw the value
-            {
-                state[3] = false;
-                treeAngle = .41;
-
-            } else if (robot.lift.rotateRight.getCurrentPosition() > 600) {
-                robot.lift.rotateRight.setPower(-0.5);
-//                robot.lift.rotateLeft.setPower(-0.5);b
-
-            } else if (robot.lift.rotateRight.getCurrentPosition() < 565) {
-                robot.lift.rotateRight.setPower(0.5); // set power for angle of the list
-//              robot.lift.rotateLeft.setPower(0.5);
-            }
-        }
+//
+//            //so time would go here I think?
+//        }
+//        else if (state[1]) // step 2: gets pixel
+//        {
+////            opMode.telemetry.addData("time",stateOneTime.milliseconds()); //doesnt work unless comment out other telemetry
+////            opMode.telemetry.update();
+//            if (!down){
+//                robot.claw.clawHalf();
+//                //wait im trolling really hard, we should initialize time when we set state[1] to true since that's
+//                //how long the robot has actually been doing the state. Rn it resets time everytime
+//                //because it initializes(resets) inside the if statement, so time will never be > 1000 milliseconds
+//                if (robot.lift.rotateRight.getCurrentPosition() < -60 && robot.lift.rotateRight.getCurrentPosition() > -75) // check to see if the lift is btw the value
+//                {
+//                    down = true;
+//                    stateOneTime.reset();
+//                }
+//
+//                else if(robot.lift.rotateRight.getCurrentPosition() > -60){
+//                    robot.lift.rotateRight.setPower(-0.5);
+//                }
+//                else if(robot.lift.rotateRight.getCurrentPosition() < -70){
+//                    robot.lift.rotateRight.setPower(0.5);
+//                }
+//
+////                liftAngleToPos(-68);
+//            }
+//            else {
+//                //robot.intake.spinTake(1);
+//                robot.claw.setClawPosition(0.5);
+//                treeAngle = 0.180;
+//                if (stateOneTime.milliseconds() > macro_timing[1]){
+//                    treeAngle = 0;
+//                }
+//                if (stateOneTime.milliseconds() > macro_timing[2]) {
+//                    robot.claw.setClawPosition(0);//retracts tree
+//                    treeAngle = 0.1155;
+//                }
+//                if (stateOneTime.milliseconds() > macro_timing[3]) {
+//                    robot.claw.setClawPosition(0.8); //claw goes down and picks pixel up
+//                }
+//
+//                if (stateOneTime.milliseconds() > macro_timing[4]){
+//                    //robot.claw.setClawPosition(0.8);
+//                    state[1] = false;
+//                    state[2] = true;
+//                    stateOneTime.reset();
+//                }
+//
+//            }
+//        }
+//        if(state[2]) // step 3: moves claw back
+//        {
+//            robot.claw.setClawPosition(0.5);
+//            treeAngle = 0.08;
+//            state[2] = false;
+//            state[3] = true;
+//        }
+//        if(state[3]) // step 4: rotate up
+//        {
+//            if (robot.lift.rotateRight.getCurrentPosition() < 600 && robot.lift.rotateRight.getCurrentPosition() > 565) // check to see if the lift is btw the value
+//            {
+//                state[3] = false;
+//                treeAngle = .41;
+//
+//            } else if (robot.lift.rotateRight.getCurrentPosition() > 600) {
+//                robot.lift.rotateRight.setPower(-0.5);
+////                robot.lift.rotateLeft.setPower(-0.5);b
+//
+//            } else if (robot.lift.rotateRight.getCurrentPosition() < 565) {
+//                robot.lift.rotateRight.setPower(0.5); // set power for angle of the list
+////              robot.lift.rotateLeft.setPower(0.5);
+//            }
+//        }
         /*if(state[8]) // step 5: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!AAAAAAAAA
         {
             robot.lift.liftRight.setTargetPosition(277);
