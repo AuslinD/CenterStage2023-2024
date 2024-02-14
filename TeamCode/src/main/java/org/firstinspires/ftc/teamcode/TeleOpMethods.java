@@ -169,7 +169,7 @@ public class TeleOpMethods {
             }
         }
         else if (gamepad2.dpad_right){// && macrooo.milliseconds() > 800){ //mathew's macro  ngl im disapointed how you spelled my name
-            Macro.initMacro ();
+            Macro.macro_run(opMode);
             /*ElapsedTime runtime = new ElapsedTime();
             if(runtime.milliseconds() > 500){
                 runtime.reset();
