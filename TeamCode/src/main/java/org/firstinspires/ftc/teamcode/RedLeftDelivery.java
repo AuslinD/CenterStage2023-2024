@@ -69,10 +69,10 @@ public class RedLeftDelivery extends LinearOpMode {
 
 
 
+        movement.PIDdriveCorrection(-900, 20000);
 
 
-
-
+/*
         if(pos == OpenCV.RedCV.SkystonePosition.RIGHT){
             movement.encoderDrive(-900, 10500);
             movement.encoderIMUTurn(-80, 5000);
@@ -148,5 +148,9 @@ public class RedLeftDelivery extends LinearOpMode {
 
 
 
+
+ */
     }
+
+
 }

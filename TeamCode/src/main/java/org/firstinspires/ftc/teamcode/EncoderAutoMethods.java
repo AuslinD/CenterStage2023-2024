@@ -212,6 +212,55 @@ public class EncoderAutoMethods {
         }
     }
 
+    public void PIDdriveCorrection(double distance, int milliseconds){
+        PID drivePID = new PID(.008, 0, 0, distance);
+        ElapsedTime elapsedTime = new ElapsedTime();
+        double initAngle = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
+        double targetAngle = initAngle;
 
+        while(Math.abs(robot.drivetrain.br.getCurrentPosition() - distance) < 10 && elapsedTime.milliseconds() < milliseconds){
+            double newPower = drivePID.loop(robot.drivetrain.br.getCurrentPosition(), elapsedTime.milliseconds());
+            double leftDrift = targetAngle - robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
+            double rightDrift = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - targetAngle;
+            leftDrift /= 100.0;
+            rightDrift /= 100.0;
+            robot.drivetrain.fl.setPower(newPower - rightDrift);
+            robot.drivetrain.fr.setPower(newPower - leftDrift);
+            robot.drivetrain.bl.setPower(newPower - rightDrift);
+            robot.drivetrain.br.setPower(newPower - leftDrift);
+            linearOpMode.telemetry.addData("newPower", newPower);
+            linearOpMode.telemetry.addData("leftDrift", leftDrift);
+            linearOpMode.telemetry.update();
+        }
+        robot.drivetrain.setALLMotorPower(0);
+    }
 
+    public void PIDTurn(double degrees, int milliseconds){
+        ElapsedTime elapsedTime = new ElapsedTime();
+
+        double initPos = robot.getImu().getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) + 180;
+        double targetPos = initPos + degrees;
+        double mult = degrees < 0 ? -1: 1;
+        if(targetPos > 360){
+            targetPos -= 360;
+        }
+        else if(targetPos < 0){
+            targetPos = 360 + targetPos;
+        }
+        PID turnPID = new PID(.008, .001, 0, targetPos);
+
+        while(elapsedTime.milliseconds() < milliseconds && !linearOpMode.isStopRequested() && Math.abs((robot.getImu().getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) + 180) - targetPos) > 1){
+            double newPower = turnPID.loop((robot.getImu().getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) + 180), elapsedTime.milliseconds());
+            linearOpMode.telemetry.addData("curAngle", robot.getImu().getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) + 180);
+            linearOpMode.telemetry.addData("target", targetPos);
+            linearOpMode.telemetry.addData("if", robot.getImu().getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) + 180 - targetPos);
+            linearOpMode.telemetry.addData("newPower", newPower);
+            linearOpMode.telemetry.update();
+            robot.drivetrain.bl.setPower(-newPower);
+            robot.drivetrain.fl.setPower(-newPower);
+            robot.drivetrain.fr.setPower(newPower);
+            robot.drivetrain.br.setPower(newPower);
+        }
+        robot.drivetrain.setALLMotorPower(0);
+    }
 }
