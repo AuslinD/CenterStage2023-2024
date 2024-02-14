@@ -168,7 +168,7 @@ public class TeleOpMethods {
                 robot.lift.rotateRight.setPower(0.2);
             }
         }
-        else if (gamepad2.dpad_right && macrooo.milliseconds() > 800){ //mathew's macro  ngl im disapointed how you spelled my name
+        else if (gamepad2.dpad_right){// && macrooo.milliseconds() > 800){ //mathew's macro  ngl im disapointed how you spelled my name
             Macro.initMacro ();
             /*ElapsedTime runtime = new ElapsedTime();
             if(runtime.milliseconds() > 500){
@@ -614,6 +614,12 @@ public class TeleOpMethods {
         opMode.telemetry.addData("potentiometer", robot.lift.potentiometer.getVoltage());
         double intakeCurrent = robot.intake.intakeMotor.getCurrent(CurrentUnit.AMPS);
         opMode.telemetry.addData("Intake Motor Current", intakeCurrent + " Amps");
+        opMode.telemetry.addData("WHY ISN'T THIS WORKING return whether it is on", Macro.macroYay());
+        opMode.telemetry.addData("5", Macro.macro_state[5]);
+        opMode.telemetry.addData("0", Macro.macro_state[0]);
+        opMode.telemetry.addData("1", Macro.macro_state[1]);
+        opMode.telemetry.addData("2", Macro.macro_state[2]);
+
         opMode.telemetry.update();
     }
 
