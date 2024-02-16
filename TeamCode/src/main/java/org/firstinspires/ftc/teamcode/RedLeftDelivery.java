@@ -22,7 +22,7 @@ public class RedLeftDelivery extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         EncoderAutoMethods movement = new EncoderAutoMethods(this);
         Robot robot = movement.robot;
-        movement.robot.intake.stowIntake();
+        //movement.robot.intake.stowIntake();
         movement.robot.claw.setClawAngle(treeAngleUp);
         movement.robot.claw.clawDown();
         /**

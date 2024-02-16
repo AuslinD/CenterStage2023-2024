@@ -22,7 +22,7 @@ public class RedRight extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         EncoderAutoMethods movement = new EncoderAutoMethods(this);
-        movement.robot.intake.stowIntake();
+        //movement.robot.intake.stowIntake();
         movement.robot.claw.setClawAngle(treeAngleUp);
         movement.robot.claw.clawDown();
         /**

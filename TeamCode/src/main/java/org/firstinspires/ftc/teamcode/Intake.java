@@ -21,7 +21,7 @@ public class Intake {
     private CRServo intakeLeft, intakeRight, transferLeft, transferRight, transferMiddle;
     public DcMotorEx intakeMotor;
 
-    public Servo intakeAngleLeft, intakeAngleRight;
+    //public Servo intakeAngleLeft, intakeAngleRight;
 
     NormalizedColorSensor colorSensorTop;
     NormalizedColorSensor colorSensorBottom;
@@ -98,6 +98,7 @@ public class Intake {
         transferMiddle.setPower(-power);
     }
 
+    /*
     public void lowerIntake(){
         intakeAngleLeft.setPosition(0);
         intakeAngleRight.setPosition(.552);
@@ -107,6 +108,8 @@ public class Intake {
         intakeAngleLeft.setPosition(-.55);
         intakeAngleRight.setPosition(.9);
     }
+
+     */
 
     public float[] getHsvValuesTop(){
         NormalizedRGBA colorsTop = colorSensorTop.getNormalizedColors();

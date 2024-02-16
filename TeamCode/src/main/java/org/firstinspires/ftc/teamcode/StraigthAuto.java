@@ -8,7 +8,7 @@ public class StraigthAuto extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Robot robot = new Robot(this);
-        robot.intake.stowIntake();
+        //robot.intake.stowIntake();
         robot.plane.setPosition(.47);//hello austin my pookie wookie bear <3
         waitForStart();
         EncoderAutoMethods autoMethods = new EncoderAutoMethods(this);
@@ -34,7 +34,7 @@ public class StraigthAuto extends LinearOpMode {
         robot.intake.spinTake(-1);
         robot.intake.spinTake(-1);
         sleep(5000);
-        robot.intake.stowIntake();
+        //robot.intake.stowIntake();
         robot.drivetrain.setALLMotorPower(-.3);
         sleep(600);
         robot.drivetrain.setALLMotorPower(0);

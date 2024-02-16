@@ -7,7 +7,7 @@ public class StraightFar extends LinearOpMode{
     @Override
     public void runOpMode() throws InterruptedException {
         Robot robot = new Robot(this);
-        robot.intake.stowIntake();
+        //robot.intake.stowIntake();
         robot.claw.setClawAngle(.71);
         robot.claw.clawDown();
         robot.plane.setPosition(.47);//hello austin my pookie wookie bear <3

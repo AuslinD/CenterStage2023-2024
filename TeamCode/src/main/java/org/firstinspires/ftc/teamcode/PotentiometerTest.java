@@ -19,7 +19,7 @@ public class PotentiometerTest extends LinearOpMode {
         waitForStart();
         EncoderAutoMethods movement = new EncoderAutoMethods(this);
         Robot robot = movement.robot;
-        movement.robot.intake.stowIntake();
+        //movement.robot.intake.stowIntake();
         movement.robot.claw.setClawAngle(treeAngleUp);
         movement.robot.claw.clawDown();
         movement.holdLiftAngle(2, 8000);
