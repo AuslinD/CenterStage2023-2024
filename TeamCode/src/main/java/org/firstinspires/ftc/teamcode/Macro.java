@@ -26,7 +26,7 @@ public class Macro {
     public static void initMacro(){
         macro_state[5] = true;
     }
-    private static boolean aBoolean = true;
+    public static boolean aBoolean = true;
     public static void macroAllOff(){
         for (int i = 0; i < macro_state.length; i++){
             macro_state[i] = false;
@@ -67,13 +67,16 @@ public class Macro {
         
         //Sets the starting pos of all the apendeges
         
-        
+        //opmode.telemetry.addData("why", aBoolean);
+        //opmode.telemetry.update();
         //Start of the actual macro
         if (aBoolean){
-            if (lift.rotateRight.getCurrentPosition() + 5 > 200 && 200 < lift.rotateRight.getCurrentPosition() - 5) {
+            macro_state[5] = true;
+            aBoolean = false;
+            /*if (lift.rotateRight.getCurrentPosition() + 5 > 200 && 200 < lift.rotateRight.getCurrentPosition() - 5) {
                 macro_state[5] = true;
                 aBoolean = false;
-            }
+            }*/
         }
         //if (macroYay ()){ //not needed if state
             if (macro_state[5]) {

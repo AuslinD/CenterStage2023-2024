@@ -347,7 +347,7 @@ public class TeleOpMethods {
 
 
 
-        if(macroOff) {
+        if(!Macro.macroYay()) {
             //comment this to make non rel
             double offSet = robot.lift.rotateRight.getCurrentPosition() / 11356.25;// the
             //offSet = treeAngle - offSet > .33 && treeAngle - offSet < .61? offSet : 0;
@@ -619,6 +619,7 @@ public class TeleOpMethods {
         opMode.telemetry.addData("0", Macro.macro_state[0]);
         opMode.telemetry.addData("1", Macro.macro_state[1]);
         opMode.telemetry.addData("2", Macro.macro_state[2]);
+        opMode.telemetry.addData("PLEASE WORK: ABOOLEAN CHECK", Macro.aBoolean);
 
         opMode.telemetry.update();
     }
