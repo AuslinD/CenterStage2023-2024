@@ -23,10 +23,14 @@ public class Macro {
     }
     
     public static double[] macro_timing = {1,1.5,2,2.5,3,0.5};
-    public static void initMacro(){
+    /*public static void initMacro(){
         macro_state[5] = true;
-    }
+    }*/
     private static boolean aBoolean = true;
+    /*public Macro(){ //constructor
+        aBoolean = true;
+    }*/
+
     public static void macroAllOff(){
         for (int i = 0; i < macro_state.length; i++){
             macro_state[i] = false;
@@ -85,7 +89,7 @@ public class Macro {
             //liftAngleToPos (1000);
             robot.lift.liftLeft.setTargetPosition (0);
             robot.lift.liftRight.setTargetPosition (0);
-            timer.reset ();
+            //timer.reset ();
             liftAngleToPos (73);
             if (timer.hasElapsed (macro_timing[5])) {
                 macro_state[5] = false;
@@ -94,10 +98,13 @@ public class Macro {
             //opmode.telemetry.addData("FIRST STEP", 5);
             //opmode.telemetry.update();
         }
-        if (timer.hasElapsed (macro_timing[0]) && macro_state[0]) {
-            robot.claw.setClawPosition (0.3);
-             macro_state[0] = false;
-             macro_state[1] = true;
+        if (macro_state[0]) {
+
+            robot.claw.setClawPosition(0.3);
+            if (timer.hasElapsed (macro_timing[0])) {
+                macro_state[0] = false;
+                macro_state[1] = true;
+            }
             }
         if (macro_state[1]) {
             robot.lift.liftLeft.setTargetPosition(85);
