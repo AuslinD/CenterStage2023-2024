@@ -26,7 +26,7 @@ public class Macro {
     public static void initMacro(){
         macro_state[5] = true;
     }
-    public static boolean aBoolean = true;
+    private static boolean aBoolean = true;
     public static void macroAllOff(){
         for (int i = 0; i < macro_state.length; i++){
             macro_state[i] = false;
@@ -133,6 +133,5 @@ public class Macro {
                 macro_state[4] = false;
             }
         }
-        aBoolean = true;//}
     }
 }
