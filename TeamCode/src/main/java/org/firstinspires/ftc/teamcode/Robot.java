@@ -20,6 +20,7 @@ public class Robot {
     IMU imu;
 
     Servo plane;
+    Servo planeAngle;
 
 
 
@@ -41,6 +42,8 @@ public class Robot {
         imu.resetYaw();
 
         plane = opmode.hardwareMap.get(Servo.class, "plane");
+        planeAngle = opmode.hardwareMap.get(Servo.class, "planeAngle");
+        planeAngle.setPosition(0);
 
 
     }
@@ -80,5 +83,6 @@ public class Robot {
         plane.setPosition(position);
     }
 
+    public void setPlaneAngle(double position){planeAngle.setPosition(position);}
 
 }

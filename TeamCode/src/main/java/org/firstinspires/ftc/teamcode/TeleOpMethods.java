@@ -32,6 +32,8 @@ public class TeleOpMethods {
     boolean down = false;
     boolean lockToAngle = false;
     ElapsedTime stateOneTime = new ElapsedTime();
+    ElapsedTime planeTimer = new ElapsedTime();
+    boolean[] planeLaunch = new boolean[]{false, false};
     ElapsedTime macrooo = new ElapsedTime();
     private static double lockHeadingHeading;
 
@@ -75,24 +77,24 @@ public class TeleOpMethods {
     private void intakeStuff(Gamepad gamepad1, Gamepad gamepad2) {
         if(gamepad2.a){
             robot.intake.spinTake(0.75);
-            robot.intake.lowerIntake();
+            //robot.intake.lowerIntake();
         }
         else if(gamepad2.y){
             robot.intake.spinTake(-1);
-            robot.intake.stowIntake();
+            //robot.intake.stowIntake();
         }
         else{
             robot.intake.spinTake(0);
         }
         if(gamepad2.x){
-            robot.intake.lowerIntake();
+            //robot.intake.lowerIntake();
             robot.intake.spinTakeTroll(1);
         }
         else if(gamepad2.b){
-            robot.intake.stowIntake();
+            //robot.intake.stowIntake();
         }
         // Rumble if amperage goes up significantly
-        double currentThreshold = 2; // Adjust this value based on your motor and testing
+        double currentThreshold = 2.3; // Adjust this value based on your motor and testing
         double rumbleStrength = 1.0; // Rumble strength (0.0 to 1.0)
         int rumbleDuration = 10; // Rumble duration in milliseconds
 
@@ -373,10 +375,25 @@ public class TeleOpMethods {
     private void planeServoControl(Gamepad gamepad1, Gamepad gamepad2) {
 
         if (gamepad1.a) {
+
             robot.setPlanePosition(0.47);
         } else if (gamepad1.b) {
-            robot.setPlanePosition(0.8);
+            planeTimer.reset();
+            planeLaunch[0] = true;
+            robot.setPlaneAngle(.5);
+            robot.drivetrain.setALLMotorPower(0);
+
         }
+        if(planeLaunch[0] && planeTimer.milliseconds() > 500){
+            robot.setPlanePosition(0.8);
+            planeLaunch[1] = true;
+        }
+        if(planeLaunch[1]){
+            robot.setPlaneAngle(0);
+            planeLaunch[0] = false;
+            planeLaunch[1] = false;
+        }
+
     }
 
 
@@ -608,8 +625,8 @@ public class TeleOpMethods {
         opMode.telemetry.addData("oursLiftR", robot.lift.liftRight.getCurrentPosition());
         opMode.telemetry.addData("treeAngle", treeAngle);
         opMode.telemetry.addData("br", robot.drivetrain.br.getCurrentPosition());
-        opMode.telemetry.addData("inLeft", robot.intake.intakeAngleLeft.getPosition());
-        opMode.telemetry.addData("inRight", robot.intake.intakeAngleRight.getPosition());
+        //opMode.telemetry.addData("inLeft", robot.intake.intakeAngleLeft.getPosition());
+        //opMode.telemetry.addData("inRight", robot.intake.intakeAngleRight.getPosition());
         opMode.telemetry.addData("MACROOOOOOOOOOOOOOOO", (!state[1]&&!state[0]&&!state[3]&&!state[2]&&!state[4]&&!state[5]&&!state[6]));
         opMode.telemetry.addData("potentiometer", robot.lift.potentiometer.getVoltage());
         double intakeCurrent = robot.intake.intakeMotor.getCurrent(CurrentUnit.AMPS);

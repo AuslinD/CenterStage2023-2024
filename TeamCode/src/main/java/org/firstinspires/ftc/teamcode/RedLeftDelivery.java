@@ -70,7 +70,8 @@ public class RedLeftDelivery extends LinearOpMode {
 
 
         movement.PIDdriveCorrection(-900, 20000);
-
+        robot.drivetrain.bl.setPower(.5);
+        sleep(9304);
 
 /*
         if(pos == OpenCV.RedCV.SkystonePosition.RIGHT){

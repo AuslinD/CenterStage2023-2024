@@ -36,8 +36,8 @@ public class Intake {
         intakeMotor = opMode.hardwareMap.get(DcMotorEx.class, "intake");
         transferLeft = opMode.hardwareMap.get(CRServo.class, "trL");
         transferRight = opMode.hardwareMap.get(CRServo.class, "trR");
-        intakeAngleLeft = opMode.hardwareMap.get(Servo.class, "angL");
-        intakeAngleRight = opMode.hardwareMap.get(Servo.class, "angR");
+        //intakeAngleLeft = opMode.hardwareMap.get(Servo.class, "angL");
+        //intakeAngleRight = opMode.hardwareMap.get(Servo.class, "angR");
         transferMiddle = opMode.hardwareMap.get(CRServo.class, "transfer");
         //intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         transferRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -60,8 +60,8 @@ public class Intake {
         intakeMotor = opMode.hardwareMap.get(DcMotorEx.class, "intake");
         transferLeft = opMode.hardwareMap.get(CRServo.class, "trL");
         transferRight = opMode.hardwareMap.get(CRServo.class, "trR");
-        intakeAngleLeft = opMode.hardwareMap.get(Servo.class, "angL");
-        intakeAngleRight = opMode.hardwareMap.get(Servo.class, "angR");
+        //intakeAngleLeft = opMode.hardwareMap.get(Servo.class, "angL");
+        //intakeAngleRight = opMode.hardwareMap.get(Servo.class, "angR");
         transferMiddle = opMode.hardwareMap.get(CRServo.class, "transfer");
 
         //intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
