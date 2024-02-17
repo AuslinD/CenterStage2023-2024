@@ -68,7 +68,10 @@ public class RedLeftDelivery extends LinearOpMode {
         waitForStart();
 
 
-
+        robot.drivetrain.bl.setPower(.5);
+        sleep(2000);
+        robot.drivetrain.bl.setPower(0);
+        sleep(2000);
         movement.PIDdriveCorrection(-900, 20000);
         robot.drivetrain.bl.setPower(.5);
         sleep(9304);

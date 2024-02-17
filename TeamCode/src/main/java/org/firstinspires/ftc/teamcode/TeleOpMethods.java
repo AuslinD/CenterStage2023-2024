@@ -51,6 +51,7 @@ public class TeleOpMethods {
         robot.plane.setPosition(.47);
         treeAngle = .47;
         gameOn = false;
+        ignoreBounds = false;
         //down = false;
     }
 
@@ -486,7 +487,12 @@ public class TeleOpMethods {
     }
 
     private static void manipulatorStuff(Gamepad gamepad1, Gamepad gamepad2) {
+        if(gamepad1.dpad_left) ignoreBounds = true;
 
+        if(gamepad1.dpad_right){
+            ignoreBounds = false;
+            robot = new Robot(robot.teleOpMode);
+        }
 
         //Manipulator and lift stuff
         int multiplier = 120;
@@ -495,7 +501,7 @@ public class TeleOpMethods {
 
             up2p = up1p;
 
-            if(gamepad1.dpad_left) ignoreBounds = true;
+
 
             if (up1p < -10 && !ignoreBounds)
             {
@@ -623,6 +629,7 @@ public class TeleOpMethods {
         //opMode.telemetry.addData("oursRotL", robot.lift.rotateLeft.getCurrentPosition());
         opMode.telemetry.addData("oursLiftL", robot.lift.liftLeft.getCurrentPosition());
         opMode.telemetry.addData("oursLiftR", robot.lift.liftRight.getCurrentPosition());
+        opMode.telemetry.addData("Ignore Bounds", ignoreBounds);
         opMode.telemetry.addData("treeAngle", treeAngle);
         opMode.telemetry.addData("br", robot.drivetrain.br.getCurrentPosition());
         //opMode.telemetry.addData("inLeft", robot.intake.intakeAngleLeft.getPosition());

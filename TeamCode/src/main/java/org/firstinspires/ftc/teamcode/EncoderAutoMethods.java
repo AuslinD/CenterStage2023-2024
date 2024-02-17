@@ -224,6 +224,7 @@ public class EncoderAutoMethods {
             double rightDrift = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - targetAngle;
             leftDrift /= 100.0;
             rightDrift /= 100.0;
+            robot.planeAngle.setPosition(1);
             robot.drivetrain.fl.setPower(newPower - rightDrift);
             robot.drivetrain.fr.setPower(newPower - leftDrift);
             robot.drivetrain.bl.setPower(newPower - rightDrift);

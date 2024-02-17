@@ -21,11 +21,13 @@ public class Robot {
 
     Servo plane;
     Servo planeAngle;
+    OpMode teleOpMode;
 
 
 
 
     public Robot(OpMode opmode){
+        teleOpMode = opmode;
         drivetrain = new Drivetrain(opmode);
         lift = new Lift(opmode);
         claw = new Claw(opmode);
