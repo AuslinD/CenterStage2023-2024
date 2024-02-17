@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import static org.firstinspires.ftc.teamcode.Macro.macro_run;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.w8wjb.ftc.AdafruitNeoDriver;
@@ -12,6 +14,7 @@ public class TeleOpRunner extends OpMode
     AdafruitNeoDriver neopixels;
 
     TeleOpMethods teleOpMethods;
+    Macro macro;
     @Override
     public void init() {
         neopixels = hardwareMap.get(AdafruitNeoDriver.class, "neopixels");
@@ -21,6 +24,7 @@ public class TeleOpRunner extends OpMode
         neopixels.show();
 
         teleOpMethods = new TeleOpMethods(this);
+//        Macro macro = new macro_run(this);
 
     }
 

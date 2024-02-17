@@ -12,7 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 @Config
 public class TeleOpMethods {
 
-    Macro macro;
+//    Macro macro;
 
     private static Robot robot;
     static OpMode opMode;
@@ -36,6 +36,8 @@ public class TeleOpMethods {
     boolean[] planeLaunch = new boolean[]{false, false};
     ElapsedTime macrooo = new ElapsedTime();
     private static double lockHeadingHeading;
+    public static int macroState = 0;
+
 
     public TeleOpMethods(OpMode opMode)
     {   //manip later
@@ -44,7 +46,7 @@ public class TeleOpMethods {
         up1p = 0;
         up2p = 0;
         this.robot = new Robot(opMode);
-        this.macro = new Macro (robot);
+//        this.macro = new Macro (robot);
         this.opMode = opMode;
         robot.imu.resetYaw();
         initPos = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
@@ -132,12 +134,26 @@ public class TeleOpMethods {
          */
     }
 
+    public static void liftAngleToPos(int desiredPosition) {
+        double tolerance = 100;
+        ElapsedTime liftAngleToPosTimer = new ElapsedTime();
+        liftAngleToPosTimer.reset();
+
+
+            int currentPos = robot.lift.rotateRight.getCurrentPosition();
+            if (desiredPosition > currentPos) {
+                robot.lift.rotateRight.setPower(0.5);
+            } else if (desiredPosition < currentPos) {
+                robot.lift.rotateRight.setPower(-0.5);
+            }
+            robot.lift.rotateRight.setPower(0);
+    }
 
     public static int[] macro_timing = {0, 1000, 0, 175, 750};
 
     private void clawStuff(Gamepad gamepad1, Gamepad gamepad2){
 
-        boolean macroOff = !state[1]&&!state[0]&&!state[3]&&!state[2]&&!state[4]&&!state[5]&&!state[6];
+        boolean macroOff = true;
 
 
         if(gamepad2.right_trigger > .1){
@@ -146,12 +162,12 @@ public class TeleOpMethods {
         else if(gamepad2.left_trigger > .1){
             robot.claw.setClawPosition(.22);
         }
-        else{
-            if (!Macro.macroYay()){
-                robot.claw.clawDown();
-            }
-
-        }
+//        else{
+//            if (!Macro.macroYay()){
+//                robot.claw.clawDown();
+//            }
+//
+//        }
         if(gamepad2.dpad_up){
             treeAngle += .02;
         }
@@ -171,8 +187,30 @@ public class TeleOpMethods {
                 robot.lift.rotateRight.setPower(0.2);
             }
         }
-        else if (gamepad2.dpad_right){// && macrooo.milliseconds() > 800){ //mathew's macro  ngl im disapointed how you spelled my name
-            Macro.macro_run(opMode);
+        else if (gamepad2.dpad_right) {// && macrooo.milliseconds() > 800){ //mathew's macro  ngl im disapointed how you spelled my name
+            //MACRO CODE
+            macroOff = false;
+
+            if (macroState == 0) {
+                robot.claw.setClawPosition(0);
+                robot.claw.setClawAngle(0.1);
+                robot.lift.liftLeft.setTargetPosition(0);
+                robot.lift.liftRight.setTargetPosition(0);
+                liftAngleToPos(1000);
+                if (!(Math.abs(robot.lift.rotateRight.getCurrentPosition() - 1000) <= 5)) {
+                    macroState = 1;
+                }
+            }
+
+            if (macroState == 1) {
+                liftAngleToPos (73);
+                robot.claw.setClawPosition (0.3);
+                //if (timer.hasElapsed ....
+            }
+        }
+            //MACRO CODE END
+
+            //            Macro.macro_run(opMode);
             /*ElapsedTime runtime = new ElapsedTime();
             if(runtime.milliseconds() > 500){
                 runtime.reset();
@@ -186,7 +224,7 @@ public class TeleOpMethods {
             ///*
             
             //state[0] = true; //rotate angle
-            macrooo.reset();
+//            macrooo.reset();
 //            if(!macro.macroYay()){
 //                macro.macroAllOff();
 //            }
@@ -197,11 +235,11 @@ public class TeleOpMethods {
         
 
 
-        }
-        if (Macro.macroYay() )
-        {
-            Macro.macro_run(opMode);
-        }
+//        }
+//        if (Macro.macroYay() )
+//        {
+//            Macro.macro_run(opMode);
+//        }
 //        if(state[0]) // step 1: resets and angles tree
 //        {
 ////            Macro.macro_run(opMode);
@@ -350,27 +388,27 @@ public class TeleOpMethods {
 
 
 
-        if(!Macro.macroYay()) {
-            //comment this to make non rel
-            double offSet = robot.lift.rotateRight.getCurrentPosition() / 11356.25;// the
-            //offSet = treeAngle - offSet > .33 && treeAngle - offSet < .61? offSet : 0;
-
-            //uncomment this to revert to relative
-            //double offSet = 0;
-            if(robot.lift.liftLeft.getCurrentPosition() > 300 && !lockToAngle){
-                lockToAngle = true;
-                robot.claw.setClawAngle(.37 - offSet);
-            }
-            else{
-                lockToAngle = false;
-            }
-            robot.claw.setClawAngle(treeAngle - offSet);
-
-
-        }
-        else {
-            //robot.claw.setClawAngle(treeAngle);
-        }
+//        if(!Macro.macroYay()) {
+//            //comment this to make non rel
+//            double offSet = robot.lift.rotateRight.getCurrentPosition() / 11356.25;// the
+//            //offSet = treeAngle - offSet > .33 && treeAngle - offSet < .61? offSet : 0;
+//
+//            //uncomment this to revert to relative
+//            //double offSet = 0;
+//            if(robot.lift.liftLeft.getCurrentPosition() > 300 && !lockToAngle){
+//                lockToAngle = true;
+//                robot.claw.setClawAngle(.37 - offSet);
+//            }
+//            else{
+//                lockToAngle = false;
+//            }
+//            robot.claw.setClawAngle(treeAngle - offSet);
+//
+//
+//        }
+//        else {
+//            //robot.claw.setClawAngle(treeAngle);
+//        }
 
     }
     private void planeServoControl(Gamepad gamepad1, Gamepad gamepad2) {
@@ -638,11 +676,11 @@ public class TeleOpMethods {
         opMode.telemetry.addData("potentiometer", robot.lift.potentiometer.getVoltage());
         double intakeCurrent = robot.intake.intakeMotor.getCurrent(CurrentUnit.AMPS);
         opMode.telemetry.addData("Intake Motor Current", intakeCurrent + " Amps");
-        opMode.telemetry.addData("WHY ISN'T THIS WORKING return whether it is on", Macro.macroYay());
-        opMode.telemetry.addData("5", Macro.macro_state[5]);
-        opMode.telemetry.addData("0", Macro.macro_state[0]);
-        opMode.telemetry.addData("1", Macro.macro_state[1]);
-        opMode.telemetry.addData("2", Macro.macro_state[2]);
+//        opMode.telemetry.addData("WHY ISN'T THIS WORKING return whether it is on", Macro.macroYay());
+//        opMode.telemetry.addData("5", Macro.macro_state[5]);
+//        opMode.telemetry.addData("0", Macro.macro_state[0]);
+//        opMode.telemetry.addData("1", Macro.macro_state[1]);
+//        opMode.telemetry.addData("2", Macro.macro_state[2]);
         //opMode.telemetry.addData("PLEASE WORK: ABOOLEAN CHECK", Macro.aBoolean);
 
         opMode.telemetry.update();

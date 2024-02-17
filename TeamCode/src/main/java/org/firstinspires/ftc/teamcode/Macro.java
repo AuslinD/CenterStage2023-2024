@@ -2,7 +2,12 @@ package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
 @Config
 public class Macro {
@@ -16,9 +21,8 @@ public class Macro {
 
     public static boolean macro_run = false;
 
-    public Macro(Robot robot) {
-        Macro.robot = robot;
-        lift = robot.lift;
+    public Macro(OpMode opMode) {
+
     }
 
     public static double[] macro_timing = {0,0.5,1,1.5,2};
@@ -29,11 +33,8 @@ public class Macro {
         ElapsedTime liftAngleToPosTimer = new ElapsedTime();
         liftAngleToPosTimer.reset();
 
-        while (!(Math.abs(lift.rotateRight.getCurrentPosition() - desiredPosition) <= tolerance)) {
+       if (!(Math.abs(lift.rotateRight.getCurrentPosition() - desiredPosition) <= tolerance)) {
             int currentPos = lift.rotateRight.getCurrentPosition();
-            if (Math.abs(currentPos - desiredPosition) <= tolerance) {
-                break;
-            }
             if (desiredPosition > currentPos) {
                 lift.rotateRight.setPower(0.5);
             } else if (desiredPosition < currentPos) {
