@@ -111,7 +111,7 @@ public class Macro {
         if (macro_state[1]) {
             robot.lift.liftLeft.setTargetPosition(85);
             robot.lift.liftRight.setTargetPosition(85);
-            //liftAngleToPos(100);
+            liftAngleToPos(100);
             robot.claw.setClawAngle (0.115);
             robot.claw.setClawPosition(0.00);
             if (timer.hasElapsed (macro_timing[1])){
@@ -120,7 +120,7 @@ public class Macro {
             }
         }
         if (macro_state[2]) {
-            //liftAngleToPos (60);
+            liftAngleToPos (60);
             robot.claw.setClawPosition (0.8);
             if ((timer.hasElapsed (macro_timing[2]))) {
                 macro_state[2] = false;
@@ -136,7 +136,7 @@ public class Macro {
             }
         }
         if (macro_state[4]) {
-            //liftAngleToPos (800);
+            liftAngleToPos (800);
             robot.claw.setClawAngle (0.41);
             if (timer.hasElapsed (macro_timing[4])) {
                 macro_state[4] = false;
