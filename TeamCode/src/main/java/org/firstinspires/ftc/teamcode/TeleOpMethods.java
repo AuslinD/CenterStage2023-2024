@@ -147,7 +147,7 @@ public class TeleOpMethods {
             robot.claw.setClawPosition(.22);
         }
         else{
-            if (macroOff){
+            if (!Macro.macroYay()){
                 robot.claw.clawDown();
             }
 
