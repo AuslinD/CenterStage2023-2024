@@ -48,7 +48,7 @@ public class TeleOpMethods {
         this.opMode = opMode;
         robot.imu.resetYaw();
         initPos = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
-        robot.plane.setPosition(.47);
+        robot.plane.setPosition(-1);
         treeAngle = .47;
         gameOn = false;
         ignoreBounds = false;
@@ -377,7 +377,7 @@ public class TeleOpMethods {
 
         if (gamepad1.a) {
 
-            robot.setPlanePosition(0.47);
+            robot.setPlanePosition(-1);
         } else if (gamepad1.b) {
             planeTimer.reset();
             planeLaunch[0] = true;
@@ -385,13 +385,16 @@ public class TeleOpMethods {
             robot.drivetrain.setALLMotorPower(0);
 
         }
+        if(planeLaunch[0] || planeLaunch[1]){
+            robot.drivetrain.setALLMotorPower(0);
+        }
         if(planeLaunch[0] && planeTimer.milliseconds() > 500){
-            robot.setPlanePosition(0.8);
+            robot.setPlanePosition(0.47);
             planeLaunch[1] = true;
         }
-        if(planeLaunch[1]){
+        if(planeLaunch[1] && planeTimer.milliseconds() > 1000){
             robot.setPlaneAngle(0);
-            robot.setPlanePosition(0.47);
+            robot.setPlanePosition(-1);
             planeLaunch[0] = false;
             planeLaunch[1] = false;
         }

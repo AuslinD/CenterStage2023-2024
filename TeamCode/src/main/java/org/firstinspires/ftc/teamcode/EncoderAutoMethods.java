@@ -213,27 +213,36 @@ public class EncoderAutoMethods {
     }
 
     public void PIDdriveCorrection(double distance, int milliseconds){
-        PID drivePID = new PID(.008, 0, 0, distance);
+        PID drivePID = new PID(.0006, 0, 0, distance);
         ElapsedTime elapsedTime = new ElapsedTime();
+
         double initAngle = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
         double targetAngle = initAngle;
+        int initPos = robot.drivetrain.br.getCurrentPosition();
 
-        while(Math.abs(robot.drivetrain.br.getCurrentPosition() - distance) < 10 && elapsedTime.milliseconds() < milliseconds){
-            double newPower = drivePID.loop(robot.drivetrain.br.getCurrentPosition(), elapsedTime.milliseconds());
-            double leftDrift = targetAngle - robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
-            double rightDrift = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - targetAngle;
-            leftDrift /= 100.0;
-            rightDrift /= 100.0;
-            robot.planeAngle.setPosition(1);
-            robot.drivetrain.fl.setPower(newPower - rightDrift);
-            robot.drivetrain.fr.setPower(newPower - leftDrift);
-            robot.drivetrain.bl.setPower(newPower - rightDrift);
-            robot.drivetrain.br.setPower(newPower - leftDrift);
+
+        while(Math.abs(robot.drivetrain.br.getCurrentPosition() - initPos - distance) > 10 && elapsedTime.milliseconds() < milliseconds && !linearOpMode.isStopRequested()){
+            double newPower = drivePID.loop(robot.drivetrain.br.getCurrentPosition() - initPos, elapsedTime.milliseconds());
+            //double leftDrift = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) - targetAngle;
+            //double rightDrift = targetAngle - robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
+
+//            leftDrift /= 100.0;
+//            rightDrift /= 100.0;
+            //robot.planeAngle.setPosition(1);
+            robot.drivetrain.fl.setPower(newPower );
+            robot.drivetrain.fr.setPower(newPower);
+            robot.drivetrain.bl.setPower(newPower);
+            robot.drivetrain.br.setPower(newPower);
             linearOpMode.telemetry.addData("newPower", newPower);
-            linearOpMode.telemetry.addData("leftDrift", leftDrift);
+            //linearOpMode.telemetry.addData("leftDrift", leftDrift);
+            linearOpMode.telemetry.addData("if", Math.abs(robot.drivetrain.br.getCurrentPosition() - initPos - distance));
             linearOpMode.telemetry.update();
         }
         robot.drivetrain.setALLMotorPower(0);
+        robot.drivetrain.fl.setPower(0);
+        robot.drivetrain.fr.setPower(0);
+        robot.drivetrain.bl.setPower(0);
+        robot.drivetrain.br.setPower(0);
     }
 
     public void PIDTurn(double degrees, int milliseconds){
@@ -248,7 +257,7 @@ public class EncoderAutoMethods {
         else if(targetPos < 0){
             targetPos = 360 + targetPos;
         }
-        PID turnPID = new PID(.008, .001, 0, targetPos);
+        PID turnPID = new PID(.008, .000, 0, targetPos);
 
         while(elapsedTime.milliseconds() < milliseconds && !linearOpMode.isStopRequested() && Math.abs((robot.getImu().getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) + 180) - targetPos) > 1){
             double newPower = turnPID.loop((robot.getImu().getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) + 180), elapsedTime.milliseconds());

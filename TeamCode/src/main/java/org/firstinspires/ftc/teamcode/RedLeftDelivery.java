@@ -68,92 +68,10 @@ public class RedLeftDelivery extends LinearOpMode {
         waitForStart();
 
 
-        robot.drivetrain.bl.setPower(.5);
-        sleep(2000);
-        robot.drivetrain.bl.setPower(0);
-        sleep(2000);
-        movement.PIDdriveCorrection(-900, 20000);
-        robot.drivetrain.bl.setPower(.5);
-        sleep(9304);
-
-/*
-        if(pos == OpenCV.RedCV.SkystonePosition.RIGHT){
-            movement.encoderDrive(-900, 10500);
-            movement.encoderIMUTurn(-80, 5000);
-            movement.encoderDrive(85, 5000);
-            movement.robot.lift.setMotorsToGoUpOrDown(450);
-
-            movement.robot.claw.setClawAngle(treeAngleDown);
-            sleep(2000);
-            robot.claw.clawHalf();
-            sleep(2000);
-            //first delivery
-            movement.robot.claw.setClawAngle(treeAngleStraight);
-            sleep(1000);
-            movement.robot.lift.setMotorsToGoUpOrDown(0);
-            sleep(2000);
-            movement.encoderIMUTurn(80, 6500);
-            movement.encoderDrive(880, 3250);
-            movement.encoderIMUTurn(-85, 6500);
-            movement.encoderDrive(-3000, 6500);
-            sleep(1000);
-
-
-        }
-        else if(pos == OpenCV.RedCV.SkystonePosition.CENTER){
-            movement.encoderDrive(-895, 5000);
-            movement.robot.lift.setMotorsToGoUpOrDown(500);
-            movement.robot.claw.setClawAngle(treeAngleDown);
-
-
-            sleep(2000);
-            //first delivery
-            robot.claw.clawHalf();
-            sleep(2000);
-            movement.robot.claw.setClawAngle(treeAngleStraight);
-            sleep(1000);
-            movement.robot.lift.setMotorsToGoUpOrDown(0);
-            sleep(2000);
-            movement.encoderDrive(900, 5000);
-            movement.encoderIMUTurn(-85, 6500);
-            movement.encoderDrive(-3000, 6500);
-            sleep(1000);
-            movement.robot.lift.setMotorsToGoUpOrDown(0);
-            sleep(2000);
-        }
-        else{
-            movement.encoderDrive(-955, 6500);
-            movement.encoderIMUTurn(80, 200000);
-
-            movement.robot.lift.setMotorsToGoUpOrDown(500);
-
-            movement.robot.claw.setClawAngle(treeAngleDown + treeAngleStraight / 5);
-            sleep(1000);
-            //first delivery
-            robot.claw.clawHalf();
-            sleep(1000);
-            movement.robot.claw.setClawAngle(treeAngleStraight);
-            sleep(1000);
-            movement.robot.lift.setMotorsToGoUpOrDown(0);
-            sleep(2000);
-            movement.encoderIMUTurn(-80, 8000);
-            movement.encoderDrive(850, 3000);
-            movement.encoderIMUTurn(-85, 6500);
-            movement.encoderDrive(-3000, 6500);
-            sleep(1000);
-            movement.robot.lift.setMotorsToGoUpOrDown(0);
-            sleep(2000);
-
-
-        }
+        movement.PIDTurn(-180, 20000);
 
 
 
-
-
-
-
- */
     }
 
 
