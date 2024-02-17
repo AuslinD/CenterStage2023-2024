@@ -26,7 +26,7 @@ public class Macro {
     /*public static void initMacro(){
         macro_state[5] = true;
     }*/
-    private static boolean aBoolean = true;
+    public static boolean aBoolean = true;
     /*public Macro(){ //constructor
         aBoolean = true;
     }*/
@@ -74,9 +74,11 @@ public class Macro {
         //opmode.telemetry.addData("why", aBoolean);
         //opmode.telemetry.update();
         //Start of the actual macro
+
         if (aBoolean){
             macro_state[5] = true;
             aBoolean = false;
+            timer.reset();
             /*if (lift.rotateRight.getCurrentPosition() + 5 > 200 && 200 < lift.rotateRight.getCurrentPosition() - 5) {
                 macro_state[5] = true;
                 aBoolean = false;
@@ -138,6 +140,7 @@ public class Macro {
             robot.claw.setClawAngle (0.41);
             if (timer.hasElapsed (macro_timing[4])) {
                 macro_state[4] = false;
+                aBoolean = true;
             }
         }
     }
