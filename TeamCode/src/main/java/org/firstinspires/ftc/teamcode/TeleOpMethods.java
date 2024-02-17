@@ -391,6 +391,7 @@ public class TeleOpMethods {
         }
         if(planeLaunch[1]){
             robot.setPlaneAngle(0);
+            robot.setPlanePosition(0.47);
             planeLaunch[0] = false;
             planeLaunch[1] = false;
         }
