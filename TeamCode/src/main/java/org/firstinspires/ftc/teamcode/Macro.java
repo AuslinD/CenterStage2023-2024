@@ -22,7 +22,7 @@ public class Macro {
         lift = robot.lift;
     }
     
-    public static double[] macro_timing = {1,1.5,2,2.5,3,0.5, 2.7};
+    public static double[] macro_timing = {1.8,2,2.5,3,3.5,1,3.3};
     /*public static void initMacro(){
         macro_state[5] = true;
     }*/
@@ -104,7 +104,7 @@ public class Macro {
             //opmode.telemetry.addData("FIRST STEP", 5);
             //opmode.telemetry.update();
         }
-        if (macro_state[0]) {
+        if (macro_state[0]) { //step 2
 
             robot.claw.setClawPosition(0.3);
             if (timer.hasElapsed (macro_timing[0])) {
@@ -112,21 +112,21 @@ public class Macro {
                 macro_state[1] = true;
             }
             }
-        if (macro_state[1]) {
-            robot.lift.liftLeft.setTargetPosition(85);
-            robot.lift.liftRight.setTargetPosition(85);
+        if (macro_state[1]) { //step 3
+            robot.lift.liftLeft.setTargetPosition(80);
+            robot.lift.liftRight.setTargetPosition(80);
             if(!(Math.abs(robot.lift.rotateRight.getCurrentPosition() - 100) < 100)) {
                 liftAngleToPos (100);
             }
             //liftAngleToPos(100);
-            robot.claw.setClawAngle (0.115);
+            robot.claw.setClawAngle (0.1); //used to be 0.115
             robot.claw.setClawPosition(0.00);
             if (timer.hasElapsed (macro_timing[1])){
                 macro_state[1] = false;
                 macro_state[2] = true;
             }
         }
-        if (macro_state[2]) {
+        if (macro_state[2]) { //gets pixel
             if(!(Math.abs(robot.lift.rotateRight.getCurrentPosition() - 60) < 100)) {
                 liftAngleToPos (60);
             }
@@ -152,6 +152,8 @@ public class Macro {
             //liftAngleToPos (800);
             if (timer.hasElapsed (macro_timing[4])) {
                 macro_state[4] = false;
+                aBoolean = true;  // Reset aBoolean to allow macro to start again
+                macroAllOff();  // Reset all macro states
             }
         }
         if (macro_state[6]){
@@ -159,6 +161,7 @@ public class Macro {
             if (timer.hasElapsed(macro_timing[6])){
                 macro_state[6] = false;
                 aBoolean = true;
+                macroAllOff();  // Reset all macro states
             }
         }
     }
