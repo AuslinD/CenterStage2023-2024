@@ -24,9 +24,7 @@ public class TeleOpMethods {
     boolean gameOn;
     //Manipulator
     boolean time = false;
-    static boolean state [] = {false,false,false,false,false,false,false,false
-
-    }; // 6 stats/steps = to false at start
+    static boolean state [] = {false,false,false,false,false,false,false,false}; // 6 stats/steps = to false at start
 
     static double rn1p, rn2p, up1p, up2p;
     boolean down = false;
