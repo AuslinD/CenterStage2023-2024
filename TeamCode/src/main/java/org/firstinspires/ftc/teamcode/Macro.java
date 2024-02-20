@@ -80,16 +80,18 @@ public class Macro {
         if (aBoolean){
             macro_state[5] = true;
             aBoolean = false;
+            robot.claw.setClawPosition (0);
             timer.reset();
             /*if (lift.rotateRight.getCurrentPosition() + 5 > 200 && 200 < lift.rotateRight.getCurrentPosition() - 5) {
                 macro_state[5] = true;
                 aBoolean = false;
             }*/
         }
+        //if (macro_state[7])
         //if (macroYay ()){ //not needed if state
         if (macro_state[5]) {
-            robot.claw.setClawPosition (0);
-            robot.claw.setClawAngle (0.1);
+            //robot.claw.setClawPosition (0);
+            robot.claw.setClawAngle (0);
             //liftAngleToPos (1000);
             robot.lift.liftLeft.setTargetPosition (0);
             robot.lift.liftRight.setTargetPosition (0);
@@ -113,13 +115,13 @@ public class Macro {
             }
             }
         if (macro_state[1]) { //step 3
-            robot.lift.liftLeft.setTargetPosition(80);
-            robot.lift.liftRight.setTargetPosition(80);
+            robot.lift.liftLeft.setTargetPosition(70);
+            robot.lift.liftRight.setTargetPosition(70);
             if(!(Math.abs(robot.lift.rotateRight.getCurrentPosition() - 100) < 100)) {
                 liftAngleToPos (100);
             }
             //liftAngleToPos(100);
-            robot.claw.setClawAngle (0.1); //used to be 0.115
+            robot.claw.setClawAngle (0.05); //used to be 0.115
             robot.claw.setClawPosition(0.00);
             if (timer.hasElapsed (macro_timing[1])){
                 macro_state[1] = false;
@@ -139,7 +141,7 @@ public class Macro {
         }
         if (macro_state[3]) {
             robot.claw.setClawPosition (0.5);
-            robot.claw.setClawAngle (0.1);
+            robot.claw.setClawAngle (0);
             if(timer.hasElapsed (macro_timing[3])) {
                 macro_state[3] = false;
                 macro_state[4] = true;
@@ -152,8 +154,9 @@ public class Macro {
             //liftAngleToPos (800);
             if (timer.hasElapsed (macro_timing[4])) {
                 macro_state[4] = false;
-                aBoolean = true;  // Reset aBoolean to allow macro to start again
-                macroAllOff();  // Reset all macro states
+                macro_state[6] = true;
+                //aBoolean = true;  // Reset aBoolean to allow macro to start again
+                //macroAllOff();  // Reset all macro states
             }
         }
         if (macro_state[6]){
