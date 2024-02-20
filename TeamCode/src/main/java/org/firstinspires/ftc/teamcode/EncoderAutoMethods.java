@@ -257,7 +257,7 @@ public class EncoderAutoMethods {
         else if(targetPos < 0){
             targetPos = 360 + targetPos;
         }
-        PID turnPID = new PID(.008, .000, 0, targetPos);
+        PID turnPID = new PID(.009, .000, 0, targetPos);
 
         while(elapsedTime.milliseconds() < milliseconds && !linearOpMode.isStopRequested() && Math.abs((robot.getImu().getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) + 180) - targetPos) > 1){
             double newPower = turnPID.loop((robot.getImu().getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) + 180), elapsedTime.milliseconds());
