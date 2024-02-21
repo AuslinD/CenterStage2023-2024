@@ -96,7 +96,7 @@ public class Macro {
             robot.lift.liftLeft.setTargetPosition (0);
             robot.lift.liftRight.setTargetPosition (0);
             //timer.reset ();
-            if(!(Math.abs(robot.lift.rotateRight.getCurrentPosition() - 73) < 100)) {
+            if(!(Math.abs(robot.lift.rotateRight.getCurrentPosition() - 73) < 100) ) {
                 liftAngleToPos (73);
             }
             if (timer.hasElapsed (macro_timing[5])) {
@@ -121,7 +121,7 @@ public class Macro {
                 liftAngleToPos (100);
             }
             //liftAngleToPos(100);
-            robot.claw.setClawAngle (0.1); //used to be 0.115
+            robot.claw.setClawAngle (0.095); //used to be 0.115
             robot.claw.setClawPosition(0.00);
             if (timer.hasElapsed (macro_timing[1])){
                 macro_state[1] = false;
