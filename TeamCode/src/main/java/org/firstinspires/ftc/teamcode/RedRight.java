@@ -74,9 +74,9 @@ public class RedRight extends LinearOpMode {
 
         //movement.liftAnglePosition(100, 4000);
         if(pos == OpenCV.RedCV.SkystonePosition.RIGHT){
-            movement.encoderDrive(-980, 15500);
-            movement.encoderIMUTurn(90, 5000);
-            movement.encoderDrive(650, 5000);
+            movement.PIDdriveCorrection(-980, 15500);
+            movement.PIDTurn(90, 5000);
+            movement.PIDdriveCorrection(650, 5000);
             movement.robot.lift.setMotorsToGoUpOrDown(450);
             movement.robot.claw.setClawAngle(treeAngleDown);
             movement.robot.claw.setClawAngle(treeAngleDown + treeAngleStraight / 5);
@@ -84,31 +84,36 @@ public class RedRight extends LinearOpMode {
             sleep(2000);
             movement.robot.claw.clawHalf();
             sleep(2000);
-            movement.encoderDrive(50, 500);
+            movement.PIDdriveCorrection(50, 500);
             movement.robot.claw.setClawAngle(treeAngleStraight);
-            movement.encoderIMUTurn(163.5, 10000);
-            movement.encoderDrive(-755, 3000);
+            movement.robot.lift.setMotorsToGoUpOrDown(0);
+            movement.PIDTurn(163.5, 10000);
+            movement.robot.lift.setMotorsToGoUpOrDown(500);
+            movement.PIDdriveCorrection(-755, 3000);
 
         }
         else if(pos == OpenCV.RedCV.SkystonePosition.CENTER){
-            movement.encoderDrive(-875, 5000);
             movement.robot.lift.setMotorsToGoUpOrDown(500);
+
             movement.robot.claw.setClawAngle(treeAngleDown);
             movement.robot.claw.setClawAngle(treeAngleDown + treeAngleStraight / 5);
-            sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleDown);
+            movement.PIDdriveCorrection(-875, 5000);
+
+
+
             sleep(2000);
             movement.robot.claw.clawHalf();
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
-            movement.encoderDrive(100, 5000);
-            movement.encoderIMUTurn(-85.5, 10000);
-            movement.encoderDrive(-1275, 5500);
+            movement.PIDdriveCorrection(100, 5000);
+            movement.PIDTurn(-85.5, 10000);
+            movement.PIDdriveCorrection(-1275, 5500);
         }
         else{
-            movement.encoderDrive(-980, 6500);
-            movement.encoderIMUTurn(90, 10000);
-            movement.encoderDrive(-50, 5000);
+            movement.PIDdriveCorrection(-980, 6500);
+            movement.PIDTurn(90, 10000);
+            movement.PIDdriveCorrection(-50, 5000);
             movement.robot.lift.setMotorsToGoUpOrDown(500);
             movement.robot.claw.setClawAngle(treeAngleDown);
             movement.robot.claw.setClawAngle(treeAngleDown + treeAngleStraight / 5);
@@ -116,10 +121,12 @@ public class RedRight extends LinearOpMode {
             sleep(2000);
             movement.robot.claw.clawHalf();
             sleep(2000);
-            movement.encoderDrive(100, 5000);
+            movement.PIDdriveCorrection(100, 5000);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
-            movement.encoderIMUTurn(-171, 13000);
-            movement.encoderDrive(-1290, 5500);
+            movement.robot.lift.setMotorsToGoUpOrDown(0);
+            movement.PIDTurn(-171, 13000);
+            movement.robot.lift.setMotorsToGoUpOrDown(500);
+            movement.PIDdriveCorrection(-1290, 5500);
         }
 
         //movement.liftAnglePosition(800, 3500);
@@ -128,7 +135,7 @@ public class RedRight extends LinearOpMode {
         sleep(2500);
 
         movement.robot.lift.setMotorsToGoUpOrDown(0);
-        movement.encoderDrive(100, 1500);
+        movement.PIDdriveCorrection(100, 1500);
         movement.strafe(.3, 2000);
 
 
