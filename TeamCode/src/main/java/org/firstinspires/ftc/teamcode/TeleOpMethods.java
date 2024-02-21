@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 public class TeleOpMethods {
 
 //    Macro macro;
-
+    public static Timer timer = new Timer();
     private static Robot robot;
     static OpMode opMode;
     static double initPos;
@@ -205,9 +205,54 @@ public class TeleOpMethods {
             if (macroState == 1) {
                 liftAngleToPos (73);
                 robot.claw.setClawPosition (0.3);
-                //if (timer.hasElapsed ....
+                if (timer.hasElapsed (macro_timing[0])) {
+                    robot.claw.setClawPosition (0.3);
+                    macroState = 2;
+                }
+            }
+            if(macroState == 2){
+                if(timer.hasElapsed (macro_timing[1])){
+                    robot.lift.liftLeft.setTargetPosition(85);
+                    robot.lift.liftRight.setTargetPosition(85);
+                    liftAngleToPos(100);
+                    robot.claw.setClawAngle (0.115);
+                    robot.claw.setClawPosition(0.00);
+                    macroState = 3;
+                }
+            }
+            if(macroState == 3){
+                if(timer.hasElapsed (macro_timing[2])){
+                    liftAngleToPos (60);
+                    robot.claw.setClawPosition (0.8);
+                    macroState = 4;
+                }
+            }
+            if(macroState == 4){
+                if(timer.hasElapsed (macro_timing[3])){
+                    robot.claw.setClawPosition (0.5);
+                    robot.claw.setClawAngle (0.1);
+                    macroState = 5;
+                }
+            }
+            if(macroState == 5){
+                if(timer.hasElapsed (macro_timing[4])){
+                    liftAngleToPos (800);
+                    robot.claw.setClawAngle (0.41);
+                    macroState = 6;
+                }
+            }
+            if(macroState == 6){
+                if(timer.hasElapsed (macro_timing[5])){
+                    macroState = 0;
+                    macroOff = true;
+                }
             }
         }
+        if(!gamepad2.dpad_right){
+            macroState = 0;
+            macroOff = true;
+        }
+        
             //MACRO CODE END
 
             //            Macro.macro_run(opMode);
@@ -231,8 +276,8 @@ public class TeleOpMethods {
 //            time = true;//reset
 //            down = false;//reset
 
-        
-        
+
+
 
 
 //        }
