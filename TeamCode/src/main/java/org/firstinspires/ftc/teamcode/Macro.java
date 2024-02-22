@@ -108,7 +108,7 @@ public class Macro {
         }
         if (macro_state[0]) { //step 2
 
-            robot.claw.setClawPosition(0.3);
+            robot.claw.setClawPosition(0.0);
             if (timer.hasElapsed (macro_timing[0])) {
                 macro_state[0] = false;
                 macro_state[1] = true;
@@ -129,11 +129,11 @@ public class Macro {
             }
         }
         if (macro_state[2]) { //gets pixel
-            if(!(Math.abs(robot.lift.rotateRight.getCurrentPosition() - 60) < 100)) {
-                liftAngleToPos (60);
+            if(!(Math.abs(robot.lift.rotateRight.getCurrentPosition() - 70) < 100)) {
+                liftAngleToPos (70);
             }
             //liftAngleToPos (60);
-            robot.claw.setClawPosition (0.8);
+            robot.claw.setClawPosition (0.0);
             if ((timer.hasElapsed (macro_timing[2]))) {
                 macro_state[2] = false;
                 macro_state[3] = true;
@@ -142,6 +142,7 @@ public class Macro {
         if (macro_state[3]) {
             robot.claw.setClawPosition (0.5);
             robot.claw.setClawAngle (0.09);
+            liftAngleToPos (60);
             if(timer.hasElapsed (macro_timing[3])) {
                 macro_state[3] = false;
                 macro_state[4] = true;
