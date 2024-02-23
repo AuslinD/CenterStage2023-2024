@@ -76,20 +76,20 @@ public class RedRight extends LinearOpMode {
         if(pos == OpenCV.RedCV.SkystonePosition.RIGHT){
             movement.PIDdriveCorrection(-980, 15500);
             movement.PIDTurn(90, 5000);
-            movement.PIDdriveCorrection(650, 5000);
+            movement.PIDdriveCorrection(800, 5000);
             movement.robot.lift.setMotorsToGoUpOrDown(450);
             movement.robot.claw.setClawAngle(treeAngleDown);
             movement.robot.claw.setClawAngle(treeAngleDown + treeAngleStraight / 5);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
-            movement.robot.claw.clawHalf();
+            movement.robot.claw.autoClawHalf();
             sleep(2000);
-            movement.PIDdriveCorrection(50, 500);
+            movement.encoderDrive(50, 500);
             movement.robot.claw.setClawAngle(treeAngleStraight);
             movement.robot.lift.setMotorsToGoUpOrDown(0);
-            movement.PIDTurn(163.5, 10000);
+            movement.PIDTurn(178.5, 10000);
             movement.robot.lift.setMotorsToGoUpOrDown(500);
-            movement.PIDdriveCorrection(-755, 3000);
+            movement.PIDdriveCorrection(-745, 3000);
 
         }
         else if(pos == OpenCV.RedCV.SkystonePosition.CENTER){
@@ -103,40 +103,40 @@ public class RedRight extends LinearOpMode {
 
 
             sleep(2000);
-            movement.robot.claw.clawHalf();
+            movement.robot.claw.autoClawHalf();
             sleep(2000);
-            movement.robot.claw.setClawAngle(treeAngleStraight+.1);
-            movement.PIDdriveCorrection(100, 5000);
+            movement.robot.claw.setClawAngle(treeAngleStraight);
+            movement.encoderDrive(100, 5000);
             movement.PIDTurn(-85.5, 10000);
             movement.PIDdriveCorrection(-1275, 5500);
         }
         else{
             movement.PIDdriveCorrection(-980, 6500);
             movement.PIDTurn(90, 10000);
-            movement.PIDdriveCorrection(-50, 5000);
+            //movement.encoderDrive(-50, 5000);
             movement.robot.lift.setMotorsToGoUpOrDown(500);
             movement.robot.claw.setClawAngle(treeAngleDown);
-            movement.robot.claw.setClawAngle(treeAngleDown + treeAngleStraight / 5);
+            //movement.robot.claw.setClawAngle(treeAngleDown + treeAngleStraight / 5);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
-            movement.robot.claw.clawHalf();
+            movement.robot.claw.autoClawHalf();
             sleep(2000);
-            movement.PIDdriveCorrection(100, 5000);
-            movement.robot.claw.setClawAngle(treeAngleStraight+.1);
+            movement.encoderDrive(100, 5000);
+            movement.robot.claw.setClawAngle(treeAngleStraight);
             movement.robot.lift.setMotorsToGoUpOrDown(0);
-            movement.PIDTurn(-171, 13000);
+            movement.PIDTurn(-165, 13000);
             movement.robot.lift.setMotorsToGoUpOrDown(500);
-            movement.PIDdriveCorrection(-1290, 5500);
+            movement.PIDdriveCorrection(-1200, 5500);
         }
 
         //movement.liftAnglePosition(800, 3500);
-        sleep(2000);
+        //sleep(2000);
         movement.robot.claw.clawUp();
         sleep(2500);
 
         movement.robot.lift.setMotorsToGoUpOrDown(0);
         movement.PIDdriveCorrection(100, 1500);
-        movement.strafe(.3, 2000);
+        movement.strafe(.5, 5000);
 
 
 

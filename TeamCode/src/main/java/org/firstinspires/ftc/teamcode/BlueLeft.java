@@ -74,26 +74,26 @@ public class BlueLeft extends LinearOpMode {
 
         //movement.liftAnglePosition(100, 4000);
         if(pos == OpenCV.BlueCV.SkystonePosition.RIGHT){
-            movement.encoderDrive(-820, 6500);
-            movement.encoderIMUTurn(-90, 200000);
+            movement.PIDdriveCorrection(-980, 6500);
+            movement.PIDTurn(-90, 200000);
             movement.encoderDrive(25, 2000);
             movement.robot.lift.setMotorsToGoUpOrDown(500);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
-            movement.robot.claw.clawHalf();
+            movement.robot.claw.autoClawHalf();
             sleep(2000);
             movement.encoderDrive(200, 2000);
             movement.robot.claw.setClawAngle(treeAngleStraight);
-            movement.encoderIMUTurn(168.5, 10000);
-            movement.encoderDrive(-1180, 9500);
+            movement.PIDTurn(168.5, 10000);
+            movement.PIDdriveCorrection(-1180, 9500);
 
         }
         else if(pos == OpenCV.BlueCV.SkystonePosition.CENTER){
-            movement.encoderDrive(-875, 5000);
+            movement.PIDdriveCorrection(-875, 5000);
             movement.robot.lift.setMotorsToGoUpOrDown(500);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
-            movement.robot.claw.clawHalf();
+            movement.robot.claw.autoClawHalf();
             sleep(2000);
             movement.robot.claw.setClawAngle(treeAngleStraight+.1);
             movement.robot.claw.setClawAngle(treeAngleDown + treeAngleStraight / 5);
@@ -101,23 +101,23 @@ public class BlueLeft extends LinearOpMode {
             movement.robot.claw.setClawAngle(treeAngleDown);
             movement.encoderDrive(100, 5000);
             movement.robot.claw.setClawAngle(treeAngleStraight);
-            movement.encoderIMUTurn(90, 10000);
-            movement.encoderDrive(-1300, 15500);
+            movement.PIDTurn(90, 10000);
+            movement.PIDdriveCorrection(-1300, 15500);
         }
         else{
-            movement.encoderDrive(-820, 10500);
-            movement.encoderIMUTurn(-90, 200000);
-            movement.encoderDrive(800, 5000);
-            movement.robot.lift.setMotorsToGoUpOrDown(450);
+            movement.PIDdriveCorrection(-980, 10500);
+            movement.PIDTurn(-90, 200000);
+            movement.PIDdriveCorrection(725, 4000);
+            movement.robot.lift.setMotorsToGoUpOrDown(500);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
-            movement.robot.claw.clawHalf();
+            movement.robot.claw.autoClawHalf();
             sleep(2000);
             movement.encoderDrive(100,1000);
-            movement.encoderDrive(50, 500);
+            //movement.encoderDrive(50, 500);
             movement.robot.claw.setClawAngle(treeAngleStraight);
-            movement.encoderIMUTurn(-178, 10000);
-            movement.encoderDrive(-400, 3000);
+            movement.PIDTurn(-168, 10000);
+            movement.PIDdriveCorrection(-520, 3000);
 
         }
 
@@ -127,8 +127,11 @@ public class BlueLeft extends LinearOpMode {
 
         movement.robot.lift.setMotorsToGoUpOrDown(0);
         movement.encoderDrive(100, 3000);
-        if(pos != OpenCV.BlueCV.SkystonePosition.LEFT)
-            movement.strafe(-1, 5000);
+            if(pos == OpenCV.BlueCV.SkystonePosition.LEFT)
+                movement.PIDTurn(-50, 2000);
+        movement.strafe(-.5, 5000);
+            if(pos == OpenCV.BlueCV.SkystonePosition.LEFT)
+                movement.encoderDrive(-300, 2000);
 
 
 
