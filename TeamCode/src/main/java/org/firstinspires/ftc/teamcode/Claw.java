@@ -36,6 +36,9 @@ public class Claw {
     public void clawHalf() {
         tree.setPosition(half);
     }
+    public void autoClawHalf() {
+        tree.setPosition(half+.07);
+    }
     public void clawUp() {
         tree.setPosition(up);
     }

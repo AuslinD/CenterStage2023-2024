@@ -189,10 +189,10 @@ public class EncoderAutoMethods {
     public void strafe(double power, int milliseconds){
         ElapsedTime elapsedTime = new ElapsedTime();
         while(elapsedTime.milliseconds() < milliseconds && !linearOpMode.isStopRequested()){
-            robot.drivetrain.fl.setPower(-power * .5);
-            robot.drivetrain.br.setPower(-power * .5);
-            robot.drivetrain.fr.setPower(power * .5);
-            robot.drivetrain.bl.setPower(power * .5);
+            robot.drivetrain.fl.setPower(-power);
+            robot.drivetrain.br.setPower(-power);
+            robot.drivetrain.fr.setPower(power);
+            robot.drivetrain.bl.setPower(power);
         }
         robot.drivetrain.setALLMotorPower(0);
     }
@@ -257,7 +257,7 @@ public class EncoderAutoMethods {
         else if(targetPos < 0){
             targetPos = 360 + targetPos;
         }
-        PID turnPID = new PID(.002, .000002, 0, targetPos);
+        PID turnPID = new PID(.0018, .000002, 0, targetPos);
 
         while(elapsedTime.milliseconds() < milliseconds && !linearOpMode.isStopRequested() && Math.abs((robot.getImu().getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) + 180) - targetPos) > 5){
             double newPower = turnPID.loop((robot.getImu().getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) + 180), elapsedTime.milliseconds());
