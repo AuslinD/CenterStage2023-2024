@@ -22,7 +22,7 @@ public class Macro {
         lift = robot.lift;
     }
     
-    public static double[] macro_timing = {1.8,2,2.5,3,3.5,1,3.3};
+    public static double[] macro_timing = {1.8,2,2.8,3,3.5,1,3.3};
     /*public static void initMacro(){
         macro_state[5] = true;
     }*/
@@ -93,8 +93,10 @@ public class Macro {
             //robot.claw.setClawPosition (0);
             robot.claw.setClawAngle (0);
             //liftAngleToPos (1000);
-            robot.lift.liftLeft.setTargetPosition (0);
-            robot.lift.liftRight.setTargetPosition (0);
+            if(timer.hasElapsed (0.3)) {
+                robot.lift.liftLeft.setTargetPosition(0);
+                robot.lift.liftRight.setTargetPosition(0);
+            }
             //timer.reset ();
             if(!(Math.abs(robot.lift.rotateRight.getCurrentPosition() - 73) < 100) ) {
                 liftAngleToPos (73);
