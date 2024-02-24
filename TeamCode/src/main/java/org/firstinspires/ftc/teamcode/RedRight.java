@@ -111,7 +111,7 @@ public class RedRight extends LinearOpMode {
             movement.PIDdriveCorrection(-1275, 5500);
         }
         else{
-            movement.PIDdriveCorrection(-980, 6500);
+            movement.PIDdriveCorrection(-980, 5500);
             movement.PIDTurn(90, 10000);
             //movement.encoderDrive(-50, 5000);
             movement.robot.lift.setMotorsToGoUpOrDown(500);
