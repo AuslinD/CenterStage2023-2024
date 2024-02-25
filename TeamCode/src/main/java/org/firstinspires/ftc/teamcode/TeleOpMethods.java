@@ -47,6 +47,7 @@ public class TeleOpMethods {
         robot.imu.resetYaw();
         initPos = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
         robot.plane.setPosition(-1);
+        robot.setPlaneClosed();
         treeAngle = .47;
         gameOn = false;
         ignoreBounds = false;
@@ -374,12 +375,13 @@ public class TeleOpMethods {
     private void planeServoControl(Gamepad gamepad1, Gamepad gamepad2) {
 
         if (gamepad1.a) {
-
+            robot.setPlaneClosed();
             robot.setPlanePosition(-1);
         } else if (gamepad1.b) {
             planeTimer.reset();
             planeLaunch[0] = true;
-            robot.setPlaneAngle(.5);
+            robot.setPlaneOpen();
+            robot.setPlaneAngle(.52);
             robot.drivetrain.setALLMotorPower(0);
 
         }
@@ -393,6 +395,7 @@ public class TeleOpMethods {
         if(planeLaunch[1] && planeTimer.milliseconds() > 1000){
             robot.setPlaneAngle(0);
             robot.setPlanePosition(-1);
+            robot.setPlaneClosed();
             planeLaunch[0] = false;
             planeLaunch[1] = false;
         }

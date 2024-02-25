@@ -108,7 +108,7 @@ public class BlueLeft extends LinearOpMode {
         else{
             movement.PIDdriveCorrection(-980, 10500);
             movement.PIDTurn(-90, 200000);
-            movement.PIDdriveCorrection(745, 4000);
+            movement.PIDdriveCorrection(785, 4000);
             movement.robot.lift.setMotorsToGoUpOrDown(500);
             movement.robot.claw.setClawAngle(treeAngleDown);
             sleep(2000);
@@ -132,7 +132,7 @@ public class BlueLeft extends LinearOpMode {
             movement.PIDTurn(-50, 2000);
         movement.strafe(-.5, 5000);
 
-        movement.encoderDrive(-600, 2000);
+        movement.encoderDrive(-900, 2000);
 
 
 

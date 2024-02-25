@@ -20,6 +20,7 @@ public class Robot {
     IMU imu;
 
     Servo plane;
+    Servo planeGate;
     Servo planeAngle;
     OpMode teleOpMode;
 
@@ -42,7 +43,7 @@ public class Robot {
         // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
         imu.initialize(parameters);
         imu.resetYaw();
-
+        planeGate = opmode.hardwareMap.get(Servo.class, "planeGate");
         plane = opmode.hardwareMap.get(Servo.class, "plane");
         planeAngle = opmode.hardwareMap.get(Servo.class, "planeAngle");
         planeAngle.setPosition(0);
@@ -83,6 +84,12 @@ public class Robot {
     public void setPlanePosition(double position)
     {
         plane.setPosition(position);
+    }
+    public void setPlaneClosed(){
+        planeGate.setPosition(1);
+    }
+    public void setPlaneOpen(){
+        planeGate.setPosition(0);
     }
 
     public void setPlaneAngle(double position){planeAngle.setPosition(position);}
