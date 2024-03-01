@@ -219,7 +219,7 @@ public class RedLeftRR extends LinearOpMode{
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            org.firstinspires.ftc.teamcode.Macro.macro_run();
+            
             return false;
         }
     }
