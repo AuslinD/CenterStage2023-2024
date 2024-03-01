@@ -17,6 +17,8 @@ public class Claw {
 
     double half = .22;//matthew was here
 
+    double autoHalf = half +.07;
+
     double up = 0;
 
     double rotate1 = 0;
@@ -37,7 +39,7 @@ public class Claw {
         tree.setPosition(half);
     }
     public void autoClawHalf() {
-        tree.setPosition(half+.07);
+        tree.setPosition(autoHalf);
     }
     public void clawUp() {
         tree.setPosition(up);
