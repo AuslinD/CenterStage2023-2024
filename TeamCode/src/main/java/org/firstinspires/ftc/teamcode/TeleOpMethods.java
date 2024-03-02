@@ -42,7 +42,7 @@ public class TeleOpMethods {
         up1p = 0;
         up2p = 0;
         this.robot = new Robot(opMode);
-        this.macro = new Macro (robot);
+        this.macro = new Macro (opMode);
         this.opMode = opMode;
         robot.imu.resetYaw();
         initPos = robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);

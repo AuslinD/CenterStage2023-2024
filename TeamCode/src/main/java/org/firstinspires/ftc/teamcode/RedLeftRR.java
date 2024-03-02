@@ -16,7 +16,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Config
-@Autonomous(name = "BLUE_TEST_AUTO_PIXEL", group = "Autonomous")
+@Autonomous(name = "RED_LEFT_RR_TESTING", group = "Autonomous")
 public class RedLeftRR extends LinearOpMode{
 
     Lift lift;
@@ -30,12 +30,15 @@ public class RedLeftRR extends LinearOpMode{
         lift = new Lift(this);
         intake = new Intake(this);
         claw = new Claw(this);
-        //macro = new org.firstinspires.ftc.teamcode.Macro(this);
+        macro = new org.firstinspires.ftc.teamcode.Macro(this);
+
+
         Action leftDelivery;
         Action toBackBoard;
         Action toStack;
         Action park;
         Action rightDelivery;
+
         claw.setClawAngle(.71);
 
         leftDelivery = drive.actionBuilder(drive.pose)
@@ -43,37 +46,49 @@ public class RedLeftRR extends LinearOpMode{
                 .turnTo(Math.toRadians(-135))
                 .turnTo(-180)
                 .build();
+
+
         rightDelivery = drive.actionBuilder(drive.pose)
-                .lineToY(-14)
+                .lineToY(0)
                 .turnTo(Math.toRadians(-45))
-                .turnTo(-180)
+                .turnTo(Math.toRadians(180))
+                .lineToX(36)
+                .turnTo(Math.toRadians(135))
+                .lineToX(36.1)
                 .build();
-        toBackBoard = drive.actionBuilder(drive.pose)
+        /*toBackBoard = drive.actionBuilder(drive.pose)
+                .setTangent(Math.toRadians(-180))
                 .lineToX(36)
                 .turnTo(Math.toRadians(135))
                 .build();
+
         toStack = drive.actionBuilder(drive.pose)
-                .turnTo(Math.toRadians(180))
+
                 .lineToX(-58)
                 .build();
         park = drive.actionBuilder(drive.pose)
-                .turnTo(Math.toRadians(180))
+
                 .lineToX(50)
                 .build();
 
+         */
 
+
+        Action correctDelivery = rightDelivery;
 
 
         waitForStart();
 
         if(isStopRequested()) return;
 
+
+
         Actions.runBlocking(
                 new SequentialAction(
-                        rightDelivery,
+                        correctDelivery,
                         LiftOut(500),
                         ClawPosition(claw.autoHalf),
-                        LiftIn(),
+                        LiftIn()/*,
                         toBackBoard,
                         LiftOut(900),
                         DeliverySequence(),
@@ -81,8 +96,10 @@ public class RedLeftRR extends LinearOpMode{
                         toStack,
                         toBackBoard,
                         LiftOut(900),
+                        Macro(),
+                        DeliverySequence(),
                         LiftIn(),
-                        park
+                        park*/
 
                 )
         );
@@ -203,7 +220,7 @@ public class RedLeftRR extends LinearOpMode{
             if(!initialized){
                 elapsedTime.reset();
             }
-            claw.setClawAngle(position);
+            claw.setClawPosition(position);
 
             return !(elapsedTime.milliseconds() < 600);
         }
@@ -217,11 +234,15 @@ public class RedLeftRR extends LinearOpMode{
 
     private class Macro implements Action{
 
+        private boolean initialized = false;
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            
-            return false;
+            org.firstinspires.ftc.teamcode.Macro.macro_run(RedLeftRR.this);
+            return org.firstinspires.ftc.teamcode.Macro.macroYay();
         }
+    }
+    private Action Macro(){
+        return new Macro();
     }
 
 

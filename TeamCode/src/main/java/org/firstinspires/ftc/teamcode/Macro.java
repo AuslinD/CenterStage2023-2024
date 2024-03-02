@@ -11,15 +11,19 @@ public class Macro {
     public static Timer timer = new Timer();
     //private static ElapsedTime time = new ElapsedTime ();
     static boolean[] macro_state = {false,false,false,false,false,false, false};
-    private static Robot robot;
-    private static Claw outtake;
+    //private static Robot robot;
+    private static Claw claw;
     private static Lift lift;
+    private static Intake intake;
     
     public static boolean macro_run = false;
     
-    public Macro(Robot robot) {
-        Macro.robot = robot;
-        lift = robot.lift;
+    public Macro(OpMode opMode) {
+        Macro.lift = new Lift(opMode);
+        Macro.claw = new Claw(opMode);
+        Macro.intake = new Intake(opMode);
+        //Macro.robot = robot;
+        //lift = lift;
     }
     
     public static double[] macro_timing = {1.8,2,2.8,3,3.5,1,3.3};
@@ -52,8 +56,8 @@ public class Macro {
         ElapsedTime liftAngleToPosTimer = new ElapsedTime();
         liftAngleToPosTimer.reset();
         PID liftPID = new PID(.95, 0.01, 0, desiredPosition);
-        double newPower = liftPID.loop(robot.lift.rotateRight.getCurrentPosition(), liftAngleToPosTimer.milliseconds());
-        robot.lift.rotateRight.setPower(newPower);
+        double newPower = liftPID.loop(lift.rotateRight.getCurrentPosition(), liftAngleToPosTimer.milliseconds());
+        lift.rotateRight.setPower(newPower);
         /*while (!(Math.abs(lift.rotateRight.getCurrentPosition() - desiredPosition) <= tolerance)) {
             int currentPos = lift.rotateRight.getCurrentPosition();
             if (Math.abs(currentPos - desiredPosition) <= tolerance) {
@@ -80,7 +84,8 @@ public class Macro {
         if (aBoolean){
             macro_state[5] = true;
             aBoolean = false;
-            robot.claw.setClawPosition (0);
+            claw.setClawPosition (0);
+            intake.spinTake(.8);
             timer.reset();
             /*if (lift.rotateRight.getCurrentPosition() + 5 > 200 && 200 < lift.rotateRight.getCurrentPosition() - 5) {
                 macro_state[5] = true;
@@ -90,15 +95,16 @@ public class Macro {
         //if (macro_state[7])
         //if (macroYay ()){ //not needed if state
         if (macro_state[5]) {
-            //robot.claw.setClawPosition (0);
-            robot.claw.setClawAngle (0);
+            //claw.setClawPosition (0);
+            claw.setClawAngle (0);
             //liftAngleToPos (1000);
             if(timer.hasElapsed (0.3)) {
-                robot.lift.liftLeft.setTargetPosition(0);
-                robot.lift.liftRight.setTargetPosition(0);
+                lift.liftLeft.setTargetPosition(0);
+                lift.liftRight.setTargetPosition(0);
+                intake.spinTake(0);
             }
             //timer.reset ();
-            if(!(Math.abs(robot.lift.rotateRight.getCurrentPosition() - 73) < 100) ) {
+            if(!(Math.abs(lift.rotateRight.getCurrentPosition() - 73) < 100) ) {
                 liftAngleToPos (73);
             }
             if (timer.hasElapsed (macro_timing[5])) {
@@ -110,40 +116,40 @@ public class Macro {
         }
         if (macro_state[0]) { //step 2
 
-            robot.claw.setClawPosition(0.3);
+            claw.setClawPosition(0.3);
             if (timer.hasElapsed (macro_timing[0])) {
                 macro_state[0] = false;
                 macro_state[1] = true;
             }
             }
         if (macro_state[1]) { //step 3
-            robot.lift.liftLeft.setTargetPosition(70);
-            robot.lift.liftRight.setTargetPosition(70);
-            if(!(Math.abs(robot.lift.rotateRight.getCurrentPosition() - 100) < 100)) {
+            lift.liftLeft.setTargetPosition(70);
+            lift.liftRight.setTargetPosition(70);
+            if(!(Math.abs(lift.rotateRight.getCurrentPosition() - 100) < 100)) {
                 liftAngleToPos (100);
             }
             //liftAngleToPos(100);
-            robot.claw.setClawAngle (0.095); //used to be 0.115
-            robot.claw.setClawPosition(0);
+            claw.setClawAngle (0.095); //used to be 0.115
+            claw.setClawPosition(0);
             if (timer.hasElapsed (macro_timing[1])){
                 macro_state[1] = false;
                 macro_state[2] = true;
             }
         }
         if (macro_state[2]) { //gets pixel
-            if(!(Math.abs(robot.lift.rotateRight.getCurrentPosition() - 60) < 150)) {
+            if(!(Math.abs(lift.rotateRight.getCurrentPosition() - 60) < 150)) {
                 liftAngleToPos (60);
             }
             //liftAngleToPos (60);
-            robot.claw.setClawPosition (0.8);
+            claw.setClawPosition (0.8);
             if ((timer.hasElapsed (macro_timing[2]))) {
                 macro_state[2] = false;
                 macro_state[3] = true;
             }
         }
         if (macro_state[3]) {
-            robot.claw.setClawPosition (0.6);
-            robot.claw.setClawAngle (0.09);
+            claw.setClawPosition (0.6);
+            claw.setClawAngle (0.09);
             liftAngleToPos (60);
             if(timer.hasElapsed (macro_timing[3])) {
                 macro_state[3] = false;
@@ -151,8 +157,8 @@ public class Macro {
             }
         }
         if (macro_state[4]) {
-            robot.claw.setClawAngle(.05);
-            if(!(Math.abs(robot.lift.rotateRight.getCurrentPosition() - 800) < 100)) {
+            claw.setClawAngle(.05);
+            if(!(Math.abs(lift.rotateRight.getCurrentPosition() - 800) < 100)) {
                 liftAngleToPos (800);
             }
             //liftAngleToPos (800);
@@ -164,7 +170,7 @@ public class Macro {
             }
         }
         if (macro_state[6]){
-            robot.claw.setClawAngle (0.41);
+            claw.setClawAngle (0.41);
             if (timer.hasElapsed(macro_timing[6])){
                 macro_state[6] = false;
                 aBoolean = true;
