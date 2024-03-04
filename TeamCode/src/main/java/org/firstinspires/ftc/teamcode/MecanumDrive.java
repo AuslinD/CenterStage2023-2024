@@ -84,8 +84,8 @@ public final class MecanumDrive {
 
         // path controller gains
         public double axialGain = 5.0;
-        public double lateralGain = 7.0;
-        public double headingGain = 5.0; // shared with turn
+        public double lateralGain = 9.0;
+        public double headingGain = 10.0; // shared with turn
 
         public double axialVelGain = 0.0;
         public double lateralVelGain = 0.0;
@@ -300,7 +300,7 @@ public final class MecanumDrive {
 
             if ((t >= timeTrajectory.duration && error.position.norm() < .75 && error.heading.imag < 0.5 * Math.PI / 180 && robotVelRobot.angVel < .5
                     && robotVelRobot.linearVel.norm() < 0.5)
-                    || t >= timeTrajectory.duration + 1) {
+                    || t >= timeTrajectory.duration + 3) {
                 leftFront.setPower(0);
                 leftBack.setPower(0);
                 rightBack.setPower(0);

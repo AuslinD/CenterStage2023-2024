@@ -24,6 +24,7 @@ public class RedLeftRR extends LinearOpMode{
     Intake intake;
     Claw claw;
     org.firstinspires.ftc.teamcode.Macro macro;
+    ElapsedTime totalElapsedTime;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -32,6 +33,7 @@ public class RedLeftRR extends LinearOpMode{
         intake = new Intake(this);
         claw = new Claw(this);
         macro = new org.firstinspires.ftc.teamcode.Macro(this);
+        totalElapsedTime = new ElapsedTime();
 
 
         Action leftDelivery;
@@ -45,24 +47,27 @@ public class RedLeftRR extends LinearOpMode{
         leftDelivery = drive.actionBuilder(drive.pose)
                 .lineToY(-14)
                 .turnTo(Math.toRadians(-135))
-                .turnTo(-180)
+                //placeholder for future
+                .turnTo(Math.toRadians(-180))
                 .build();
 
 
         rightDelivery = drive.actionBuilder(drive.pose)
-                .lineToY(-12)
+                .setReversed(true)
+                .splineToConstantHeading(new Vector2d(-35, -12), Math.toRadians(90))
                 .turnTo(Math.toRadians(-45))
+                //placeholder for future
                 .turnTo(Math.toRadians(180))
                 .build();
-        toBackBoard = drive.actionBuilder(drive.pose)
+        toBackBoard = drive.actionBuilder(new Pose2d(-35, -12, Math.toRadians(180)))
                 .setTangent(Math.toRadians(180))
                 .setReversed(true)
-                .splineToConstantHeading(new Vector2d(29, -14), 180)
-                .splineToSplineHeading(new Pose2d(37, -15, Math.toRadians(135)), 180)
+                .splineToConstantHeading(new Vector2d(29, -14), 0)
+                .splineToSplineHeading(new Pose2d(37, -15, Math.toRadians(135)), 0)
                 .build();
 
 
-        toStack = drive.actionBuilder(drive.pose)
+        toStack = drive.actionBuilder(new Pose2d(37, -15, Math.toRadians(135)))
                 .setReversed(true)
                 .splineToSplineHeading(new Pose2d(29, -14, Math.toRadians(180)), Math.toRadians(180))
                 .splineToConstantHeading(new Vector2d(-58, -14), Math.toRadians(180))
@@ -76,7 +81,7 @@ public class RedLeftRR extends LinearOpMode{
          */
 
 
-        Action correctDelivery = rightDelivery;
+
 
 
         waitForStart();
@@ -84,6 +89,7 @@ public class RedLeftRR extends LinearOpMode{
         if(isStopRequested()) return;
 
 
+        Action correctDelivery = rightDelivery;
 
         Actions.runBlocking(
                 new SequentialAction(
@@ -130,11 +136,11 @@ public class RedLeftRR extends LinearOpMode{
             // checks lift's current position
             double pos = lift.liftLeft.getCurrentPosition();
             packet.put("liftPos", pos);
-            if (Math.abs(pos - position) > 5) {
-                // true causes the action to rerun
+            if (Math.abs(pos - position) > 2) {
+                //wtf
                 return true;
             } else {
-                // false stops action rerun
+                //figurethisout later
 
                 return false;
             }
@@ -163,11 +169,11 @@ public class RedLeftRR extends LinearOpMode{
             // checks lift's current position
             double pos = lift.liftLeft.getCurrentPosition();
             packet.put("liftPos", pos);
-            if (Math.abs(pos - 0) > 4) {
-                // true causes the action to rerun
+            if (Math.abs(pos - 0) > 2) {
+                // figure out later
                 return true;
             } else {
-                // false stops action rerun
+                // figure out later
 
                 return false;
             }
@@ -186,18 +192,20 @@ public class RedLeftRR extends LinearOpMode{
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             if(!initialized){
+
                 elapsedTime.reset();
+                initialized = true;
             }
-            if(elapsedTime.milliseconds() < 200) {
+            if(elapsedTime.milliseconds() > 200) {
                 claw.setClawAngle(.51);
                 claw.clawHalf();
             }
-            else if(elapsedTime.milliseconds() < 500){
+            else if(elapsedTime.milliseconds() > 600){
                 lift.setMotorsToGoUpOrDown(lift.liftLeft.getCurrentPosition() + 10);
                 claw.clawUp();
             }
 
-            return !(elapsedTime.milliseconds() > 600);
+            return !(elapsedTime.milliseconds() < 1000);
         }
     }
     private Action DeliverySequence() {
@@ -221,8 +229,11 @@ public class RedLeftRR extends LinearOpMode{
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             if(!initialized){
                 elapsedTime.reset();
+                initialized = true;
             }
             claw.setClawPosition(position);
+
+
 
             return !(elapsedTime.milliseconds() < 600);
         }
