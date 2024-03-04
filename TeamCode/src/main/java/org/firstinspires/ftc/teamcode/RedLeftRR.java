@@ -8,6 +8,7 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 
 // Non-RR imports
@@ -49,23 +50,24 @@ public class RedLeftRR extends LinearOpMode{
 
 
         rightDelivery = drive.actionBuilder(drive.pose)
-                .lineToY(0)
+                .lineToY(-12)
                 .turnTo(Math.toRadians(-45))
                 .turnTo(Math.toRadians(180))
-                .lineToX(36)
-                .turnTo(Math.toRadians(135))
-                .lineToX(36.1)
                 .build();
-        /*toBackBoard = drive.actionBuilder(drive.pose)
-                .setTangent(Math.toRadians(-180))
-                .lineToX(36)
-                .turnTo(Math.toRadians(135))
+        toBackBoard = drive.actionBuilder(drive.pose)
+                .setTangent(Math.toRadians(180))
+                .setReversed(true)
+                .splineToConstantHeading(new Vector2d(29, -14), 180)
+                .splineToSplineHeading(new Pose2d(37, -15, Math.toRadians(135)), 180)
                 .build();
+
 
         toStack = drive.actionBuilder(drive.pose)
-
-                .lineToX(-58)
+                .setReversed(true)
+                .splineToSplineHeading(new Pose2d(29, -14, Math.toRadians(180)), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(-58, -14), Math.toRadians(180))
                 .build();
+        /*
         park = drive.actionBuilder(drive.pose)
 
                 .lineToX(50)
@@ -88,12 +90,12 @@ public class RedLeftRR extends LinearOpMode{
                         correctDelivery,
                         LiftOut(500),
                         ClawPosition(claw.autoHalf),
-                        LiftIn()/*,
+                        LiftIn(),
                         toBackBoard,
                         LiftOut(900),
                         DeliverySequence(),
                         LiftIn(),
-                        toStack,
+                        toStack/*,
                         toBackBoard,
                         LiftOut(900),
                         Macro(),
