@@ -7,6 +7,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantAction;
+import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
@@ -38,13 +39,14 @@ public class RedLeftRR extends LinearOpMode{
         totalElapsedTime = new ElapsedTime();
 
 
+
         Action leftDelivery;
         Action toBackBoard;
         Action toStack;
         Action park;
         Action rightDelivery;
 
-        claw.setClawAngle(.71);
+        claw.setClawAngle(.51);
 
         leftDelivery = drive.actionBuilder(drive.pose)
                 .lineToY(-14)
@@ -57,22 +59,27 @@ public class RedLeftRR extends LinearOpMode{
         rightDelivery = drive.actionBuilder(drive.pose)
                 .setReversed(true)
                 .splineToConstantHeading(new Vector2d(-35, -12), Math.toRadians(90))
-                .turnTo(Math.toRadians(-45))
-                //placeholder for future
+                .turnTo(Math.toRadians(135))
+                .waitSeconds(4)
                 .turnTo(Math.toRadians(180))
+
+                //placeholder for future
+
                 .build();
+
         toBackBoard = drive.actionBuilder(new Pose2d(-35, -12, Math.toRadians(180)))
+
                 .setTangent(Math.toRadians(180))
                 .setReversed(true)
-                .splineToConstantHeading(new Vector2d(29, -14), 0)
-                .splineToSplineHeading(new Pose2d(37, -15, Math.toRadians(135)), 0)
+                .splineToConstantHeading(new Vector2d(29, -12), 0)
+                .splineToSplineHeading(new Pose2d(37, -12, Math.toRadians(135)), 0)
                 .build();
 
 
-        toStack = drive.actionBuilder(new Pose2d(37, -15, Math.toRadians(135)))
+        toStack = drive.actionBuilder(new Pose2d(37, -12, Math.toRadians(135)))
                 .setReversed(true)
-                .splineToSplineHeading(new Pose2d(29, -14, Math.toRadians(180)), Math.toRadians(180))
-                .splineToConstantHeading(new Vector2d(-58, -14), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(29, -12, Math.toRadians(180)), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(-56, -12), Math.toRadians(180))
                 .build();
         /*
         park = drive.actionBuilder(drive.pose)
@@ -81,6 +88,7 @@ public class RedLeftRR extends LinearOpMode{
                 .build();
 
          */
+        claw.clawDown();
 
 
 
@@ -95,11 +103,20 @@ public class RedLeftRR extends LinearOpMode{
 
         Actions.runBlocking(
                 new SequentialAction(
-                        /*correctDelivery,
-                        LiftOut(500),
-                        ClawPosition(claw.autoHalf),
-                        LiftIn(),
+                        /*
+                        new ParallelAction(
+                                correctDelivery,
+                                new SequentialAction(
+                                        new SleepAction(5),
+                                        LiftOut(700),
+                                        ClawPosition(claw.autoHalf),
+                                        LiftIn(),
+                                        ClawPosition(claw.autoHalf)
+                                )
+                        ),
+
                         toBackBoard,*/
+                        LiftAngle(1800),
                         LiftOut(900),
                         new SequentialAction(
                                 new InstantAction(() -> claw.clawHalf()),
@@ -266,6 +283,47 @@ public class RedLeftRR extends LinearOpMode{
     }
     private Action Macro(){
         return new Macro();
+    }
+
+
+    private class LiftAngle implements Action{
+        ElapsedTime elapsedTime;
+        PID pid;
+        int position;
+
+        public void setPosition(int position) {
+            this.position = position;
+        }
+
+        private boolean initialized = false;
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            if(!initialized){
+                elapsedTime = new ElapsedTime();
+                elapsedTime.reset();
+                pid = new PID(.95, 0.01, 0, position);
+                initialized = true;
+            }
+            double power = pid.loop(position, elapsedTime.milliseconds());
+
+            lift.rotateRight.setPower(power);
+
+            if(Math.abs(lift.rotateRight.getCurrentPosition() - position) > 100){
+                lift.rotateRight.setPower(power);
+                //lift.rotateRight.setPower(.2);
+                return true;
+            }
+            else{
+                lift.rotateRight.setPower(0);
+                return false;
+            }
+
+        }
+    }
+    private Action LiftAngle(int pos){
+        LiftAngle action = new LiftAngle();
+        action.setPosition(pos);
+        return action;
     }
 
 
