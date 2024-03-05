@@ -6,8 +6,10 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 
@@ -99,8 +101,13 @@ public class RedLeftRR extends LinearOpMode{
                         LiftIn(),
                         toBackBoard,*/
                         LiftOut(900),
-                        /*DeliverySequence(),*/
-                        LiftIn()/*,
+                        new SequentialAction(
+                                new InstantAction(() -> claw.clawHalf()),
+                                new SleepAction(.5),
+                                new InstantAction(() -> lift.setMotorsToGoUpOrDown(1000)),
+                                new InstantAction(() -> claw.clawUp())
+                        ),
+                        LiftOut(0)/*,
                         toStack,
                         toBackBoard,
                         LiftOut(900),
@@ -169,7 +176,7 @@ public class RedLeftRR extends LinearOpMode{
             }
 
             // checks lift's current position
-            double pos = lift.liftLeft.getCurrentPosition();
+            double pos = lift.liftRight.getCurrentPosition();
             packet.put("liftPos", pos);
             if (Math.abs(0 - pos) > 2) {
                 // figure out later
