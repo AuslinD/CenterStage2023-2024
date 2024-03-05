@@ -129,6 +129,7 @@ public class RedLeftRR extends LinearOpMode{
         public boolean run(@NonNull TelemetryPacket packet) {
             // powers on motor, if it is not on
             if (!initialized) {
+                //TODO: check this is actually working
                 lift.setMotorsToGoUpOrDown(position);
                 initialized = true;
             }
@@ -162,6 +163,7 @@ public class RedLeftRR extends LinearOpMode{
         public boolean run(@NonNull TelemetryPacket packet) {
             // powers on motor, if it is not on
             if (!initialized) {
+                //TODO: this should go back in but it doesnnt
                 lift.setMotorsToGoUpOrDown(0);
                 initialized = true;
             }
