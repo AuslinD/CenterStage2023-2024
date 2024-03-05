@@ -93,15 +93,15 @@ public class RedLeftRR extends LinearOpMode{
 
         Actions.runBlocking(
                 new SequentialAction(
-                        correctDelivery,
+                        /*correctDelivery,
                         LiftOut(500),
                         ClawPosition(claw.autoHalf),
                         LiftIn(),
-                        toBackBoard,
+                        toBackBoard,*/
                         LiftOut(900),
-                        DeliverySequence(),
-                        LiftIn(),
-                        toStack/*,
+                        /*DeliverySequence(),*/
+                        LiftIn()/*,
+                        toStack,
                         toBackBoard,
                         LiftOut(900),
                         Macro(),
@@ -129,12 +129,12 @@ public class RedLeftRR extends LinearOpMode{
         public boolean run(@NonNull TelemetryPacket packet) {
             // powers on motor, if it is not on
             if (!initialized) {
-                lift.setMotorsToGoUpOrDown(500);
+                lift.setMotorsToGoUpOrDown(position);
                 initialized = true;
             }
 
             // checks lift's current position
-            double pos = lift.liftLeft.getCurrentPosition();
+            double pos = lift.liftRight.getCurrentPosition();
             packet.put("liftPos", pos);
             if (Math.abs(pos - position) > 2) {
                 //wtf
@@ -169,8 +169,9 @@ public class RedLeftRR extends LinearOpMode{
             // checks lift's current position
             double pos = lift.liftLeft.getCurrentPosition();
             packet.put("liftPos", pos);
-            if (Math.abs(pos - 0) > 2) {
+            if (Math.abs(0 - pos) > 2) {
                 // figure out later
+                lift.setMotorsToGoUpOrDown(0);
                 return true;
             } else {
                 // figure out later
@@ -196,16 +197,16 @@ public class RedLeftRR extends LinearOpMode{
                 elapsedTime.reset();
                 initialized = true;
             }
-            if(elapsedTime.milliseconds() > 200) {
+            if(elapsedTime.milliseconds() < 200) {
                 claw.setClawAngle(.51);
                 claw.clawHalf();
             }
-            else if(elapsedTime.milliseconds() > 600){
+            else if(elapsedTime.milliseconds() < 600){
                 lift.setMotorsToGoUpOrDown(lift.liftLeft.getCurrentPosition() + 10);
                 claw.clawUp();
             }
 
-            return !(elapsedTime.milliseconds() < 1000);
+            return false;
         }
     }
     private Action DeliverySequence() {
@@ -235,7 +236,7 @@ public class RedLeftRR extends LinearOpMode{
 
 
 
-            return !(elapsedTime.milliseconds() < 600);
+            return (elapsedTime.milliseconds() < 600);
         }
     }
 
