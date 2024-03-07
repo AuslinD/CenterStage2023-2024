@@ -41,18 +41,29 @@ public class RedLeftRR extends LinearOpMode{
 
 
         Action leftDelivery;
+        Action centerDelivery;
+        Action rightDelivery;
         Action toBackBoard;
         Action toStack;
         Action park;
-        Action rightDelivery;
 
-        claw.setClawAngle(.51);
+
+        claw.setClawAngle(.1);
 
         leftDelivery = drive.actionBuilder(drive.pose)
-                .lineToY(-14)
-                .turnTo(Math.toRadians(-135))
-                //placeholder for future
-                .turnTo(Math.toRadians(-180))
+                .setReversed(true)
+                .splineToConstantHeading(new Vector2d(-35, -12), Math.toRadians(90))
+                .turnTo(Math.toRadians(48))
+                .waitSeconds(4)
+                .turnTo(Math.toRadians(180))
+                .build();
+
+        centerDelivery = drive.actionBuilder(drive.pose)
+                .setReversed(true)
+                .splineToConstantHeading(new Vector2d(-35, -12), Math.toRadians(90))
+                .turnTo(Math.toRadians(90))
+                .waitSeconds(4)
+                .turnTo(Math.toRadians(180))
                 .build();
 
 
@@ -72,11 +83,11 @@ public class RedLeftRR extends LinearOpMode{
                 .setTangent(Math.toRadians(180))
                 .setReversed(true)
                 .splineToConstantHeading(new Vector2d(29, -12), 0)
-                .splineToSplineHeading(new Pose2d(37, -12, Math.toRadians(135)), 0)
+                .splineToSplineHeading(new Pose2d(37, -12, Math.toRadians(165)), 0)
                 .build();
 
 
-        toStack = drive.actionBuilder(new Pose2d(37, -12, Math.toRadians(135)))
+        toStack = drive.actionBuilder(new Pose2d(37, -12, Math.toRadians(165)))
                 .setReversed(true)
                 .splineToSplineHeading(new Pose2d(29, -12, Math.toRadians(180)), Math.toRadians(180))
                 .splineToConstantHeading(new Vector2d(-56, -12), Math.toRadians(180))
@@ -99,11 +110,11 @@ public class RedLeftRR extends LinearOpMode{
         if(isStopRequested()) return;
 
 
-        Action correctDelivery = rightDelivery;
+        Action correctDelivery = leftDelivery;
 
         Actions.runBlocking(
                 new SequentialAction(
-                        /*
+
                         new ParallelAction(
                                 correctDelivery,
                                 new SequentialAction(
@@ -115,17 +126,27 @@ public class RedLeftRR extends LinearOpMode{
                                 )
                         ),
 
-                        toBackBoard,*/
-                        LiftAngle(1800),
-                        LiftOut(900),
+                        toBackBoard,
+                        new ParallelAction(
+                                LiftAngle(1600),
+                                LiftOut(3600)
+                        ),
                         new SequentialAction(
                                 new InstantAction(() -> claw.clawHalf()),
                                 new SleepAction(.5),
                                 new InstantAction(() -> lift.setMotorsToGoUpOrDown(1000)),
                                 new InstantAction(() -> claw.clawUp())
                         ),
-                        LiftOut(0)/*,
-                        toStack,
+                        new ParallelAction(
+                                LiftOut(0),
+                                new SequentialAction(
+                                        new SleepAction(2),
+                                        LiftAngle(0)
+
+                                )
+
+                        ),
+                        toStack/*,
                         toBackBoard,
                         LiftOut(900),
                         Macro(),
@@ -304,12 +325,19 @@ public class RedLeftRR extends LinearOpMode{
                 pid = new PID(.95, 0.01, 0, position);
                 initialized = true;
             }
-            double power = pid.loop(position, elapsedTime.milliseconds());
+            double multiplier = 1;
+            //double power = pid.loop(position, elapsedTime.milliseconds());
+            if(lift.rotateRight.getCurrentPosition() < position){
+                multiplier = 1;
+            }
+            else{
+                multiplier = -1;
+            }
 
-            lift.rotateRight.setPower(power);
+            lift.rotateRight.setPower(.5 * multiplier);
 
             if(Math.abs(lift.rotateRight.getCurrentPosition() - position) > 100){
-                lift.rotateRight.setPower(power);
+                lift.rotateRight.setPower(.5 * multiplier);
                 //lift.rotateRight.setPower(.2);
                 return true;
             }
