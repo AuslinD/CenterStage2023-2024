@@ -46,6 +46,7 @@ public class RedLeftRR extends LinearOpMode{
         Action toBackBoard;
         Action toStack;
         Action park;
+        Action stackToBackboard;
 
 
         claw.setClawAngle(.1);
@@ -92,13 +93,17 @@ public class RedLeftRR extends LinearOpMode{
                 .splineToSplineHeading(new Pose2d(29, -12, Math.toRadians(180)), Math.toRadians(180))
                 .splineToConstantHeading(new Vector2d(-56, -12), Math.toRadians(180))
                 .build();
-        /*
-        park = drive.actionBuilder(drive.pose)
-
-                .lineToX(50)
+        stackToBackboard = drive.actionBuilder(new Pose2d(-56, -12, Math.toRadians(180)))
+                .setReversed(true)
+                .splineToConstantHeading(new Vector2d(29, -12), 0)
+                .splineToSplineHeading(new Pose2d(37, -12, Math.toRadians(165)), 0)
                 .build();
 
-         */
+        park = drive.actionBuilder(new Pose2d(37, -12, Math.toRadians(165)))
+                .splineToSplineHeading(new Pose2d(48, -12, Math.toRadians(180)), Math.toRadians(180))
+                .build();
+
+
         claw.clawDown();
 
 
@@ -146,13 +151,14 @@ public class RedLeftRR extends LinearOpMode{
                                 )
 
                         ),
-                        toStack/*,
+                        toStack,
                         toBackBoard,
-                        LiftOut(900),
                         Macro(),
+                        LiftAngle(0),
                         DeliverySequence(),
                         LiftIn(),
-                        park*/
+                        stackToBackboard,
+                        park
 
                 )
         );
