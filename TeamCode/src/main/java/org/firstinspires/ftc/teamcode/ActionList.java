@@ -2,169 +2,30 @@ package org.firstinspires.ftc.teamcode;
 
 import androidx.annotation.NonNull;
 
-// RR-specific imports
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.InstantAction;
-import com.acmerobotics.roadrunner.ParallelAction;
-import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.SequentialAction;
-import com.acmerobotics.roadrunner.SleepAction;
-import com.acmerobotics.roadrunner.Vector2d;
-import com.acmerobotics.roadrunner.ftc.Actions;
-
-// Non-RR imports
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Config
-@Autonomous(name = "RED_LEFT_RR_TESTING", group = "Autonomous")
-public class RedLeftRR extends LinearOpMode{
+import org.checkerframework.checker.units.qual.C;
 
+public class ActionList {
     Lift lift;
     Intake intake;
     Claw claw;
     org.firstinspires.ftc.teamcode.Macro macro;
+    LinearOpMode opMode;
+
     ElapsedTime totalElapsedTime;
 
-    @Override
-    public void runOpMode() throws InterruptedException {
-        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(-35, -62, Math.toRadians(-90)));
-        lift = new Lift(this);
-        intake = new Intake(this);
-        claw = new Claw(this);
-        macro = new org.firstinspires.ftc.teamcode.Macro(this);
+    public ActionList(LinearOpMode opMode){
+        this.opMode = opMode;
+        lift = new Lift(opMode);
+        intake = new Intake(opMode);
+        claw = new Claw(opMode);
+        macro = new org.firstinspires.ftc.teamcode.Macro(opMode);
         totalElapsedTime = new ElapsedTime();
-
-
-
-        Action leftDelivery;
-        Action centerDelivery;
-        Action rightDelivery;
-        Action toBackBoard;
-        Action toStack;
-        Action park;
-        Action stackToBackboard;
-
-
-        claw.setClawAngle(.1);
-
-        leftDelivery = drive.actionBuilder(drive.pose)
-                .setReversed(true)
-                .splineToConstantHeading(new Vector2d(-35, -12), Math.toRadians(90))
-                .turnTo(Math.toRadians(48))
-                .waitSeconds(4)
-                .turnTo(Math.toRadians(180))
-                .build();
-
-        centerDelivery = drive.actionBuilder(drive.pose)
-                .setReversed(true)
-                .splineToConstantHeading(new Vector2d(-35, -12), Math.toRadians(90))
-                .turnTo(Math.toRadians(90))
-                .waitSeconds(4)
-                .turnTo(Math.toRadians(180))
-                .build();
-
-
-        rightDelivery = drive.actionBuilder(drive.pose)
-                .setReversed(true)
-                .splineToConstantHeading(new Vector2d(-35, -12), Math.toRadians(90))
-                .turnTo(Math.toRadians(135))
-                .waitSeconds(4)
-                .turnTo(Math.toRadians(180))
-
-                //placeholder for future
-
-                .build();
-
-        toBackBoard = drive.actionBuilder(new Pose2d(-35, -12, Math.toRadians(180)))
-
-                .setTangent(Math.toRadians(180))
-                .setReversed(true)
-                .splineToConstantHeading(new Vector2d(29, -12), 0)
-                .splineToSplineHeading(new Pose2d(37, -12, Math.toRadians(165)), 0)
-                .build();
-
-
-        toStack = drive.actionBuilder(new Pose2d(37, -12, Math.toRadians(165)))
-                .setReversed(true)
-                .splineToSplineHeading(new Pose2d(29, -12, Math.toRadians(180)), Math.toRadians(180))
-                .splineToConstantHeading(new Vector2d(-56, -12), Math.toRadians(180))
-                .build();
-        stackToBackboard = drive.actionBuilder(new Pose2d(-56, -12, Math.toRadians(180)))
-                .setReversed(true)
-                .splineToConstantHeading(new Vector2d(29, -12), 0)
-                .splineToSplineHeading(new Pose2d(37, -12, Math.toRadians(165)), 0)
-                .build();
-
-        park = drive.actionBuilder(new Pose2d(37, -12, Math.toRadians(165)))
-                .splineToSplineHeading(new Pose2d(48, -12, Math.toRadians(180)), Math.toRadians(180))
-                .build();
-
-
-        claw.clawDown();
-
-
-
-
-
-        waitForStart();
-
-        if(isStopRequested()) return;
-
-
-        Action correctDelivery = leftDelivery;
-
-        Actions.runBlocking(
-                new SequentialAction(
-
-                        new ParallelAction(
-                                correctDelivery,
-                                new SequentialAction(
-                                        new SleepAction(5),
-                                        LiftOut(700),
-                                        ClawPosition(claw.autoHalf),
-                                        LiftIn(),
-                                        ClawPosition(claw.autoHalf)
-                                )
-                        ),
-
-                        toBackBoard,
-                        new ParallelAction(
-                                LiftAngle(1600),
-                                LiftOut(3600)
-                        ),
-                        new SequentialAction(
-                                new InstantAction(() -> claw.clawHalf()),
-                                new SleepAction(.5),
-                                new InstantAction(() -> lift.setMotorsToGoUpOrDown(1000)),
-                                new InstantAction(() -> claw.clawUp())
-                        ),
-                        new ParallelAction(
-                                LiftOut(0),
-                                new SequentialAction(
-                                        new SleepAction(2),
-                                        LiftAngle(0)
-
-                                )
-
-                        ),
-                        toStack,
-                        toBackBoard,
-                        Macro(),
-                        /*LiftAngle(0),
-                        DeliverySequence(),
-                        LiftIn(),*/
-                        stackToBackboard,
-                        park
-
-                )
-        );
     }
-
-
     private class LiftOut implements Action {
         // checks if the lift motor has been powered on
         int position;
@@ -199,7 +60,7 @@ public class RedLeftRR extends LinearOpMode{
 
         }
     }
-    private Action LiftOut(int pos){
+    public Action LiftOut(int pos){
         LiftOut action = new LiftOut();
         action.setPosition(pos);
         return action;
@@ -235,7 +96,7 @@ public class RedLeftRR extends LinearOpMode{
         }
     }
 
-    private Action LiftIn(){
+    public Action LiftIn(){
         return new LiftIn();
     }
 
@@ -262,7 +123,7 @@ public class RedLeftRR extends LinearOpMode{
             return false;
         }
     }
-    private Action DeliverySequence() {
+    public Action DeliverySequence() {
         return new DeliverySequence();
     }
 
@@ -293,7 +154,7 @@ public class RedLeftRR extends LinearOpMode{
         }
     }
 
-    private Action ClawPosition(double pos){
+    public Action ClawPosition(double pos){
         ClawPosition action = new ClawPosition();
         action.setPosition(pos);
         return action;
@@ -304,11 +165,11 @@ public class RedLeftRR extends LinearOpMode{
         private boolean initialized = false;
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            org.firstinspires.ftc.teamcode.Macro.macro_run(RedLeftRR.this);
+            org.firstinspires.ftc.teamcode.Macro.macro_run(opMode);
             return org.firstinspires.ftc.teamcode.Macro.macroYay();
         }
     }
-    private Action Macro(){
+    public Action Macro(){
         return new Macro();
     }
 
@@ -354,11 +215,9 @@ public class RedLeftRR extends LinearOpMode{
 
         }
     }
-    private Action LiftAngle(int pos){
+    public Action LiftAngle(int pos){
         LiftAngle action = new LiftAngle();
         action.setPosition(pos);
         return action;
     }
-
-
 }

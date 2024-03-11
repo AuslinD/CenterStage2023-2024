@@ -24,16 +24,17 @@ public class RedLeftNorm {
                 .turnTo(Math.toRadians(180))
                 .setTangent(Math.toRadians(0))
                 .splineToConstantHeading(new Vector2d(29, -57), 0)
-                .splineToSplineHeading(new Pose2d(37, -57, Math.toRadians(225)), 0)// end of backdrop section
+                .splineToSplineHeading(new Pose2d(37, -57, Math.toRadians(200)), 0)// end of backdrop section
                 .setTangent(Math.toRadians(180))
-                .splineToSplineHeading(new Pose2d(29, -57, Math.toRadians(180)), Math.toRadians(180))
-                .splineToConstantHeading(new Vector2d(-34, -57), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(29, -59, Math.toRadians(180)), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(-34, -59), Math.toRadians(180))
                 .setReversed(false)
-                .splineToConstantHeading(new Vector2d(-57, -35), Math.toRadians(180))//at stack rn
+                .splineTo(new Vector2d(-57, -35), Math.toRadians(180))//at stack rn
                         .setReversed(true)
-                .splineToConstantHeading(new Vector2d(-34, -57), Math.toRadians(0))
-                .splineToConstantHeading(new Vector2d(29, -57), 0)
-                .splineToSplineHeading(new Pose2d(37, -57, Math.toRadians(225)), 0)
+                .splineToConstantHeading(new Vector2d(-34, -59), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(29, -59), 0)
+                .splineToSplineHeading(new Pose2d(37, -57, Math.toRadians(200)), 0)
+                .splineToSplineHeading(new Pose2d(48, -57, Math.toRadians(180)), Math.toRadians(180))
 
 
 
