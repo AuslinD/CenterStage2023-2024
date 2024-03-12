@@ -33,6 +33,7 @@ public class RedLeftNorm {
                         .setReversed(true)
                 .splineToConstantHeading(new Vector2d(-34, -59), Math.toRadians(0))
                 .splineToConstantHeading(new Vector2d(29, -59), 0)
+                .setTangent(0)
                 .splineToSplineHeading(new Pose2d(37, -57, Math.toRadians(200)), 0)
                 .splineToSplineHeading(new Pose2d(48, -57, Math.toRadians(180)), Math.toRadians(180))
 

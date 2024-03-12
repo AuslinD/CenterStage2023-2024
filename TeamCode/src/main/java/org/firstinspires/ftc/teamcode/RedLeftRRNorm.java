@@ -84,22 +84,22 @@ public class RedLeftRRNorm extends LinearOpMode {
         toStack = drive.actionBuilder(new Pose2d(37, -57, Math.toRadians(200)))
                 .setTangent(Math.toRadians(180))
                 .setReversed(true)
-                .splineToSplineHeading(new Pose2d(29, -59, Math.toRadians(180)), Math.toRadians(180))
-                .waitSeconds(1)
-                .splineToConstantHeading(new Vector2d(-34, -59), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(29, -58, Math.toRadians(180)), Math.toRadians(180))
+                //.waitSeconds(0)
+                .splineToConstantHeading(new Vector2d(-34, -58), Math.toRadians(180))
                 .setReversed(false)
-                .splineToConstantHeading(new Vector2d(-57, -35), Math.toRadians(180))//at stack rn
+                .splineTo(new Vector2d(-57, -35), Math.toRadians(180))//at stack rn
                 .build();
         stackToBackboard = drive.actionBuilder(new Pose2d(-56, -35, Math.toRadians(180)))
                 .setReversed(true)
-                .splineToConstantHeading(new Vector2d(-34, -59), Math.toRadians(0))
-                .waitSeconds(1)
+                .splineToConstantHeading(new Vector2d(-34, -58), Math.toRadians(0))
+                .waitSeconds(0)
                 .setTangent(0)
-                .splineToConstantHeading(new Vector2d(29, -59), 0)
+                .splineToConstantHeading(new Vector2d(29, -58), 0)
                 .splineToSplineHeading(new Pose2d(37, -57, Math.toRadians(200)), 0)
                 .build();
 
-        park = drive.actionBuilder(new Pose2d(37, -57, Math.toRadians(225)))
+        park = drive.actionBuilder(new Pose2d(37, -57, Math.toRadians(200)))
                 .splineToSplineHeading(new Pose2d(48, -57, Math.toRadians(180)), Math.toRadians(180))
                 .build();
 
@@ -131,10 +131,18 @@ public class RedLeftRRNorm extends LinearOpMode {
                                 )
                         ),
 
-                        toBackBoard,
+
                         new ParallelAction(//angle to deliver to backdrop
-                                actions.LiftAngle(1600)
-                                //actions.LiftOut(3600)
+                                toBackBoard,
+
+                                new SequentialAction(
+                                        new SleepAction(1.5),
+                                        new ParallelAction(
+                                                actions.LiftAngle(1600)
+                                                //actions.LiftOut(3600)
+                                        )
+                                )
+
                         ),
                         new SequentialAction(//delivery sequence
                                 new InstantAction(() -> claw.clawHalf()),

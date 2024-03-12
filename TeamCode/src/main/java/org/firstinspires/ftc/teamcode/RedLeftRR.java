@@ -83,7 +83,7 @@ public class RedLeftRR extends LinearOpMode{
 
                 .setTangent(Math.toRadians(180))
                 .setReversed(true)
-                .splineToConstantHeading(new Vector2d(29, -12), 0)
+                .splineToConstantHeading(new Vector2d(29, -11), 0)
                 .splineToSplineHeading(new Pose2d(37, -12, Math.toRadians(165)), 0)
                 .build();
 
@@ -124,26 +124,26 @@ public class RedLeftRR extends LinearOpMode{
                                 correctDelivery,
                                 new SequentialAction(
                                         new SleepAction(5),
-                                        LiftOut(700),
+                                        //LiftOut(700),
                                         ClawPosition(claw.autoHalf),
-                                        LiftIn(),
+                                        //LiftIn(),
                                         ClawPosition(claw.autoHalf)
                                 )
                         ),
 
                         toBackBoard,
                         new ParallelAction(
-                                LiftAngle(1600),
-                                LiftOut(3600)
+                                LiftAngle(1600)
+                                //LiftOut(3600)
                         ),
                         new SequentialAction(
                                 new InstantAction(() -> claw.clawHalf()),
                                 new SleepAction(.5),
-                                new InstantAction(() -> lift.setMotorsToGoUpOrDown(1000)),
+                                //new InstantAction(() -> lift.setMotorsToGoUpOrDown(1000)),
                                 new InstantAction(() -> claw.clawUp())
                         ),
                         new ParallelAction(
-                                LiftOut(0),
+                                //LiftOut(0),
                                 new SequentialAction(
                                         new SleepAction(2),
                                         LiftAngle(0)
@@ -153,7 +153,7 @@ public class RedLeftRR extends LinearOpMode{
                         ),
                         toStack,
                         toBackBoard,
-                        Macro(),
+                        //Macro(),
                         /*LiftAngle(0),
                         DeliverySequence(),
                         LiftIn(),*/
