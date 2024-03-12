@@ -19,14 +19,21 @@ public class MeepMeepTestingBlue {
 
         myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-35, 62, -1.5708))
 
-                .splineToConstantHeading(new Vector2d(-35,34), Math.toRadians(-90))
+                .splineToConstantHeading(new Vector2d(-35,55), Math.toRadians(-90))
+                .turnTo(Math.toRadians(60))
                 .splineToConstantHeading(new Vector2d(-35,59), Math.toRadians(-90))
                 .turnTo(Math.toRadians(0))
-                .splineToConstantHeading(new Vector2d(43,57), Math.toRadians(0))
-                .turnTo(Math.toRadians(-45))
+                .setTangent(Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(29, 59), 0)
+                .splineToSplineHeading(new Pose2d(37,56, Math.toRadians(130)), 0)
                 .turnTo(Math.toRadians(-180))
                 .splineToConstantHeading(new Vector2d(-35,59), Math.toRadians(-180))
-                .splineToSplineHeading(new Pose2d(-64,35, Math.toRadians(180)),Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(-57,35, Math.toRadians(180)),Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(-34, 59), Math.toRadians(0))
+                .setTangent(0)
+                .splineToConstantHeading(new Vector2d(29, 59), 0)
+                .splineToSplineHeading(new Pose2d(37, 57, Math.toRadians(150)), 0)
+                .splineToSplineHeading(new Pose2d(48, 57, Math.toRadians(180)), Math.toRadians(180))
 
                 //.splineToConstantHeading(new Vector2d(-35,59), Math.toRadians(-180))
 

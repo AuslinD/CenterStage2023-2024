@@ -31,7 +31,7 @@ public class BlueRightRR extends LinearOpMode{
 
     @Override
     public void runOpMode() throws InterruptedException {
-        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(-35, 62, -1.5708));
+        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(-35, 62, +1.5708));
         lift = new Lift(this);
         intake = new Intake(this);
         claw = new Claw(this);
@@ -46,59 +46,79 @@ public class BlueRightRR extends LinearOpMode{
         Action toBackBoard;
         Action toStack;
         Action park;
+        Action stackToBackboard;
 
 
         claw.setClawAngle(.1);
 
         leftDelivery = drive.actionBuilder(drive.pose)
                 .setReversed(true)
-                .splineToConstantHeading(new Vector2d(-35,34), Math.toRadians(-90))
-                .waitSeconds(4)
+                .splineToConstantHeading(new Vector2d(-35,55), Math.toRadians(-90))
+                .waitSeconds(2)
+                .turnTo(Math.toRadians(60))
                 .splineToConstantHeading(new Vector2d(-35,59), Math.toRadians(-90))
-                .turnTo(Math.toRadians(0))
+                .turnTo(Math.toRadians(180))
+                //.waitSeconds(4)
                 .build();
 
         centerDelivery = drive.actionBuilder(drive.pose)
                 .setReversed(true)
-                .splineToConstantHeading(new Vector2d(-35, -12), Math.toRadians(90))
-                .turnTo(Math.toRadians(90))
-                .waitSeconds(4)
+                .splineToConstantHeading(new Vector2d(-35,48), Math.toRadians(-90))
+                .waitSeconds(2)
+                .turnTo(Math.toRadians(-90))
+                .splineToConstantHeading(new Vector2d(-35,59), Math.toRadians(-90))
                 .turnTo(Math.toRadians(180))
+                //.waitSeconds(4)
                 .build();
 
 
         rightDelivery = drive.actionBuilder(drive.pose)
                 .setReversed(true)
-                .splineToConstantHeading(new Vector2d(-35, -12), Math.toRadians(90))
-                .turnTo(Math.toRadians(135))
+                .splineToConstantHeading(new Vector2d(-35, 59), Math.toRadians(90))
+                .turnTo(Math.toRadians(-120))
                 .waitSeconds(4)
                 .turnTo(Math.toRadians(180))
 
                 //placeholder for future
-
+                //.waitSeconds(4)
                 .build();
 
-        toBackBoard = drive.actionBuilder(new Pose2d(-35, -12, Math.toRadians(180)))
+        toBackBoard = drive.actionBuilder(new Pose2d(-35, 57, Math.toRadians(180)))
+                .setReversed(true)
+                .setTangent(Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(29, 57), 0)
+                .splineToSplineHeading(new Pose2d(37,56, Math.toRadians(145)), 0)
+                .turnTo(Math.toRadians(-180))
 
+                //.waitSeconds(4)
+                .build();
+
+
+        toStack = drive.actionBuilder(new Pose2d(37, 56, Math.toRadians(-180)))
                 .setTangent(Math.toRadians(180))
                 .setReversed(true)
-                .splineToConstantHeading(new Vector2d(29, -12), 0)
-                .splineToSplineHeading(new Pose2d(37, -12, Math.toRadians(165)), 0)
+                .splineToSplineHeading(new Pose2d(29, 57.5, Math.toRadians(180)), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(-34, 57.5), Math.toRadians(180))
+                .setReversed(false)
+                .splineTo(new Vector2d(-57, 35), Math.toRadians(180))//at stack rn
+
+                //.waitSeconds(4)
                 .build();
 
-
-        toStack = drive.actionBuilder(new Pose2d(37, -12, Math.toRadians(165)))
+        stackToBackboard = drive.actionBuilder(new Pose2d(-57, 35, Math.toRadians(180)))
                 .setReversed(true)
-                .splineToSplineHeading(new Pose2d(29, -12, Math.toRadians(180)), Math.toRadians(180))
-                .splineToConstantHeading(new Vector2d(-56, -12), Math.toRadians(180))
-                .build();
-        /*
-        park = drive.actionBuilder(drive.pose)
-
-                .lineToX(50)
+                .splineToConstantHeading(new Vector2d(-34, 57), Math.toRadians(0))
+                .waitSeconds(1)
+                .setTangent(0)
+                .splineToConstantHeading(new Vector2d(29, 57), 0)
+                .splineToSplineHeading(new Pose2d(37, 56, Math.toRadians(150)), 0)
                 .build();
 
-         */
+        park = drive.actionBuilder(new Pose2d(37,56, Math.toRadians(155)))
+
+                .splineToSplineHeading(new Pose2d(48, 57, Math.toRadians(180)), Math.toRadians(180))
+                .build();
+
         claw.clawDown();
 
 
@@ -119,26 +139,26 @@ public class BlueRightRR extends LinearOpMode{
                                 correctDelivery,
                                 new SequentialAction(
                                         new SleepAction(5),
-                                        LiftOut(700),
+                                        //LiftOut(700),
                                         ClawPosition(claw.autoHalf),
-                                        LiftIn(),
+                                        //LiftIn(),
                                         ClawPosition(claw.autoHalf)
                                 )
                         ),
 
                         toBackBoard,
                         new ParallelAction(
-                                LiftAngle(1600),
-                                LiftOut(3600)
+                                //LiftAngle(1600),
+                                //LiftOut(3600)
                         ),
                         new SequentialAction(
                                 new InstantAction(() -> claw.clawHalf()),
                                 new SleepAction(.5),
-                                new InstantAction(() -> lift.setMotorsToGoUpOrDown(1000)),
+                                //new InstantAction(() -> lift.setMotorsToGoUpOrDown(1000)),
                                 new InstantAction(() -> claw.clawUp())
                         ),
                         new ParallelAction(
-                                LiftOut(0),
+                                //LiftOut(0),
                                 new SequentialAction(
                                         new SleepAction(2),
                                         LiftAngle(0)
@@ -146,13 +166,14 @@ public class BlueRightRR extends LinearOpMode{
                                 )
 
                         ),
-                        toStack/*,
+                        toStack,
                         toBackBoard,
-                        LiftOut(900),
-                        Macro(),
-                        DeliverySequence(),
-                        LiftIn(),
-                        park*/
+                        //LiftOut(900),
+                        //Macro(),
+                        //DeliverySequence(),
+                        //LiftIn()
+                        stackToBackboard,
+                        park
 
                 )
         );
