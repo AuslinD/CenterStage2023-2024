@@ -13,9 +13,21 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.openftc.easyopencv.OpenCvInternalCamera;
+
+import java.util.function.Function;
+
 @Config
 @Autonomous(name = "RedLeftRRClose", group = "Autonomous")
 public class RedLeftRRNorm extends LinearOpMode {
+
+    int[] liftAngles = new int[]{1600, 800, 350};
+
+    OpenCvInternalCamera phoneCam;
+    OpenCV.RedCV pipeline;
 
     Lift lift;
     Intake intake;
@@ -47,7 +59,7 @@ public class RedLeftRRNorm extends LinearOpMode {
         Action stackToBackboard;
 
 
-        claw.setClawAngle(.1);
+        claw.setClawAngle(.5);
 
         leftDelivery = drive.actionBuilder(drive.pose)
                 .setReversed(true)
@@ -109,13 +121,61 @@ public class RedLeftRRNorm extends LinearOpMode {
 
 
 
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        pipeline = new OpenCV.RedCV();
+        phoneCam.setPipeline(pipeline);
 
+        // We set the viewport policy to optimized view so the preview doesn't appear 90 deg
+        // out when the RC activity is in portrait. We do our actual image processing assuming
+        // landscape orientation, though.
+        phoneCam.setViewportRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy.OPTIMIZE_VIEW);
+
+        phoneCam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
+        {
+            @Override
+            public void onOpened()
+            {
+                phoneCam.startStreaming(320,240, OpenCvCameraRotation.SIDEWAYS_LEFT);
+            }
+
+            @Override
+            public void onError(int errorCode)
+            {
+                telemetry.addLine("No camera");
+            }
+        });
+        OpenCV.RedCV.SkystonePosition pos = null;
+        while (!isStarted() && !isStopRequested())
+        {
+            telemetry.addData("Analysis", pipeline.getAnalysis());
+            telemetry.update();
+            pos = pipeline.getAnalysis();
+            // Don't burn CPU cycles busy-looping in this sample
+            sleep(50);
+        }
+
+        Action correctDelivery;
         waitForStart();
 
         if(isStopRequested()) return;
+        int index = 0;
+
+        if(pos == OpenCV.RedCV.SkystonePosition.LEFT){
+            correctDelivery = leftDelivery;
+            index = 0;
+        }
+        else if(pos == OpenCV.RedCV.SkystonePosition.RIGHT) {
+            correctDelivery = rightDelivery;
+            index = 2;
+        }
+        else{
+            correctDelivery = centerDelivery;
+            index = 1;
+        }
 
 
-        Action correctDelivery = leftDelivery;
+
 
         Actions.runBlocking(
                 new SequentialAction(
@@ -123,8 +183,10 @@ public class RedLeftRRNorm extends LinearOpMode {
                         new ParallelAction(
                                 correctDelivery,
                                 new SequentialAction(
+
                                         new SleepAction(2),
                                         //actions.LiftOut(700),
+                                        new InstantAction(() -> claw.setClawAngle(.11)),
                                         actions.ClawPosition(claw.autoHalf),
                                         //actions.LiftIn(),
                                         actions.ClawPosition(claw.autoHalf)
@@ -138,7 +200,7 @@ public class RedLeftRRNorm extends LinearOpMode {
                                 new SequentialAction(
                                         new SleepAction(1.5),
                                         new ParallelAction(
-                                                actions.LiftAngle(1600)
+                                                actions.LiftAngle(liftAngles[index])
                                                 //actions.LiftOut(3600)
                                         )
                                 )
@@ -146,6 +208,7 @@ public class RedLeftRRNorm extends LinearOpMode {
                         ),
                         new SequentialAction(//delivery sequence
                                 new InstantAction(() -> claw.clawHalf()),
+                                new InstantAction(() -> claw.setClawAngle(.3)),
                                 new SleepAction(.5),
                                 //new InstantAction(() -> lift.setMotorsToGoUpOrDown(1000)),
                                 new InstantAction(() -> claw.clawUp())

@@ -19,9 +19,16 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.openftc.easyopencv.OpenCvInternalCamera;
+
 @Config
 @Autonomous(name = "Blue_Right_RR_TESTING", group = "Autonomous")
 public class BlueRightRR extends LinearOpMode{
+    OpenCvInternalCamera phoneCam;
+    OpenCV.BlueCV pipeline;
 
     Lift lift;
     Intake intake;
@@ -123,14 +130,52 @@ public class BlueRightRR extends LinearOpMode{
 
 
 
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        pipeline = new OpenCV.BlueCV();
+        phoneCam.setPipeline(pipeline);
 
+        // We set the viewport policy to optimized view so the preview doesn't appear 90 deg
+        // out when the RC activity is in portrait. We do our actual image processing assuming
+        // landscape orientation, though.
+        phoneCam.setViewportRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy.OPTIMIZE_VIEW);
 
+        phoneCam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+            @Override
+            public void onOpened() {
+                phoneCam.startStreaming(320, 240, OpenCvCameraRotation.SIDEWAYS_LEFT);
+            }
+            //matthew was here
+            @Override
+            public void onError(int errorCode) {
+                telemetry.addLine("No camera");
+            }
+        });
+        OpenCV.BlueCV.SkystonePosition pos = null;
+        while (!isStarted() && !isStopRequested()) {
+            telemetry.addData("Analysis", pipeline.getAnalysis());
+            telemetry.update();
+            pos = pipeline.getAnalysis();
+            // Don't burn CPU cycles busy-looping in this sample
+            sleep(50);
+        }
+
+        Action correctDelivery = leftDelivery;
         waitForStart();
 
         if(isStopRequested()) return;
+        if(pos == OpenCV.BlueCV.SkystonePosition.LEFT){
+            correctDelivery = leftDelivery;
+        }
+        else if(pos == OpenCV.BlueCV.SkystonePosition.CENTER){
+            correctDelivery = centerDelivery;
+        }
+        else{
+            correctDelivery = rightDelivery;
+        }
 
 
-        Action correctDelivery = leftDelivery;
+
 
         Actions.runBlocking(
                 new SequentialAction(
