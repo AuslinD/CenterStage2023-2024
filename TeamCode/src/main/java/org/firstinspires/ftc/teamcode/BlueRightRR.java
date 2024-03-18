@@ -60,13 +60,13 @@ public class BlueRightRR extends LinearOpMode{
         Action stackToBackboard;
 
 
-        claw.setClawAngle(.1);
+        claw.setClawAngle(.3);
 
         leftDelivery = drive.actionBuilder(drive.pose)
                 .setReversed(true)
                 .splineToConstantHeading(new Vector2d(-35,55), Math.toRadians(-90))
                 .waitSeconds(2)
-                .turnTo(Math.toRadians(60))
+                .turnTo(Math.toRadians(120)) //was 60
                 .splineToConstantHeading(new Vector2d(-35,59), Math.toRadians(-90))
                 .turnTo(Math.toRadians(180))
                 //.waitSeconds(4)
@@ -85,8 +85,8 @@ public class BlueRightRR extends LinearOpMode{
 
         rightDelivery = drive.actionBuilder(drive.pose)
                 .setReversed(true)
-                .splineToConstantHeading(new Vector2d(-35, 59), Math.toRadians(90))
-                .turnTo(Math.toRadians(-120))
+                .splineToConstantHeading(new Vector2d(-35, 59), Math.toRadians(-90))
+                .turnTo(Math.toRadians(60)) //was  120
                 .waitSeconds(4)
                 .turnTo(Math.toRadians(180))
 
@@ -115,7 +115,7 @@ public class BlueRightRR extends LinearOpMode{
 
                 //.waitSeconds(4)
                 .build();
-
+        
         stackToBackboard = drive.actionBuilder(new Pose2d(-57, 35, Math.toRadians(180)))
                 .setReversed(true)
                 .splineToConstantHeading(new Vector2d(-34, 57), Math.toRadians(0))
@@ -201,11 +201,17 @@ public class BlueRightRR extends LinearOpMode{
                                 )
                         ),
 
-                        toBackBoard,
-                        new ParallelAction(
-                                actions.LiftAngle(liftAngles[index])
-                                //LiftAngle(1600),
-                                //LiftOut(3600)
+                        new ParallelAction(//angle to deliver to backdrop
+                                toBackBoard,
+
+                                new SequentialAction(
+                                        new SleepAction(1.5),
+                                        new ParallelAction(
+                                                actions.LiftAngle(liftAngles[index])
+                                                //actions.LiftOut(3600)
+                                        )
+                                )
+
                         ),
                         new SequentialAction(
                                 new InstantAction(() -> claw.clawHalf()),
@@ -214,7 +220,19 @@ public class BlueRightRR extends LinearOpMode{
                                 //new InstantAction(() -> lift.setMotorsToGoUpOrDown(1000)),
                                 new InstantAction(() -> claw.clawUp())
                         ),
-                        new ParallelAction(
+                        new ParallelAction(// retract lift and angle
+                                //actions.LiftOut(0),
+                                new SequentialAction(
+                                        new SleepAction(2),
+                                        actions.LiftAngle(0)
+
+                                )
+
+                        ),
+                        toStack,// add the stack get stuff here?
+                        toBackBoard,
+                        stackToBackboard,
+                        /*new ParallelAction( //testing stuff here
 
                                 //LiftOut(0),
                                 new SequentialAction(
@@ -228,14 +246,14 @@ public class BlueRightRR extends LinearOpMode{
 
                                 )
 
-                        ),
-                        toStack,
-                        toBackBoard,
+                        ),*/
+                        //toStack,
+                        //toBackBoard,
                         //LiftOut(900),
                         //Macro(),
                         //DeliverySequence(),
                         //LiftIn()
-                        stackToBackboard,
+                        //stackToBackboard,
                         park
 
                 )
