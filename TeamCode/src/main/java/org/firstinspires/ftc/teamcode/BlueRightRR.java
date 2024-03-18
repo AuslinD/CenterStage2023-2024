@@ -27,6 +27,8 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 @Config
 @Autonomous(name = "Blue_Right_RR_TESTING", group = "Autonomous")
 public class BlueRightRR extends LinearOpMode{
+
+    int[] liftAngles = new int[]{1600, 800, 350};
     OpenCvInternalCamera phoneCam;
     OpenCV.BlueCV pipeline;
 
@@ -35,6 +37,7 @@ public class BlueRightRR extends LinearOpMode{
     Claw claw;
     org.firstinspires.ftc.teamcode.Macro macro;
     ElapsedTime totalElapsedTime;
+    org.firstinspires.ftc.teamcode.ActionList actions;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -44,6 +47,7 @@ public class BlueRightRR extends LinearOpMode{
         claw = new Claw(this);
         macro = new org.firstinspires.ftc.teamcode.Macro(this);
         totalElapsedTime = new ElapsedTime();
+        actions = new org.firstinspires.ftc.teamcode.ActionList(this);
 
 
 
@@ -164,14 +168,19 @@ public class BlueRightRR extends LinearOpMode{
         waitForStart();
 
         if(isStopRequested()) return;
+        int index = 0;
+
         if(pos == OpenCV.BlueCV.SkystonePosition.LEFT){
             correctDelivery = leftDelivery;
+            index = 2;
         }
         else if(pos == OpenCV.BlueCV.SkystonePosition.CENTER){
             correctDelivery = centerDelivery;
+            index = 1;
         }
         else{
             correctDelivery = rightDelivery;
+            index = 0;
         }
 
 
@@ -179,6 +188,7 @@ public class BlueRightRR extends LinearOpMode{
 
         Actions.runBlocking(
                 new SequentialAction(
+
 
                         new ParallelAction(
                                 correctDelivery,
@@ -193,20 +203,28 @@ public class BlueRightRR extends LinearOpMode{
 
                         toBackBoard,
                         new ParallelAction(
+                                actions.LiftAngle(liftAngles[index])
                                 //LiftAngle(1600),
                                 //LiftOut(3600)
                         ),
                         new SequentialAction(
                                 new InstantAction(() -> claw.clawHalf()),
+
                                 new SleepAction(.5),
                                 //new InstantAction(() -> lift.setMotorsToGoUpOrDown(1000)),
                                 new InstantAction(() -> claw.clawUp())
                         ),
                         new ParallelAction(
+
                                 //LiftOut(0),
                                 new SequentialAction(
+
                                         new SleepAction(2),
-                                        LiftAngle(0)
+                                        new ParallelAction(
+                                                actions.LiftAngle(liftAngles[index])
+                                                //actions.LiftOut(3600)
+                                        )
+
 
                                 )
 
