@@ -46,6 +46,16 @@ public class ActionList {
                 initialized = true;
             }
 
+            if(lift.liftLeft.getCurrentPosition() > 1600){
+                lift.rotateRight.setPower(.15);
+                //robot.lift.rotateLeft.setPower(.15);
+
+            }
+            else {
+                lift.rotateRight.setPower(0);
+                //.lift.rotateLeft.setPower(0);
+            }
+
             // checks lift's current position
             double pos = lift.liftRight.getCurrentPosition();
             packet.put("liftPos", pos);

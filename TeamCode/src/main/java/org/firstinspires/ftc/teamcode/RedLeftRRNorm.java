@@ -65,14 +65,14 @@ public class RedLeftRRNorm extends LinearOpMode {
                 .setReversed(true)
                 .splineToConstantHeading(new Vector2d(-35, -57), Math.toRadians(90))
                 .turnTo(Math.toRadians(-65))
-                .waitSeconds(1)
+                .waitSeconds(3)
                 .turnTo(Math.toRadians(180))
                 .build();
 
         centerDelivery = drive.actionBuilder(drive.pose)
                 .setReversed(true)
                 .splineToConstantHeading(new Vector2d(-35, -57), Math.toRadians(90))
-                .waitSeconds(1)
+                .waitSeconds(3)
                 .turnTo(Math.toRadians(180))
                 .build();
 
@@ -81,7 +81,7 @@ public class RedLeftRRNorm extends LinearOpMode {
                 .setReversed(true)
                 .splineToConstantHeading(new Vector2d(-35, -57), Math.toRadians(90))
                 .turnTo(Math.toRadians(-115))
-                .waitSeconds(1)
+                .waitSeconds(3)
                 .turnTo(Math.toRadians(180))
                 .build();
 
@@ -185,11 +185,11 @@ public class RedLeftRRNorm extends LinearOpMode {
                                 new SequentialAction(
 
                                         new SleepAction(2),
-                                        //actions.LiftOut(700),
+                                        actions.LiftOut(2000),
                                         new InstantAction(() -> claw.setClawAngle(.11)),
                                         actions.ClawPosition(claw.autoHalf),
-                                        //actions.LiftIn(),
-                                        actions.ClawPosition(claw.autoHalf)
+                                        actions.LiftIn(),
+                                        new InstantAction(() -> claw.setClawAngle(.5))
                                 )
                         ),
 
@@ -200,8 +200,8 @@ public class RedLeftRRNorm extends LinearOpMode {
                                 new SequentialAction(
                                         new SleepAction(1.5),
                                         new ParallelAction(
-                                                actions.LiftAngle(liftAngles[index])
-                                                //actions.LiftOut(3600)
+                                                actions.LiftAngle(liftAngles[index]),
+                                                actions.LiftOut(3600)
                                         )
                                 )
 
@@ -210,11 +210,11 @@ public class RedLeftRRNorm extends LinearOpMode {
                                 new InstantAction(() -> claw.clawHalf()),
                                 new InstantAction(() -> claw.setClawAngle(.3)),
                                 new SleepAction(.5),
-                                //new InstantAction(() -> lift.setMotorsToGoUpOrDown(1000)),
+                                new InstantAction(() -> lift.setMotorsToGoUpOrDown(1000)),
                                 new InstantAction(() -> claw.clawUp())
                         ),
                         new ParallelAction(// retract lift and angle
-                                //actions.LiftOut(0),
+                                actions.LiftOut(0),
                                 new SequentialAction(
                                         new SleepAction(2),
                                         actions.LiftAngle(0)
@@ -224,10 +224,9 @@ public class RedLeftRRNorm extends LinearOpMode {
                         ),
                         toStack,
                         toBackBoard,
-                        /*actions.Macro(),
+                        actions.Macro(),
                         actions.LiftAngle(0),
-                        actions.DeliverySequence(),
-                        actions.LiftIn(),*/
+                        actions.LiftIn(),
                         stackToBackboard,
                         park
 
