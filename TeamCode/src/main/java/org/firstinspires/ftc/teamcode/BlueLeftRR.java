@@ -17,7 +17,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 
-@Autonomous(name = "RedRightRR", group = "Autonomous")
+@Autonomous(name = "BlueLeftRR", group = "Autonomous")
 public class BlueLeftRR extends LinearOpMode {
 
     int[] liftPositions = new int[]{1000, 800, 600};

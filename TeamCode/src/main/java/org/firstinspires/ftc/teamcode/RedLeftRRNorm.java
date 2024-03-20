@@ -212,10 +212,10 @@ public class RedLeftRRNorm extends LinearOpMode {
                                 new SequentialAction(
                                         //deliver spike
                                         new SleepAction(2),
-                                        actions.LiftOut(2000),
+                                        //actions.LiftOut(2000),
                                         new InstantAction(() -> claw.setClawAngle(.11)),
                                         actions.ClawPosition(claw.autoHalf),
-                                        actions.LiftIn(),
+                                        //actions.LiftIn(),
                                         new InstantAction(() -> claw.setClawAngle(.5))
                                 )
                         ),
@@ -227,8 +227,8 @@ public class RedLeftRRNorm extends LinearOpMode {
                                 new SequentialAction(
                                         new SleepAction(1.5),
                                         new ParallelAction(
-                                                actions.LiftAngle(450),
-                                                actions.LiftOut(liftPositions[index])
+                                                //actions.LiftAngle(450),
+                                                //actions.LiftOut(liftPositions[index])
                                         )
                                 )
 
@@ -237,13 +237,14 @@ public class RedLeftRRNorm extends LinearOpMode {
                                 new InstantAction(() -> claw.clawUp())
                         ),
                         new ParallelAction(// retract lift and angle
-                                actions.LiftOut(0),
+                                //actions.LiftOut(0),
                                 new SequentialAction(
-                                        new SleepAction(1),
-                                        actions.LiftAngle(0)
+                                        new SleepAction(1)//,
+                                        //actions.LiftAngle(0)
                                 )
 
                         ),
+                        //correctBackboardAngle,
                         /*toStack,
                         toBackBoard,
                         actions.Macro(),

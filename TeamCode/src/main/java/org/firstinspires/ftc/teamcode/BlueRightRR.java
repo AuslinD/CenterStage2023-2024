@@ -217,10 +217,10 @@ public class BlueRightRR extends LinearOpMode{
                                 correctDelivery,
                                 new SequentialAction(
                                         //deliver spike
-                                        actions.LiftOut(2000),
+                                        //actions.LiftOut(2000),
                                         new SleepAction(1),
                                         actions.ClawPosition(claw.autoHalf),
-                                        actions.LiftIn(),
+                                        //actions.LiftIn(),
                                         actions.ClawPosition(claw.autoHalf)
                                 )
                         ),
@@ -232,11 +232,11 @@ public class BlueRightRR extends LinearOpMode{
                                 new SequentialAction(
                                         new SleepAction(1.3),
                                         new ParallelAction(
-                                                actions.LiftAngle(450),
+                                                //actions.LiftAngle(450),
 
                                                 new SequentialAction(
-                                                        new SleepAction(.5),
-                                                        actions.LiftOut(liftPositions[index])
+                                                        new SleepAction(.5)//,
+                                                        //actions.LiftOut(liftPositions[index])
                                                 )
 
                                         )
@@ -247,14 +247,15 @@ public class BlueRightRR extends LinearOpMode{
                                 new InstantAction(() -> claw.clawUp())
                         ),
                         new ParallelAction(// retract lift and angle
-                                actions.LiftOut(0),
+                                //actions.LiftOut(0),
                                 new SequentialAction(
-                                        new SleepAction(2),
-                                        actions.LiftAngle(0)
+                                        new SleepAction(2)//,
+                                        //actions.LiftAngle(0)
 
                                 )
 
                         ),
+                        //correctBackboardAngle,
                         /*toStack,// add the stack get stuff here?
                         toBackBoard,
                         stackToBackboard,
