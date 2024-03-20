@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.ParallelAction;
@@ -18,13 +17,10 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 
-import java.util.function.Function;
+@Autonomous(name = "RedRightRR", group = "Autonomous")
+public class RedRightRR extends LinearOpMode {
 
-@Config
-@Autonomous(name = "RedLeftRRClose", group = "Autonomous")
-public class RedLeftRRNorm extends LinearOpMode {
 
-    int[] liftAngles = new int[]{1600, 800, 450};
     int[] liftPositions = new int[]{1000, 800, 600};
 
     OpenCvInternalCamera phoneCam;
@@ -41,15 +37,14 @@ public class RedLeftRRNorm extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(-35, -62, Math.toRadians(-90)));
+        //change start position to positive X?
+        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(-35, 62, +1.5708));
         lift = new Lift(this);
         intake = new Intake(this);
         claw = new Claw(this);
         macro = new org.firstinspires.ftc.teamcode.Macro(this);
         totalElapsedTime = new ElapsedTime();
         actions = new org.firstinspires.ftc.teamcode.ActionList(this);
-
-
 
         Action leftDelivery;
         Action centerDelivery;
@@ -62,87 +57,92 @@ public class RedLeftRRNorm extends LinearOpMode {
         Action park;
         Action stackToBackboard;
 
-
-        claw.setClawAngle(.5);
+        claw.setClawAngle(.3);
 
         leftDelivery = drive.actionBuilder(drive.pose)
                 .setReversed(true)
-                .splineToConstantHeading(new Vector2d(-35, -57), Math.toRadians(90))
-                .turnTo(Math.toRadians(-65))
+                .splineToConstantHeading(new Vector2d(-35, 59.5), Math.toRadians(-90))
+                .turnTo(Math.toRadians(120)) //was  120
                 .waitSeconds(5)
                 .turnTo(Math.toRadians(180))
+                //.waitSeconds(4)
                 .build();
 
         centerDelivery = drive.actionBuilder(drive.pose)
                 .setReversed(true)
-                .splineToConstantHeading(new Vector2d(-35, -57), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(-35, 59.5), Math.toRadians(-90))
                 .waitSeconds(5)
                 .turnTo(Math.toRadians(180))
+                //.waitSeconds(4)
                 .build();
 
 
         rightDelivery = drive.actionBuilder(drive.pose)
                 .setReversed(true)
-                .splineToConstantHeading(new Vector2d(-35, -57), Math.toRadians(90))
-                .turnTo(Math.toRadians(-115))
+                .splineToConstantHeading(new Vector2d(-35, 59.5), Math.toRadians(-90))
+                .turnTo(Math.toRadians(65)) //was  120
                 .waitSeconds(5)
                 .turnTo(Math.toRadians(180))
+
+                //placeholder for future
+                //.waitSeconds(4)
                 .build();
 
-        toBackBoard = drive.actionBuilder(new Pose2d(-35, -57, Math.toRadians(180)))
+        toBackBoard = drive.actionBuilder(new Pose2d(-35, 59.5, Math.toRadians(180)))
+                .setReversed(true)
                 .setTangent(Math.toRadians(0))
-                .setReversed(true)
-                .splineToConstantHeading(new Vector2d(29, -57), 0)
-                //.splineToSplineHeading(new Pose2d(37, -57, Math.toRadians(200)), 0)
+                .splineToConstantHeading(new Vector2d(29, 58), 0)
+                //.splineToSplineHeading(new Pose2d(37,56, Math.toRadians(160)), 0)
+                //.waitSeconds(3)
+                //.turnTo(Math.toRadians(-180))
+
+                //.waitSeconds(4)
                 .build();
-        //angling to backboard
-        angleRightBoard = drive.actionBuilder(new Pose2d(29, -57, Math.toRadians(180)))
-                .setReversed(true)
+        angleLeftBoard = drive.actionBuilder(new Pose2d(29, 58, Math.toRadians(180)))
                 .setTangent(0)
-                .splineToSplineHeading(new Pose2d(37, -57, Math.toRadians(200)), 0)
+                .setReversed(true)
+                .splineToSplineHeading(new Pose2d(37,56, Math.toRadians(160)), 0)
                 .waitSeconds(3)
                 .build();
-        angleCenterBoard = drive.actionBuilder(new Pose2d(29, -57, Math.toRadians(180)))
-                .setReversed(true)
+        angleCenterBoard = drive.actionBuilder(new Pose2d(29, 58, Math.toRadians(180)))
                 .setTangent(0)
-                .splineToSplineHeading(new Pose2d(37, -57, Math.toRadians(210)), 0)
+                .setReversed(true)
+                .splineToSplineHeading(new Pose2d(37,56, Math.toRadians(150)), 0)
                 .waitSeconds(3)
                 .build();
-        angleLeftBoard = drive.actionBuilder(new Pose2d(29, -57, Math.toRadians(180)))
-                .setReversed(true)
+        angleRightBoard = drive.actionBuilder(new Pose2d(29, 58, Math.toRadians(180)))
                 .setTangent(0)
-                .splineToSplineHeading(new Pose2d(37, -57, Math.toRadians(220)), 0)
+                .setReversed(true)
+                .splineToSplineHeading(new Pose2d(37,56, Math.toRadians(140)), 0)
                 .waitSeconds(3)
                 .build();
 
-
-        toStack = drive.actionBuilder(new Pose2d(37, -57, Math.toRadians(200)))
+        toStack = drive.actionBuilder(new Pose2d(37, 56, Math.toRadians(-180)))
                 .setTangent(Math.toRadians(180))
                 .setReversed(true)
-                .splineToSplineHeading(new Pose2d(29, -58, Math.toRadians(180)), Math.toRadians(180))
-                //.waitSeconds(0)
-                .splineToConstantHeading(new Vector2d(-34, -58), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(29, 58.5, Math.toRadians(180)), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(-34, 58.5), Math.toRadians(180))
                 .setReversed(false)
-                .splineTo(new Vector2d(-57, -35), Math.toRadians(180))//at stack rn
+                .splineTo(new Vector2d(-57, 35), Math.toRadians(180))//at stack rn
+
+                //.waitSeconds(4)
                 .build();
-        stackToBackboard = drive.actionBuilder(new Pose2d(-56, -35, Math.toRadians(180)))
+
+        stackToBackboard = drive.actionBuilder(new Pose2d(-57, 35, Math.toRadians(180)))
                 .setReversed(true)
-                .splineToConstantHeading(new Vector2d(-34, -58), Math.toRadians(0))
-                .waitSeconds(0)
+                .splineToConstantHeading(new Vector2d(-34, 57), Math.toRadians(0))
+                .waitSeconds(1)
                 .setTangent(0)
-                .splineToConstantHeading(new Vector2d(29, -58), 0)
-                .splineToSplineHeading(new Pose2d(37, -57, Math.toRadians(200)), 0)
+                .splineToConstantHeading(new Vector2d(29, 57), 0)
+                .splineToSplineHeading(new Pose2d(37, 56, Math.toRadians(150)), 0)
                 .build();
 
-        park = drive.actionBuilder(new Pose2d(37, -57, Math.toRadians(200)))
-                .splineToSplineHeading(new Pose2d(52, -57, Math.toRadians(180)), Math.toRadians(180))
-                .build();
+        park = drive.actionBuilder(new Pose2d(37,56, Math.toRadians(155)))
 
+                .splineToSplineHeading(new Pose2d(52, 57, Math.toRadians(180)), Math.toRadians(180))
+                .build();
 
         claw.clawDown();
-
-
-
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);

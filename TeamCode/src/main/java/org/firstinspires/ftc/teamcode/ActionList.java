@@ -65,6 +65,7 @@ public class ActionList {
             } else {
                 //figurethisout later
 
+                lift.rotateRight.setPower(0);
                 return false;
             }
 
