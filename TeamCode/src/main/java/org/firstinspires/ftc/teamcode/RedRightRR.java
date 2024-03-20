@@ -210,7 +210,7 @@ public class RedRightRR extends LinearOpMode {
                         new ParallelAction(
                                 correctDelivery,
                                 new SequentialAction(
-
+                                        //deliver spike
                                         new SleepAction(2),
                                         actions.LiftOut(2000),
                                         new InstantAction(() -> claw.setClawAngle(.11)),

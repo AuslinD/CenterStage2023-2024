@@ -208,6 +208,7 @@ public class BlueLeftRR extends LinearOpMode {
                         new ParallelAction(
                                 correctDelivery,
                                 new SequentialAction(
+                                        //deliver spike
                                         actions.LiftOut(2000),
                                         new SleepAction(1),
                                         actions.ClawPosition(claw.autoHalf),
