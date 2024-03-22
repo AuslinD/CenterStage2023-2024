@@ -24,8 +24,8 @@ import java.util.function.Function;
 @Autonomous(name = "RedLeftRRClose", group = "Autonomous")
 public class RedLeftRRNorm extends LinearOpMode {
 
-    int[] liftAngles = new int[]{1600, 800, 450};
-    int[] liftPositions = new int[]{1000, 800, 600};
+    int[] liftAngles = new int[]{850, 900, 900};
+    int[] liftPositions = new int[]{2300, 2250, 2000};
 
     OpenCvInternalCamera phoneCam;
     OpenCV.RedCV pipeline;
@@ -105,13 +105,13 @@ public class RedLeftRRNorm extends LinearOpMode {
         angleCenterBoard = drive.actionBuilder(new Pose2d(29, -57, Math.toRadians(180)))
                 .setReversed(true)
                 .setTangent(0)
-                .splineToSplineHeading(new Pose2d(37, -57, Math.toRadians(210)), 0)
+                .splineToSplineHeading(new Pose2d(37, -57, Math.toRadians(212)), 0)
                 .waitSeconds(3)
                 .build();
         angleLeftBoard = drive.actionBuilder(new Pose2d(29, -57, Math.toRadians(180)))
                 .setReversed(true)
                 .setTangent(0)
-                .splineToSplineHeading(new Pose2d(37, -57, Math.toRadians(220)), 0)
+                .splineToSplineHeading(new Pose2d(37, -57, Math.toRadians(222)), 0)
                 .waitSeconds(3)
                 .build();
 
@@ -135,7 +135,8 @@ public class RedLeftRRNorm extends LinearOpMode {
                 .build();
 
         park = drive.actionBuilder(new Pose2d(37, -57, Math.toRadians(200)))
-                .splineToSplineHeading(new Pose2d(52, -57, Math.toRadians(180)), Math.toRadians(180))
+                .setTangent(Math.toRadians(-180))
+                .splineToSplineHeading(new Pose2d(52, -62, Math.toRadians(180)), Math.toRadians(180))
                 .build();
 
 
@@ -212,11 +213,16 @@ public class RedLeftRRNorm extends LinearOpMode {
                                 new SequentialAction(
                                         //deliver spike
                                         new SleepAction(2),
-                                        //actions.LiftOut(2000),
+                                        actions.LiftOut(index != 1? 2000 : 2200),
                                         new InstantAction(() -> claw.setClawAngle(.11)),
                                         actions.ClawPosition(claw.autoHalf),
-                                        //actions.LiftIn(),
-                                        new InstantAction(() -> claw.setClawAngle(.5))
+                                        new SleepAction(1),
+                                        new ParallelAction(
+                                                actions.LiftIn(),
+                                                new InstantAction(() -> claw.setClawAngle(.50))
+                                        ),
+
+                                        new InstantAction(() -> claw.setClawAngle(.50))
                                 )
                         ),
                         toBackBoard,
@@ -227,20 +233,23 @@ public class RedLeftRRNorm extends LinearOpMode {
                                 new SequentialAction(
                                         new SleepAction(1.5),
                                         new ParallelAction(
-                                                //actions.LiftAngle(450),
-                                                //actions.LiftOut(liftPositions[index])
-                                        )
+                                                actions.LiftAngle(liftAngles[index]),
+                                                actions.LiftOut(liftPositions[index])
+                                        ),
+                                        actions.LiftAngle(liftAngles[index])
                                 )
 
                         ),
                         new SequentialAction(//delivery sequence
-                                new InstantAction(() -> claw.clawUp())
+                                new InstantAction(() -> claw.setClawAngle(.50 - lift.rotateRight.getCurrentPosition() / 11356.25)),
+                                new InstantAction(() -> claw.clawUp()),
+                                new SleepAction(1)
                         ),
                         new ParallelAction(// retract lift and angle
-                                //actions.LiftOut(0),
+                                actions.LiftOut(0),
                                 new SequentialAction(
-                                        new SleepAction(1)//,
-                                        //actions.LiftAngle(0)
+                                        new SleepAction(1),
+                                        actions.LiftAngle(0)
                                 )
 
                         ),

@@ -28,8 +28,8 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 @Autonomous(name = "Blue_Right_RRClose", group = "Autonomous")
 public class BlueRightRR extends LinearOpMode{
 
-    int[] liftAngles = new int[]{1600, 800, 450};
-    int[] liftPositions = new int[]{1000, 800, 600};
+    int[] liftAngles = new int[]{850, 900, 900};
+    int[] liftPositions = new int[]{2300, 2250, 2000};
     OpenCvInternalCamera phoneCam;
     OpenCV.BlueCV pipeline;
 
@@ -145,8 +145,8 @@ public class BlueRightRR extends LinearOpMode{
                 .build();
 
         park = drive.actionBuilder(new Pose2d(37,56, Math.toRadians(155)))
-
-                .splineToSplineHeading(new Pose2d(52, 57, Math.toRadians(180)), Math.toRadians(180))
+                .setTangent(Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(54, 58.5, Math.toRadians(180)), Math.toRadians(180))
                 .build();
 
         claw.clawDown();
@@ -217,11 +217,16 @@ public class BlueRightRR extends LinearOpMode{
                                 correctDelivery,
                                 new SequentialAction(
                                         //deliver spike
-                                        //actions.LiftOut(2000),
+                                        new SleepAction(2),
+                                        actions.LiftOut(2000),
                                         new SleepAction(1),
                                         actions.ClawPosition(claw.autoHalf),
-                                        //actions.LiftIn(),
-                                        actions.ClawPosition(claw.autoHalf)
+                                        new SleepAction(1),
+                                        new ParallelAction(
+                                                actions.LiftIn(),
+                                                new InstantAction(() -> claw.setClawAngle(.50))
+                                        ),
+                                        new InstantAction(() -> claw.setClawAngle(.50))
                                 )
                         ),
                         toBackBoard,
@@ -232,26 +237,23 @@ public class BlueRightRR extends LinearOpMode{
                                 new SequentialAction(
                                         new SleepAction(1.3),
                                         new ParallelAction(
-                                                //actions.LiftAngle(450),
-
-                                                new SequentialAction(
-                                                        new SleepAction(.5)//,
-                                                        //actions.LiftOut(liftPositions[index])
-                                                )
-
-                                        )
+                                                actions.LiftAngle(liftAngles[index]),
+                                                actions.LiftOut(liftPositions[index])
+                                        ),
+                                        actions.LiftAngle(liftAngles[index])
                                 )
 
                         ),
                         new SequentialAction(
-                                new InstantAction(() -> claw.clawUp())
+                                new InstantAction(() -> claw.setClawAngle(.50 - lift.rotateRight.getCurrentPosition() / 11356.25)),
+                                new InstantAction(() -> claw.clawUp()),
+                                new SleepAction(1)
                         ),
                         new ParallelAction(// retract lift and angle
-                                //actions.LiftOut(0),
+                                actions.LiftOut(0),
                                 new SequentialAction(
-                                        new SleepAction(2)//,
-                                        //actions.LiftAngle(0)
-
+                                        new SleepAction(1),
+                                        actions.LiftAngle(0)
                                 )
 
                         ),

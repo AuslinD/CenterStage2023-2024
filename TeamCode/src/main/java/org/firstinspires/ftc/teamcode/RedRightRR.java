@@ -21,7 +21,8 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 public class RedRightRR extends LinearOpMode {
 
 
-    int[] liftPositions = new int[]{1000, 800, 600};
+    int[] liftAngles = new int[]{850, 900, 900};
+    int[] liftPositions = new int[]{2300, 2250, 2000};
 
     OpenCvInternalCamera phoneCam;
     OpenCV.RedCV pipeline;
@@ -38,7 +39,7 @@ public class RedRightRR extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         //change start position to positive X?
-        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(-35, 62, +1.5708));
+        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(  13, 62, +1.5708));
         lift = new Lift(this);
         intake = new Intake(this);
         claw = new Claw(this);
@@ -61,7 +62,7 @@ public class RedRightRR extends LinearOpMode {
 
         leftDelivery = drive.actionBuilder(drive.pose)
                 .setReversed(true)
-                .splineToConstantHeading(new Vector2d(-35, 59.5), Math.toRadians(-90))
+                .splineToConstantHeading(new Vector2d(13, 59.5), Math.toRadians(-90))
                 .turnTo(Math.toRadians(120)) //was  120
                 .waitSeconds(5)
                 .turnTo(Math.toRadians(180))
@@ -70,7 +71,7 @@ public class RedRightRR extends LinearOpMode {
 
         centerDelivery = drive.actionBuilder(drive.pose)
                 .setReversed(true)
-                .splineToConstantHeading(new Vector2d(-35, 59.5), Math.toRadians(-90))
+                .splineToConstantHeading(new Vector2d(13, 59.5), Math.toRadians(-90))
                 .waitSeconds(5)
                 .turnTo(Math.toRadians(180))
                 //.waitSeconds(4)
@@ -79,7 +80,7 @@ public class RedRightRR extends LinearOpMode {
 
         rightDelivery = drive.actionBuilder(drive.pose)
                 .setReversed(true)
-                .splineToConstantHeading(new Vector2d(-35, 59.5), Math.toRadians(-90))
+                .splineToConstantHeading(new Vector2d(13, 59.5), Math.toRadians(-90))
                 .turnTo(Math.toRadians(65)) //was  120
                 .waitSeconds(5)
                 .turnTo(Math.toRadians(180))
@@ -88,7 +89,7 @@ public class RedRightRR extends LinearOpMode {
                 //.waitSeconds(4)
                 .build();
 
-        toBackBoard = drive.actionBuilder(new Pose2d(-35, 59.5, Math.toRadians(180)))
+        toBackBoard = drive.actionBuilder(new Pose2d(13, 59.5, Math.toRadians(180)))
                 .setReversed(true)
                 .setTangent(Math.toRadians(0))
                 .splineToConstantHeading(new Vector2d(29, 58), 0)
@@ -207,16 +208,21 @@ public class RedRightRR extends LinearOpMode {
         Actions.runBlocking(
                 new SequentialAction(
 
+
                         new ParallelAction(
                                 correctDelivery,
                                 new SequentialAction(
                                         //deliver spike
                                         new SleepAction(2),
                                         actions.LiftOut(2000),
-                                        new InstantAction(() -> claw.setClawAngle(.11)),
+                                        new SleepAction(1),
                                         actions.ClawPosition(claw.autoHalf),
-                                        actions.LiftIn(),
-                                        new InstantAction(() -> claw.setClawAngle(.5))
+                                        new SleepAction(1),
+                                        new ParallelAction(
+                                                actions.LiftIn(),
+                                                new InstantAction(() -> claw.setClawAngle(.50))
+                                        ),
+                                        new InstantAction(() -> claw.setClawAngle(.50))
                                 )
                         ),
                         toBackBoard,
@@ -225,16 +231,19 @@ public class RedRightRR extends LinearOpMode {
                                 correctBackboardAngle,
 
                                 new SequentialAction(
-                                        new SleepAction(1.5),
+                                        new SleepAction(1.3),
                                         new ParallelAction(
-                                                actions.LiftAngle(450),
+                                                actions.LiftAngle(liftAngles[index]),
                                                 actions.LiftOut(liftPositions[index])
-                                        )
+                                        ),
+                                        actions.LiftAngle(liftAngles[index])
                                 )
 
                         ),
-                        new SequentialAction(//delivery sequence
-                                new InstantAction(() -> claw.clawUp())
+                        new SequentialAction(
+                                new InstantAction(() -> claw.setClawAngle(.50 - lift.rotateRight.getCurrentPosition() / 11356.25)),
+                                new InstantAction(() -> claw.clawUp()),
+                                new SleepAction(1)
                         ),
                         new ParallelAction(// retract lift and angle
                                 actions.LiftOut(0),
@@ -244,12 +253,32 @@ public class RedRightRR extends LinearOpMode {
                                 )
 
                         ),
-                        /*toStack,
+                        //correctBackboardAngle,
+                        /*toStack,// add the stack get stuff here?
                         toBackBoard,
-                        actions.Macro(),
-                        actions.LiftAngle(0),
-                        actions.LiftIn(),
-                        stackToBackboard,*/
+                        stackToBackboard,
+                        /*new ParallelAction( //testing stuff here
+
+                                //LiftOut(0),
+                                new SequentialAction(
+
+                                        new SleepAction(2),
+                                        new ParallelAction(
+                                                actions.LiftAngle(liftAngles[index])
+                                                //actions.LiftOut(3600)
+                                        )
+
+
+                                )
+
+                        ),*/
+                        //toStack,
+                        //toBackBoard,
+                        //LiftOut(900),
+                        //Macro(),
+                        //DeliverySequence(),
+                        //LiftIn()
+                        //stackToBackboard,
                         park
 
                 )

@@ -26,7 +26,7 @@ public class Macro {
         //lift = lift;
     }
     
-    public static double[] macro_timing = {1.8,2,2.8,3,3.5,1,3.3};
+    public static double[] macro_timing = {1.4,1.6,2.4,2.6,3.1,.6,2.9};
     /*public static void initMacro(){
         macro_state[5] = true;
     }*/
@@ -96,6 +96,7 @@ public class Macro {
         //if (macroYay ()){ //not needed if state
         if (macro_state[5]) {
             //claw.setClawPosition (0);
+            intake.spinTake(1);
             claw.setClawAngle (0);
             //liftAngleToPos (1000);
             if(timer.hasElapsed (0.3)) {
