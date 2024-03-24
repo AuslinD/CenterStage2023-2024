@@ -20,8 +20,8 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 @Autonomous(name = "BlueLeftRR", group = "Autonomous")
 public class BlueLeftRR extends LinearOpMode {
 
-    int[] liftAngles = new int[]{850, 900, 900};
-    int[] liftPositions = new int[]{2300, 2250, 2000};
+    int[] liftAngles = new int[]{700, 700, 700};
+    int[] liftPositions = new int[]{2150, 2150, 2150};
     OpenCvInternalCamera phoneCam;
     OpenCV.BlueCV pipeline;
 
@@ -57,7 +57,7 @@ public class BlueLeftRR extends LinearOpMode {
         Action stackToBackboard;
 
 
-        claw.setClawAngle(.3);
+        claw.setClawAngle(.71);
 
         leftDelivery = drive.actionBuilder(drive.pose)
                 .setReversed(true)
@@ -101,19 +101,21 @@ public class BlueLeftRR extends LinearOpMode {
         angleLeftBoard = drive.actionBuilder(new Pose2d(29, 58, Math.toRadians(180)))
                 .setTangent(0)
                 .setReversed(true)
-                .splineToSplineHeading(new Pose2d(37,56, Math.toRadians(160)), 0)
+                .splineToSplineHeading(new Pose2d(37,56, Math.toRadians(158)), 0)
                 .waitSeconds(3)
                 .build();
+
         angleCenterBoard = drive.actionBuilder(new Pose2d(29, 58, Math.toRadians(180)))
                 .setTangent(0)
                 .setReversed(true)
-                .splineToSplineHeading(new Pose2d(37,56, Math.toRadians(150)), 0)
+                .splineToSplineHeading(new Pose2d(37,50, Math.toRadians(158)), 0)
                 .waitSeconds(3)
                 .build();
+
         angleRightBoard = drive.actionBuilder(new Pose2d(29, 58, Math.toRadians(180)))
                 .setTangent(0)
                 .setReversed(true)
-                .splineToSplineHeading(new Pose2d(37,56, Math.toRadians(140)), 0)
+                .splineToSplineHeading(new Pose2d(37,44, Math.toRadians(158)), 0)
                 .waitSeconds(3)
                 .build();
 
@@ -210,15 +212,17 @@ public class BlueLeftRR extends LinearOpMode {
                                 correctDelivery,
                                 new SequentialAction(
                                         //deliver spike
-                                        new SleepAction(2),
-                                        actions.LiftOut(2000),
-                                        new SleepAction(1),
+                                        new SleepAction(1.2),
+                                        actions.LiftAngle(200),
+                                        new InstantAction(() -> claw.setClawAngle(.11)),
+                                        actions.LiftOut(index != 1? 2000 : 2550),
                                         actions.ClawPosition(claw.autoHalf),
                                         new SleepAction(1),
                                         new ParallelAction(
                                                 actions.LiftIn(),
                                                 new InstantAction(() -> claw.setClawAngle(.50))
                                         ),
+
                                         new InstantAction(() -> claw.setClawAngle(.50))
                                 )
                         ),
@@ -229,7 +233,7 @@ public class BlueLeftRR extends LinearOpMode {
 
                                 new SequentialAction(
                                         new SleepAction(1.3),
-                                        new ParallelAction(
+                                        new SequentialAction(
                                                 actions.LiftAngle(liftAngles[index]),
                                                 actions.LiftOut(liftPositions[index])
                                         ),
@@ -268,16 +272,18 @@ public class BlueLeftRR extends LinearOpMode {
 
                                 )
 
-                        ),*/
+                        ),
                         //toStack,
                         //toBackBoard,
                         //LiftOut(900),
                         //Macro(),
                         //DeliverySequence(),
                         //LiftIn()
-                        //stackToBackboard,
-                        park
-
+                        //stackToBackboard,*/
+                        park,
+                    new InstantAction(() -> lift.setMotorsToGoUpOrDown(-10)),
+                    actions.LiftAngle(0),
+                    new SleepAction(1)
                 )
         );
     }

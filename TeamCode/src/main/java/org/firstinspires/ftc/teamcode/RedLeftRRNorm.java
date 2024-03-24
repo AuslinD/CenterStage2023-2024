@@ -24,8 +24,8 @@ import java.util.function.Function;
 @Autonomous(name = "RedLeftRRClose", group = "Autonomous")
 public class RedLeftRRNorm extends LinearOpMode {
 
-    int[] liftAngles = new int[]{850, 900, 900};
-    int[] liftPositions = new int[]{2300, 2250, 2000};
+    int[] liftAngles = new int[]{700, 700, 700};
+    int[] liftPositions = new int[]{2150, 2150, 2150};
 
     OpenCvInternalCamera phoneCam;
     OpenCV.RedCV pipeline;
@@ -63,7 +63,7 @@ public class RedLeftRRNorm extends LinearOpMode {
         Action stackToBackboard;
 
 
-        claw.setClawAngle(.5);
+        claw.setClawAngle(.71);
 
         leftDelivery = drive.actionBuilder(drive.pose)
                 .setReversed(true)
@@ -102,16 +102,18 @@ public class RedLeftRRNorm extends LinearOpMode {
                 .splineToSplineHeading(new Pose2d(37, -57, Math.toRadians(200)), 0)
                 .waitSeconds(3)
                 .build();
+
         angleCenterBoard = drive.actionBuilder(new Pose2d(29, -57, Math.toRadians(180)))
                 .setReversed(true)
                 .setTangent(0)
-                .splineToSplineHeading(new Pose2d(37, -57, Math.toRadians(212)), 0)
+                .splineToSplineHeading(new Pose2d(37, -51, Math.toRadians(200)), 0)
                 .waitSeconds(3)
                 .build();
-        angleLeftBoard = drive.actionBuilder(new Pose2d(29, -57, Math.toRadians(180)))
+
+        angleLeftBoard = drive.actionBuilder(new Pose2d(29, -45, Math.toRadians(180)))
                 .setReversed(true)
                 .setTangent(0)
-                .splineToSplineHeading(new Pose2d(37, -57, Math.toRadians(222)), 0)
+                .splineToSplineHeading(new Pose2d(37, -57, Math.toRadians(200)), 0)
                 .waitSeconds(3)
                 .build();
 
@@ -207,14 +209,16 @@ public class RedLeftRRNorm extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
+                        new SleepAction(4),
 
                         new ParallelAction(
                                 correctDelivery,
                                 new SequentialAction(
                                         //deliver spike
-                                        new SleepAction(2),
-                                        actions.LiftOut(index != 1? 2000 : 2200),
+                                        new SleepAction(1.2),
+                                        actions.LiftAngle(200),
                                         new InstantAction(() -> claw.setClawAngle(.11)),
+                                        actions.LiftOut(index != 1? 2000 : 2550),
                                         actions.ClawPosition(claw.autoHalf),
                                         new SleepAction(1),
                                         new ParallelAction(
@@ -225,14 +229,16 @@ public class RedLeftRRNorm extends LinearOpMode {
                                         new InstantAction(() -> claw.setClawAngle(.50))
                                 )
                         ),
+                        new SleepAction(3),
                         toBackBoard,
+
 
                         new ParallelAction(//angle to deliver to backdrop
                                 correctBackboardAngle,
 
                                 new SequentialAction(
                                         new SleepAction(1.5),
-                                        new ParallelAction(
+                                        new SequentialAction(
                                                 actions.LiftAngle(liftAngles[index]),
                                                 actions.LiftOut(liftPositions[index])
                                         ),
@@ -260,8 +266,11 @@ public class RedLeftRRNorm extends LinearOpMode {
                         actions.LiftAngle(0),
                         actions.LiftIn(),
                         stackToBackboard,*/
-                        park
-
+                        park,
+                        new InstantAction(() -> lift.setMotorsToGoUpOrDown(-10)),
+                        actions.LiftAngle(0)
+                        ,
+                        new SleepAction(1)
                 )
         );
 

@@ -21,8 +21,8 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 public class RedRightRR extends LinearOpMode {
 
 
-    int[] liftAngles = new int[]{850, 900, 900};
-    int[] liftPositions = new int[]{2300, 2250, 2000};
+    int[] liftAngles = new int[]{700, 700, 700};
+    int[] liftPositions = new int[]{2150, 2150, 2150};
 
     OpenCvInternalCamera phoneCam;
     OpenCV.RedCV pipeline;
@@ -58,7 +58,7 @@ public class RedRightRR extends LinearOpMode {
         Action park;
         Action stackToBackboard;
 
-        claw.setClawAngle(.3);
+        claw.setClawAngle(.71);
 
         leftDelivery = drive.actionBuilder(drive.pose)
                 .setReversed(true)
@@ -99,22 +99,24 @@ public class RedRightRR extends LinearOpMode {
 
                 //.waitSeconds(4)
                 .build();
-        angleLeftBoard = drive.actionBuilder(new Pose2d(29, 58, Math.toRadians(180)))
-                .setTangent(0)
+        angleRightBoard = drive.actionBuilder(new Pose2d(29, -57, Math.toRadians(180)))
                 .setReversed(true)
-                .splineToSplineHeading(new Pose2d(37,56, Math.toRadians(160)), 0)
+                .setTangent(0)
+                .splineToSplineHeading(new Pose2d(37, -57, Math.toRadians(200)), 0)
                 .waitSeconds(3)
                 .build();
-        angleCenterBoard = drive.actionBuilder(new Pose2d(29, 58, Math.toRadians(180)))
-                .setTangent(0)
+
+        angleCenterBoard = drive.actionBuilder(new Pose2d(29, -57, Math.toRadians(180)))
                 .setReversed(true)
-                .splineToSplineHeading(new Pose2d(37,56, Math.toRadians(150)), 0)
+                .setTangent(0)
+                .splineToSplineHeading(new Pose2d(37, -51, Math.toRadians(200)), 0)
                 .waitSeconds(3)
                 .build();
-        angleRightBoard = drive.actionBuilder(new Pose2d(29, 58, Math.toRadians(180)))
-                .setTangent(0)
+
+        angleLeftBoard = drive.actionBuilder(new Pose2d(29, -45, Math.toRadians(180)))
                 .setReversed(true)
-                .splineToSplineHeading(new Pose2d(37,56, Math.toRadians(140)), 0)
+                .setTangent(0)
+                .splineToSplineHeading(new Pose2d(37, -57, Math.toRadians(200)), 0)
                 .waitSeconds(3)
                 .build();
 
@@ -213,8 +215,10 @@ public class RedRightRR extends LinearOpMode {
                                 correctDelivery,
                                 new SequentialAction(
                                         //deliver spike
-                                        new SleepAction(2),
-                                        actions.LiftOut(2000),
+                                        new SleepAction(1.2),
+                                        actions.LiftAngle(200),
+                                        new InstantAction(() -> claw.setClawAngle(.11)),
+                                        actions.LiftOut(index != 1? 2000 : 2550),
                                         new SleepAction(1),
                                         actions.ClawPosition(claw.autoHalf),
                                         new SleepAction(1),
@@ -225,6 +229,7 @@ public class RedRightRR extends LinearOpMode {
                                         new InstantAction(() -> claw.setClawAngle(.50))
                                 )
                         ),
+
                         toBackBoard,
 
                         new ParallelAction(//angle to deliver to backdrop
@@ -232,7 +237,7 @@ public class RedRightRR extends LinearOpMode {
 
                                 new SequentialAction(
                                         new SleepAction(1.3),
-                                        new ParallelAction(
+                                        new SequentialAction(
                                                 actions.LiftAngle(liftAngles[index]),
                                                 actions.LiftOut(liftPositions[index])
                                         ),
@@ -279,8 +284,11 @@ public class RedRightRR extends LinearOpMode {
                         //DeliverySequence(),
                         //LiftIn()
                         //stackToBackboard,
-                        park
-
+                        park,
+                        new InstantAction(() -> lift.setMotorsToGoUpOrDown(-10)),
+                        actions.LiftAngle(0)
+                        ,
+                        new SleepAction(1)
                 )
         );
 

@@ -89,7 +89,7 @@ public class Robot {
         planeGate.setPosition(1);
     }
     public void setPlaneOpen(){
-        planeGate.setPosition(0);
+        planeGate.setPosition(.5);
     }
 
     public void setPlaneAngle(double position){planeAngle.setPosition(position);}

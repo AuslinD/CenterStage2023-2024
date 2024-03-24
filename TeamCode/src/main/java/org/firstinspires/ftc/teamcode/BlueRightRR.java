@@ -28,8 +28,8 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 @Autonomous(name = "Blue_Right_RRClose", group = "Autonomous")
 public class BlueRightRR extends LinearOpMode{
 
-    int[] liftAngles = new int[]{850, 900, 900};
-    int[] liftPositions = new int[]{2300, 2250, 2000};
+    int[] liftAngles = new int[]{700, 700, 700};
+    int[] liftPositions = new int[]{2150, 2150, 2150};
     OpenCvInternalCamera phoneCam;
     OpenCV.BlueCV pipeline;
 
@@ -64,7 +64,7 @@ public class BlueRightRR extends LinearOpMode{
         Action stackToBackboard;
 
 
-        claw.setClawAngle(.3);
+        claw.setClawAngle(.71);
 
         leftDelivery = drive.actionBuilder(drive.pose)
                 .setReversed(true)
@@ -108,19 +108,21 @@ public class BlueRightRR extends LinearOpMode{
         angleLeftBoard = drive.actionBuilder(new Pose2d(29, 58, Math.toRadians(180)))
                 .setTangent(0)
                 .setReversed(true)
-                .splineToSplineHeading(new Pose2d(37,56, Math.toRadians(160)), 0)
+                .splineToSplineHeading(new Pose2d(37,56, Math.toRadians(158)), 0)
                 .waitSeconds(3)
                 .build();
+
         angleCenterBoard = drive.actionBuilder(new Pose2d(29, 58, Math.toRadians(180)))
                 .setTangent(0)
                 .setReversed(true)
-                .splineToSplineHeading(new Pose2d(37,56, Math.toRadians(150)), 0)
+                .splineToSplineHeading(new Pose2d(37,50, Math.toRadians(158)), 0)
                 .waitSeconds(3)
                 .build();
+
         angleRightBoard = drive.actionBuilder(new Pose2d(29, 58, Math.toRadians(180)))
                 .setTangent(0)
                 .setReversed(true)
-                .splineToSplineHeading(new Pose2d(37,56, Math.toRadians(140)), 0)
+                .splineToSplineHeading(new Pose2d(37,44, Math.toRadians(158)), 0)
                 .waitSeconds(3)
                 .build();
 
@@ -146,7 +148,7 @@ public class BlueRightRR extends LinearOpMode{
 
         park = drive.actionBuilder(new Pose2d(37,56, Math.toRadians(155)))
                 .setTangent(Math.toRadians(180))
-                .splineToSplineHeading(new Pose2d(54, 58.5, Math.toRadians(180)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(53.5, 58.5, Math.toRadians(180)), Math.toRadians(180))
                 .build();
 
         claw.clawDown();
@@ -217,18 +219,21 @@ public class BlueRightRR extends LinearOpMode{
                                 correctDelivery,
                                 new SequentialAction(
                                         //deliver spike
-                                        new SleepAction(2),
-                                        actions.LiftOut(2000),
-                                        new SleepAction(1),
+                                        new SleepAction(1.2),
+                                        actions.LiftAngle(250),
+                                        new InstantAction(() -> claw.setClawAngle(.11)),
+                                        actions.LiftOut(index != 1? 2000 : 2550),
                                         actions.ClawPosition(claw.autoHalf),
-                                        new SleepAction(1),
+                                        new SleepAction(1.2),
                                         new ParallelAction(
                                                 actions.LiftIn(),
                                                 new InstantAction(() -> claw.setClawAngle(.50))
                                         ),
+
                                         new InstantAction(() -> claw.setClawAngle(.50))
                                 )
                         ),
+                        new SleepAction(2),
                         toBackBoard,
 
                         new ParallelAction(//angle to deliver to backdrop
@@ -236,16 +241,17 @@ public class BlueRightRR extends LinearOpMode{
 
                                 new SequentialAction(
                                         new SleepAction(1.3),
-                                        new ParallelAction(
+                                        new SequentialAction(
                                                 actions.LiftAngle(liftAngles[index]),
                                                 actions.LiftOut(liftPositions[index])
+
                                         ),
-                                        actions.LiftAngle(liftAngles[index])
+                                        //actions.LiftAngle(liftAngles[index]),
+                                        new InstantAction(() -> claw.setClawAngle(.50 - lift.rotateRight.getCurrentPosition() / 11356.25))
                                 )
 
                         ),
                         new SequentialAction(
-                                new InstantAction(() -> claw.setClawAngle(.50 - lift.rotateRight.getCurrentPosition() / 11356.25)),
                                 new InstantAction(() -> claw.clawUp()),
                                 new SleepAction(1)
                         ),
@@ -283,7 +289,11 @@ public class BlueRightRR extends LinearOpMode{
                         //DeliverySequence(),
                         //LiftIn()
                         //stackToBackboard,
-                        park
+                        park,
+                        new InstantAction(() -> lift.setMotorsToGoUpOrDown(-10)),
+                        actions.LiftAngle(0)
+                        ,
+                        new SleepAction(1)
 
                 )
         );
